@@ -5,6 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPhotoCompetitionViewer"
         mc:Ignorable="d"
-        Title="Photo Competition Viewer" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize" WindowStyle="None">
-    <Grid/>
+        Title="Photo Competition Viewer" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize">
+    <Grid>
+        <Label x:Name="StatusLabel" Content="Status Prompt" HorizontalAlignment="Left" Margin="87,44,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        <Button x:Name="Competition1Button" Content="Button" HorizontalAlignment="Left" Height="84" Margin="87,157,0,0" VerticalAlignment="Top" Width="910" FontSize="48" Click="Competition1Button_Click" Visibility="Hidden"/>
+        <Button x:Name="Competition2Button" Content="Button" HorizontalAlignment="Left" Height="84" Margin="87,291,0,0" VerticalAlignment="Top" Width="910" FontSize="48" Click="Competition2Button_Click" Visibility="Hidden"/>
+    </Grid>
 </Window>

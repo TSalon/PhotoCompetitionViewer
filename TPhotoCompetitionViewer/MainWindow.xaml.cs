@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TPhotoCompetitionViewer.Competitions;
 
 namespace TPhotoCompetitionViewer
 {
@@ -20,10 +21,39 @@ namespace TPhotoCompetitionViewer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private CompetitionManager competitionMgr = new CompetitionManager();
+
         public MainWindow()
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+            this.LoadCompetitions();
+
+        }
+
+        private void LoadCompetitions()
+        {
+            this.StatusLabel.Content = "Loading competitions...";
+            List<string> competitionNames = this.competitionMgr.GetCompetitions();
+
+            if (competitionNames.Count == 0)
+            {
+                this.StatusLabel.Content = "No competitions found";
+            }
+            else
+            {
+                this.StatusLabel.Content = "Select competition to run:";
+
+                this.Competition1Button.Visibility = Visibility.Visible;
+                this.Competition1Button.Content = competitionNames[0];
+                if (competitionNames.Count > 1)
+                {
+                    this.Competition2Button.Visibility = Visibility.Visible;
+                    this.Competition2Button.Content = competitionNames[1];
+                }
+                
+            }
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -32,6 +62,20 @@ namespace TPhotoCompetitionViewer
             {
                 Close();
             }
+        }
+
+        private void Competition1Button_Click(object sender, RoutedEventArgs e)
+        {
+            CompetitionPage competitionPage = new CompetitionPage();
+            competitionPage.Init(this.competitionMgr, 0);
+            competitionPage.Show();
+        }
+
+        private void Competition2Button_Click(object sender, RoutedEventArgs e)
+        {
+            CompetitionPage competitionPage = new CompetitionPage();
+            competitionPage.Init(this.competitionMgr, 1);
+            competitionPage.Show();
         }
     }
 }
