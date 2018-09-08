@@ -65,6 +65,11 @@ namespace TPhotoCompetitionViewer.Competitions
             this.images = imageList;   
         }
 
+        internal string GetImageName(int imageIndex)
+        {
+            return this.images[imageIndex].GetTitle();
+        }
+
         internal int MaxImageIndex()
         {
             return this.images.Count - 1;

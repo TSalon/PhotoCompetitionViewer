@@ -8,9 +8,9 @@ namespace TPhotoCompetitionViewer.Competitions
 {
     class CompetitionImage
     {
-        private string imageTitle;
-        private string imageAuthor;
-        private string imagePath;
+        private readonly string imageTitle;
+        private readonly string imageAuthor;
+        private readonly string imagePath;
 
         public CompetitionImage(string imageTitle, string imageAuthor, string imagePath)
         {
@@ -22,6 +22,11 @@ namespace TPhotoCompetitionViewer.Competitions
         internal string GetFilePath()
         {
             return imagePath;
+        }
+
+        internal string GetTitle()
+        {
+            return imageTitle;
         }
     }
 }

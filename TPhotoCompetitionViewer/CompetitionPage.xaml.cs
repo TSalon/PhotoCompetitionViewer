@@ -62,6 +62,9 @@ namespace TPhotoCompetitionViewer
             imageToShow.UriSource = new Uri("C:" + imagePath);
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
+
+            string imageName = this.competition.GetImageName(imageIndex);
+            this.ImageTitle.Content = imageName;
         }
 
         private void NextImage()
