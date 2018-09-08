@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -14,8 +15,6 @@ namespace TPhotoCompetitionViewer.Competitions
         private const string COMPETITION_METADATA_FILENAME = "competition.xml";
 
         private List<CompetitionImage> images;
-        private XmlNode competitionName;
-        private string competitionTrophy;
         private readonly string competitionFileName;
         private string competitionDirectory;
 
@@ -28,12 +27,6 @@ namespace TPhotoCompetitionViewer.Competitions
         {
             // Store path to images
             this.competitionDirectory = competitionDirectory;
-
-            // Load competition details
-            XmlDocument competitionDocument = new XmlDocument();
-            competitionDocument.Load(competitionDirectory + "/" + COMPETITION_METADATA_FILENAME);
-            this.competitionName = competitionDocument.SelectSingleNode("/Competition/Name");
-            this.competitionTrophy = competitionDocument.SelectSingleNode("/Competition/Trophy").Value;
 
             // Load image order details
             XmlDocument orderingDocument = new XmlDocument();
@@ -63,6 +56,38 @@ namespace TPhotoCompetitionViewer.Competitions
             }
 
             this.images = imageList;   
+        }
+
+        internal void HoldImage(int imageIndex)
+        {
+            Boolean heldImage = this.images[imageIndex].ToggleHeld();
+            if (heldImage)
+            {
+                this.WriteImageToHeldDirectory(imageIndex);
+            }
+            else
+            {
+                this.DeleteImageFromHeldDirectory(imageIndex);
+            }
+        }
+
+        private void WriteImageToHeldDirectory(int imageIndex)
+        {
+            String heldDirectory = ImagePaths.GetHeldDirectory(this.competitionFileName);
+            if (Directory.Exists(heldDirectory) == false)
+            {
+                Directory.CreateDirectory(heldDirectory);
+            }
+            string source = this.GetImagePath(imageIndex);
+            string destination = heldDirectory + "/" + this.GetImageName(imageIndex) + ".jpg";
+            File.Copy(source, destination, true);
+        }
+
+        private void DeleteImageFromHeldDirectory(int imageIndex)
+        {
+            String heldDirectory = ImagePaths.GetHeldDirectory(this.competitionFileName);
+            string heldImageFile = heldDirectory + "/" + this.GetImageName(imageIndex) + ".jpg";
+            File.Delete(heldImageFile);
         }
 
         internal string GetImageName(int imageIndex)

@@ -88,6 +88,7 @@
     <Compile Include="CompetitionPage.xaml.cs">
       <DependentUpon>CompetitionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Competitions\ImagePaths.cs" />
     <Compile Include="Competitions\Competition.cs" />
     <Compile Include="Competitions\CompetitionImage.cs" />
     <Compile Include="Competitions\CompetitionManager.cs" />

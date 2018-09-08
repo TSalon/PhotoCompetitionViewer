@@ -10,18 +10,16 @@ namespace TPhotoCompetitionViewer.Competitions
 {
     class CompetitionManager
     {
-        private const string BASE_DIRECTORY = "/Competitions";
-        private const string EXTRACT_OFFSET = "extract";
         List<string> competitionList = new List<String>();
 
         internal List<string> GetCompetitions()
         {
-            IEnumerable<string> competitions = Directory.GetFiles(BASE_DIRECTORY);
+            IEnumerable<string> competitions = ImagePaths.GetCompetitionZipFilesList();
 
             foreach (var item in competitions)
             {
                 var today = DateTime.Now.ToString("yyyy-MM-dd");
-                var competitionFileName = item.Substring(BASE_DIRECTORY.Length + 1);
+                var competitionFileName = ImagePaths.RemovePathStart(item);
                 var competitionName = competitionFileName.Substring(0, competitionFileName.Length - 4);
 
                 if (competitionName.StartsWith(today)){
@@ -32,24 +30,19 @@ namespace TPhotoCompetitionViewer.Competitions
             return competitionList;
         }
 
-        internal string getExtractDirectory(string competitionName)
-        {
-            return BASE_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName;
-        }
-
         internal Competition GetCompetition(int competitionIndex)
         {
             string competitionName = this.competitionList[competitionIndex];
             Competition competition = new Competition(competitionName);
-            competition.LoadImages(this.getExtractDirectory(competitionName));
+            competition.LoadImages(ImagePaths.getExtractDirectory(competitionName));
             return competition;
         }
 
         /** Extract from zip file to tmp directory */
         private void ExtractFiles(string competitionName)
         {
-            string zipFilePath = BASE_DIRECTORY + "/" + competitionName + ".zip";
-            string destination = this.getExtractDirectory(competitionName);
+            string zipFilePath = ImagePaths.GetZipFile(competitionName);
+            string destination = ImagePaths.getExtractDirectory(competitionName);
             if (Directory.Exists(destination))
             {
                 Directory.Delete(destination, true);

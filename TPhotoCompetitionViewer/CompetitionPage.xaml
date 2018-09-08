@@ -13,6 +13,5 @@
                 <SolidColorBrush Color="Black" Opacity="0.2"/>
             </Label.Background>
         </Label>
-
     </Grid>
 </Window>

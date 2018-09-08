@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using TPhotoCompetitionViewer.Competitions;
 
 namespace TPhotoCompetitionViewer
@@ -22,12 +23,25 @@ namespace TPhotoCompetitionViewer
     {
         private Competition competition;
         private int imageIndex = 0;
+        private DispatcherTimer dispatcherTimer;
 
         public CompetitionPage()
         {
             InitializeComponent();
 
             this.PreviewKeyDown += new KeyEventHandler(HandleKeys);
+
+            //Create a timer with interval of 5 secs
+            this.dispatcherTimer = new DispatcherTimer();
+            this.dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
+            this.dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+           this.ImageTitle.Visibility = Visibility.Hidden;
+
+           this.dispatcherTimer.IsEnabled = false;
         }
 
         private void HandleKeys(object sender, KeyEventArgs e)
@@ -44,7 +58,19 @@ namespace TPhotoCompetitionViewer
             {
                 this.PreviousImage();
             }
+            else if (e.Key == Key.T)
+            {
+                this.ShowTitle(this.imageIndex);
+            }
+            else if (e.Key == Key.H)
+            {
+                this.HoldImage(this.imageIndex);
+            }
+        }
 
+        private void HoldImage(int imageIndex)
+        {
+            this.competition.HoldImage(imageIndex);
         }
 
         internal void Init(CompetitionManager competitionMgr, int competitionIndex)
@@ -63,8 +89,16 @@ namespace TPhotoCompetitionViewer
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
 
+            this.ShowTitle(imageIndex);
+          }
+
+        private void ShowTitle(int imageIndex)
+        {
             string imageName = this.competition.GetImageName(imageIndex);
             this.ImageTitle.Content = imageName;
+            this.ImageTitle.Visibility = Visibility.Visible;
+
+            this.dispatcherTimer.Start();
         }
 
         private void NextImage()

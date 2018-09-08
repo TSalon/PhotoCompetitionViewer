@@ -11,6 +11,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string imageTitle;
         private readonly string imageAuthor;
         private readonly string imagePath;
+        private bool held = false;
 
         public CompetitionImage(string imageTitle, string imageAuthor, string imagePath)
         {
@@ -27,6 +28,12 @@ namespace TPhotoCompetitionViewer.Competitions
         internal string GetTitle()
         {
             return imageTitle;
+        }
+
+        internal bool ToggleHeld()
+        {
+            this.held = !this.held;
+            return this.held;
         }
     }
 }
