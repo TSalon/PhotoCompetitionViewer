@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuzzIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace TPhotoCompetitionViewer
         private Competition competition;
         private int imageIndex = 0;
         private DispatcherTimer dispatcherTimer;
+        private List<IBuzzHandsetDevice> handsets;
 
         public CompetitionPage()
         {
@@ -35,6 +37,10 @@ namespace TPhotoCompetitionViewer
             this.dispatcherTimer = new DispatcherTimer();
             this.dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
             this.dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+
+            // get handle to buzz controllers
+            this.handsets = new BuzzHandsetFinder().FindHandsets().ToList();
+            this.handsets[0].ButtonChanged += HandleHandsetEvent;
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
@@ -42,6 +48,11 @@ namespace TPhotoCompetitionViewer
            this.ImageTitle.Visibility = Visibility.Hidden;
 
            this.dispatcherTimer.IsEnabled = false;
+        }
+
+        private void HandleHandsetEvent(object sender, BuzzButtonChangedEventArgs e)
+        {
+            this.NextImage();
         }
 
         private void HandleKeys(object sender, KeyEventArgs e)

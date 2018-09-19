@@ -125,6 +125,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BuzzIO\ButtonStates.cs" />
+    <Compile Include="BuzzIO\BuzzButtonChangedEventArgs.cs" />
+    <Compile Include="BuzzIO\BuzzHandsetDevice.cs" />
+    <Compile Include="BuzzIO\BuzzHandsetFinder.cs" />
+    <Compile Include="BuzzIO\BuzzInputReport.cs" />
+    <Compile Include="BuzzIO\BuzzOutputReport.cs" />
+    <Compile Include="BuzzIO\HIDDevice.cs" />
+    <Compile Include="BuzzIO\HIDDeviceException.cs" />
+    <Compile Include="BuzzIO\IBuzzHandsetDevice.cs" />
+    <Compile Include="BuzzIO\IBuzzHandsetFinder.cs" />
+    <Compile Include="BuzzIO\InputReport.cs" />
+    <Compile Include="BuzzIO\IUsbEventService.cs" />
+    <Compile Include="BuzzIO\OutputReport.cs" />
+    <Compile Include="BuzzIO\Report.cs" />
+    <Compile Include="BuzzIO\UsbEventService.cs" />
+    <Compile Include="BuzzIO\Win32USB.cs" />
     <Compile Include="CompetitionPage.xaml.cs">
       <DependentUpon>CompetitionPage.xaml</DependentUpon>
     </Compile>
