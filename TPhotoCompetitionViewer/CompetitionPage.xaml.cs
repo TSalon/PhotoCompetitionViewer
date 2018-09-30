@@ -159,7 +159,7 @@ namespace TPhotoCompetitionViewer
         /** Show the image title for a short period of time */
         private void ShowTitle(int imageIndex)
         {
-            string imageName = this.competition.GetImageName(imageIndex);
+            string imageName = this.competitionImage.GetTitle();
 
             this.ImageTitle.Content = imageName;
             this.ImageTitle.Visibility = Visibility.Visible;

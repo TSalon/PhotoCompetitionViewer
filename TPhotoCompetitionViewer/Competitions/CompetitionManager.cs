@@ -10,7 +10,7 @@ namespace TPhotoCompetitionViewer.Competitions
 {
     class CompetitionManager
     {
-        List<string> competitionList = new List<String>();
+        readonly List<string> competitionList = new List<String>();
 
         internal List<string> GetCompetitions()
         {

@@ -51,16 +51,11 @@ namespace TPhotoCompetitionViewer.Competitions
                     }
                 }
 
-                CompetitionImage eachImage = new CompetitionImage(imageTitle, imageAuthor, imagePath);
+                CompetitionImage eachImage = new CompetitionImage(imageTitle, imageAuthor, imagePath, imageFilename);
                 imageList.Add(eachImage);
             }
 
             this.images = imageList;   
-        }
-
-        internal int ScoreImage(string handsetId, int score)
-        {
-            return 0;
         }
 
         internal void HoldImage(int imageIndex)
@@ -84,20 +79,20 @@ namespace TPhotoCompetitionViewer.Competitions
                 Directory.CreateDirectory(heldDirectory);
             }
             string source = this.GetImagePath(imageIndex);
-            string destination = heldDirectory + "/" + this.GetImageName(imageIndex) + ".jpg";
+            string destination = heldDirectory + "/" + this.GetImageFileName(imageIndex) + ".jpg";
             File.Copy(source, destination, true);
         }
 
         private void DeleteImageFromHeldDirectory(int imageIndex)
         {
             String heldDirectory = ImagePaths.GetHeldDirectory(this.competitionFileName);
-            string heldImageFile = heldDirectory + "/" + this.GetImageName(imageIndex) + ".jpg";
+            string heldImageFile = heldDirectory + "/" + this.GetImageFileName(imageIndex) + ".jpg";
             File.Delete(heldImageFile);
         }
 
-        internal string GetImageName(int imageIndex)
+        private string GetImageFileName(int imageIndex)
         {
-            return this.images[imageIndex].GetTitle();
+            return this.images[imageIndex].getFilename();
         }
 
         internal int MaxImageIndex()

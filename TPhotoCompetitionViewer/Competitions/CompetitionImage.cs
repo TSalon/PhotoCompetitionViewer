@@ -9,27 +9,34 @@ namespace TPhotoCompetitionViewer.Competitions
 {
     class CompetitionImage
     {
-        private readonly string imageTitle;
-        private readonly string imageAuthor;
-        private readonly string imagePath;
+        private readonly string imageTitle; // Lone Tree
+        private readonly string imageAuthor; // Tim Sawyer
+        private readonly string imagePath; // Tim Sawyer/221_1_Lone Tree.jpg
+        private readonly string imageFilename; // 221_1_Lone Tree.jpg
         private bool held = false;
         private readonly IDictionary<String, int> imageScores = new Dictionary<string,int>();
         
-        public CompetitionImage(string imageTitle, string imageAuthor, string imagePath)
+        public CompetitionImage(string imageTitle, string imageAuthor, string imagePath, string imageFilename)
         {
             this.imageTitle = imageTitle;
             this.imageAuthor = imageAuthor;
             this.imagePath = imagePath;
+            this.imageFilename = imageFilename;
         }
 
         internal string GetFilePath()
         {
-            return imagePath;
+            return this.imagePath;
         }
 
         internal string GetTitle()
         {
-            return imageTitle;
+            return this.imageTitle;
+        }
+
+        internal string getFilename()
+        {
+            return this.imageFilename;
         }
 
         internal bool ToggleHeld()
