@@ -11,8 +11,7 @@ namespace TPhotoCompetitionViewer.Competitions
 {
     class Competition
     {
-        private const string ORDER_FILENAME = "order.xml";
-        private const string COMPETITION_METADATA_FILENAME = "competition.xml";
+        private const string CONTROL_FILENAME = "competition.xml";
 
         private List<CompetitionImage> images;
         private readonly string competitionFileName;
@@ -30,7 +29,7 @@ namespace TPhotoCompetitionViewer.Competitions
 
             // Load image order details
             XmlDocument orderingDocument = new XmlDocument();
-            orderingDocument.Load(competitionDirectory + "/" + ORDER_FILENAME);
+            orderingDocument.Load(competitionDirectory + "/" + CONTROL_FILENAME);
             var imageList = new List<CompetitionImage>();
             XmlNode rootNode = orderingDocument.FirstChild;
             foreach (XmlNode eachImageNode in rootNode.ChildNodes)
@@ -56,6 +55,11 @@ namespace TPhotoCompetitionViewer.Competitions
             }
 
             this.images = imageList;   
+        }
+
+        internal string GetName()
+        {
+            return this.competitionFileName;
         }
 
         internal void HoldImage(int imageIndex)

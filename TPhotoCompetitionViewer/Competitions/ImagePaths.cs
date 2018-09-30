@@ -14,7 +14,8 @@ namespace TPhotoCompetitionViewer.Competitions
         private const string EXTRACT_OFFSET = "extract";
         private const string ALL_OFFSET = "all";
         private const string HELD_OFFSET = "held";
-        
+        private const string DATABASE_OFFSET = "db";
+
         internal static string getExtractDirectory(string competitionName)
         {
             return BASE_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + ALL_OFFSET;
@@ -38,6 +39,16 @@ namespace TPhotoCompetitionViewer.Competitions
         internal static string GetHeldDirectory(string competitionName)
         {
             return BASE_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + HELD_OFFSET;
+        }
+
+        internal static string GetDatabaseDirectory(string competitionName)
+        {
+            return BASE_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + DATABASE_OFFSET;
+        }
+
+        internal static string GetDatabaseFile(string competitionName)
+        {
+            return ImagePaths.GetDatabaseDirectory(competitionName) + "/" + competitionName + ".sqlite";
         }
     }
 

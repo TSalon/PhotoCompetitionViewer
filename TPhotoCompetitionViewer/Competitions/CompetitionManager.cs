@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -24,10 +25,29 @@ namespace TPhotoCompetitionViewer.Competitions
 
                 if (competitionName.StartsWith(today)){
                     this.ExtractFiles(competitionName);
+                    this.CreateDatabase(competitionName);
                     this.competitionList.Add(competitionName);
                 }
             }
             return competitionList;
+        }
+
+        private void CreateDatabase(string competitionName)
+        {
+            string databaseDirectory = ImagePaths.GetDatabaseDirectory(competitionName);
+            Directory.CreateDirectory(databaseDirectory);
+
+            string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
+            SQLiteConnection.CreateFile(databaseFilePath);
+
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            dbConnection.Open();
+
+            String createTableCommandString = "CREATE TABLE scores (timestamp TEXT, name VARCHAR(50) NOT NULL, score NUMBER(2) not null)";
+            SQLiteCommand createTableCommand = new SQLiteCommand(createTableCommandString, dbConnection);
+            createTableCommand.ExecuteNonQuery();
+
+            dbConnection.Close();
         }
 
         internal Competition GetCompetition(int competitionIndex)

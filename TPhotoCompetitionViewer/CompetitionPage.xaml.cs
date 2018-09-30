@@ -1,6 +1,7 @@
 ﻿using BuzzIO;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace TPhotoCompetitionViewer
         private int imageIndex = 0;
         private DispatcherTimer dispatcherTimer;
         private HandsetWrapper handsets;
+        private SQLiteConnection dbConnection;
 
         /** Initialise Window */
         public CompetitionPage()
@@ -50,6 +52,7 @@ namespace TPhotoCompetitionViewer
                 this.handsets.Get(1).ButtonChanged += HandleHandsetEvent1;
             }
 
+            // start with all handset lights turned off
             this.handsets.AllLightsOff();
         }
 
@@ -95,7 +98,7 @@ namespace TPhotoCompetitionViewer
         /** Record the score associated with a pushed handset button */
         private void ScoreImage(string handsetId, int score)
         {
-            this.competitionImage.ScoreImage(handsetId, score);
+            this.competitionImage.ScoreImage(handsetId, score, this.dbConnection);
             this.handsets.SetLightsForThisImage(this.competitionImage);
         }
 
@@ -104,8 +107,7 @@ namespace TPhotoCompetitionViewer
         {
             if (e.Key == Key.Escape)
             {
-                this.handsets.AllLightsOff();
-                this.Close();
+                this.CloseWindow();
             }
             else if (e.Key == Key.Right)
             {
@@ -125,6 +127,13 @@ namespace TPhotoCompetitionViewer
             }
         }
 
+        private void CloseWindow()
+        {
+            this.handsets.AllLightsOff();
+            this.dbConnection.Close();
+            this.Close();
+        }
+
         /** Mark an image as held */
         private void HoldImage(int imageIndex)
         {
@@ -134,8 +143,17 @@ namespace TPhotoCompetitionViewer
         /** Initialise this window for a particular competition and show the first image */
         internal void Init(CompetitionManager competitionMgr, int competitionIndex)
         {
+            // Get competition instance
             this.competition = competitionMgr.GetCompetition(competitionIndex);
-            this.ShowImage(imageIndex);
+
+            // Get a handle to the database for this competition
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
+            this.dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            this.dbConnection.Open();
+
+            // Show first image
+            this.imageIndex = 0;
+            this.ShowImage(this.imageIndex);
         }
 
         /** Show the image at the specified index */
