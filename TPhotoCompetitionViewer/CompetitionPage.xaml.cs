@@ -161,10 +161,10 @@ namespace TPhotoCompetitionViewer
         }
 
         /** Initialise this window for a particular competition and show the first image */
-        internal void Init(CompetitionManager competitionMgr, int competitionIndex)
+        internal void Init(CompetitionManager competitionMgr, int competitionIndex, int scoresRequired)
         {
             // Get competition instance
-            this.competition = competitionMgr.GetCompetition(competitionIndex);
+            this.competition = competitionMgr.GetCompetition(competitionIndex, scoresRequired);
 
             // Get a handle to the database for this competition
             string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());

@@ -47,10 +47,12 @@ namespace TPhotoCompetitionViewer
 
                 this.Competition1Button.Visibility = Visibility.Visible;
                 this.Competition1Button.Content = competitionNames[0];
+                this.CompOneScoresRequired.Visibility = Visibility.Visible;
                 if (competitionNames.Count > 1)
                 {
                     this.Competition2Button.Visibility = Visibility.Visible;
                     this.Competition2Button.Content = competitionNames[1];
+                    this.CompTwoScoresRequired.Visibility = Visibility.Visible;
                 }
                 
             }
@@ -66,15 +68,17 @@ namespace TPhotoCompetitionViewer
 
         private void Competition1Button_Click(object sender, RoutedEventArgs e)
         {
+            int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
             CompetitionPage competitionPage = new CompetitionPage();
-            competitionPage.Init(this.competitionMgr, 0);
+            competitionPage.Init(this.competitionMgr, 0, scoresRequired);
             competitionPage.Show();
         }
 
         private void Competition2Button_Click(object sender, RoutedEventArgs e)
         {
+            int scoresRequired = System.Convert.ToInt32(this.CompTwoScoresRequired.Text);
             CompetitionPage competitionPage = new CompetitionPage();
-            competitionPage.Init(this.competitionMgr, 1);
+            competitionPage.Init(this.competitionMgr, 1, scoresRequired);
             competitionPage.Show();
         }
     }

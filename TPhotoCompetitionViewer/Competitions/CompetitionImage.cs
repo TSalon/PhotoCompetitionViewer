@@ -16,9 +16,11 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string imageFilename; // 221_1_Lone Tree.jpg
         private bool held = false;
         private readonly IDictionary<String, int> imageScores = new Dictionary<string,int>();
+        private readonly Competition competition;
         
-        public CompetitionImage(string imageTitle, string imageAuthor, string imagePath, string imageFilename)
+        public CompetitionImage(Competition competition, string imageTitle, string imageAuthor, string imagePath, string imageFilename)
         {
+            this.competition = competition;
             this.imageTitle = imageTitle;
             this.imageAuthor = imageAuthor;
             this.imagePath = imagePath;
@@ -35,7 +37,7 @@ namespace TPhotoCompetitionViewer.Competitions
             return this.imageTitle;
         }
 
-        internal string getFilename()
+        internal string GetFilename()
         {
             return this.imageFilename;
         }
@@ -58,7 +60,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 this.imageScores[handsetId] = score;
             }
 
-            bool CompleteCriteraMet = this.imageScores.Keys.Count == 8;
+            bool CompleteCriteraMet = this.imageScores.Keys.Count == this.competition.GetScoresRequired();
 
             // We have a complete score, write it to the database
             if (CompleteCriteraMet)
@@ -74,7 +76,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 // Write score to database
                 String sql = "INSERT INTO scores (timestamp, name, score) VALUES (CURRENT_TIMESTAMP, @name, @score)";
                 SQLiteCommand insertScore = new SQLiteCommand(sql, dbConnection);
-                insertScore.Parameters.Add(new SQLiteParameter("@name", this.getFilename()));
+                insertScore.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
                 insertScore.Parameters.Add(new SQLiteParameter("@score", totalScore));
                 insertScore.ExecuteNonQuery();
 

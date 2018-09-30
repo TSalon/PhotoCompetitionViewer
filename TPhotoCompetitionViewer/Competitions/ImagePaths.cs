@@ -16,7 +16,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private const string HELD_OFFSET = "held";
         private const string DATABASE_OFFSET = "db";
 
-        internal static string getExtractDirectory(string competitionName)
+        internal static string GetExtractDirectory(string competitionName)
         {
             return BASE_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + ALL_OFFSET;
         }

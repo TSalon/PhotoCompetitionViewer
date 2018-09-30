@@ -56,11 +56,11 @@ namespace TPhotoCompetitionViewer.Competitions
             dbConnection.Close();
         }
 
-        internal Competition GetCompetition(int competitionIndex)
+        internal Competition GetCompetition(int competitionIndex, int scoresRequired)
         {
             string competitionName = this.competitionList[competitionIndex];
-            Competition competition = new Competition(competitionName);
-            competition.LoadImages(ImagePaths.getExtractDirectory(competitionName));
+            Competition competition = new Competition(competitionName, scoresRequired);
+            competition.LoadImages(ImagePaths.GetExtractDirectory(competitionName));
             return competition;
         }
 
@@ -68,7 +68,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private void ExtractFiles(string competitionName)
         {
             string zipFilePath = ImagePaths.GetZipFile(competitionName);
-            string destination = ImagePaths.getExtractDirectory(competitionName);
+            string destination = ImagePaths.GetExtractDirectory(competitionName);
             if (Directory.Exists(destination))
             {
                 Directory.Delete(destination, true);

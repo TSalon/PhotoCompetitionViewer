@@ -15,11 +15,13 @@ namespace TPhotoCompetitionViewer.Competitions
 
         private List<CompetitionImage> images;
         private readonly string competitionFileName;
+        private readonly int scoresRequired;
         private string competitionDirectory;
 
-        public Competition(string competitionFileName)
+        public Competition(string competitionFileName, int scoresRequired)
         {
             this.competitionFileName = competitionFileName;
+            this.scoresRequired = scoresRequired;
         }
 
         internal void LoadImages(string competitionDirectory)
@@ -50,11 +52,16 @@ namespace TPhotoCompetitionViewer.Competitions
                     }
                 }
 
-                CompetitionImage eachImage = new CompetitionImage(imageTitle, imageAuthor, imagePath, imageFilename);
+                CompetitionImage eachImage = new CompetitionImage(this, imageTitle, imageAuthor, imagePath, imageFilename);
                 imageList.Add(eachImage);
             }
 
             this.images = imageList;   
+        }
+
+        internal int GetScoresRequired()
+        {
+            return this.scoresRequired;
         }
 
         internal string GetName()
@@ -96,7 +103,7 @@ namespace TPhotoCompetitionViewer.Competitions
 
         private string GetImageFileName(int imageIndex)
         {
-            return this.images[imageIndex].getFilename();
+            return this.images[imageIndex].GetFilename();
         }
 
         internal int MaxImageIndex()
