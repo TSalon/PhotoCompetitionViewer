@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -98,17 +99,26 @@ namespace TPhotoCompetitionViewer
         /** Record the score associated with a pushed handset button */
         private void ScoreImage(string handsetId, int score)
         {
-            int totalScore = this.competitionImage.ScoreImage(handsetId, score, this.dbConnection);
-            this.handsets.SetLightsForThisImage(this.competitionImage);
-
-            if (totalScore > 0)
+            if (this.competitionImage != null)
             {
-                // play mp3 of total score number
-                this.Dispatcher.Invoke(() =>
+                int totalScore = this.competitionImage.ScoreImage(handsetId, score, this.dbConnection);
+                this.handsets.SetLightsForThisImage(this.competitionImage);
+
+                if (totalScore > 0)
                 {
-                    this.MediaElement.Source = new Uri("Resources/Numbers/Brian/" + totalScore + ".mp3", UriKind.Relative);
-                    this.MediaElement.Play();
-                });
+                    // play mp3 of total score number
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        this.MediaElement.Source = new Uri("Resources/Numbers/Brian/" + totalScore + ".mp3", UriKind.Relative);
+                        this.MediaElement.Play();
+
+                    // allow time for number to be read out
+                    Thread.Sleep(1000);
+
+                    // Move to next image
+                    this.NextImage();
+                    });
+                }
             }
         }
 
@@ -202,6 +212,12 @@ namespace TPhotoCompetitionViewer
             if (this.imageIndex < this.competition.MaxImageIndex())
             {
                 this.ShowImage(this.imageIndex + 1);
+            }
+            else
+            {
+                this.ImagePane.Source = null;
+                this.competitionImage = null;
+                this.ImageTitle.Content = "Finished";
             }
         }
 
