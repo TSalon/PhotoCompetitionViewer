@@ -144,10 +144,12 @@
     <Compile Include="CompetitionPage.xaml.cs">
       <DependentUpon>CompetitionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Handsets\HandsetIdTools.cs" />
     <Compile Include="Competitions\ImagePaths.cs" />
     <Compile Include="Competitions\Competition.cs" />
     <Compile Include="Competitions\CompetitionImage.cs" />
     <Compile Include="Competitions\CompetitionManager.cs" />
+    <Compile Include="Handsets\HandsetWrapper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -58,6 +58,11 @@ namespace TPhotoCompetitionViewer.Competitions
             this.images = imageList;   
         }
 
+        internal int ScoreImage(string handsetId, int score)
+        {
+            return 0;
+        }
+
         internal void HoldImage(int imageIndex)
         {
             Boolean heldImage = this.images[imageIndex].ToggleHeld();
@@ -103,6 +108,11 @@ namespace TPhotoCompetitionViewer.Competitions
         internal string GetImagePath(int imageIndex)
         {
             return this.competitionDirectory + "/" + this.images[imageIndex].GetFilePath();
+        }
+
+        internal CompetitionImage GetImageObject(int imageIndex)
+        {
+            return this.images[imageIndex];
         }
     }
 }

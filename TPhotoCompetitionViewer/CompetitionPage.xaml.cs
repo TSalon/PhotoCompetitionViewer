@@ -14,19 +14,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using TPhotoCompetitionViewer.Competitions;
+using TPhotoCompetitionViewer.Handsets;
 
 namespace TPhotoCompetitionViewer
 {
     /// <summary>
     /// Interaction logic for CompetitionPage.xaml
+    ///   - Responsible for handling all interaction with scoring controllers
     /// </summary>
     public partial class CompetitionPage : Window
     {
         private Competition competition;
+        private CompetitionImage competitionImage;
         private int imageIndex = 0;
         private DispatcherTimer dispatcherTimer;
-        private List<IBuzzHandsetDevice> handsets;
+        private HandsetWrapper handsets;
 
+        /** Initialise Window */
         public CompetitionPage()
         {
             InitializeComponent();
@@ -38,11 +42,19 @@ namespace TPhotoCompetitionViewer
             this.dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
             this.dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
 
-            // get handle to buzz controllers
-            this.handsets = new BuzzHandsetFinder().FindHandsets().ToList();
-            this.handsets[0].ButtonChanged += HandleHandsetEvent;
+            // get handle to buzz controllers and register event handler
+            this.handsets = new HandsetWrapper(new BuzzHandsetFinder().FindHandsets().ToList());
+            this.handsets.Get(0).ButtonChanged += HandleHandsetEvent0;
+            if (this.handsets.HasSecondHandsetGroup())
+            {
+                this.handsets.Get(1).ButtonChanged += HandleHandsetEvent1;
+            }
+
+            this.handsets.AllLightsOff();
         }
 
+
+        /** Handle timer tick to hide image title */
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
            this.ImageTitle.Visibility = Visibility.Hidden;
@@ -50,15 +62,49 @@ namespace TPhotoCompetitionViewer
            this.dispatcherTimer.IsEnabled = false;
         }
 
-        private void HandleHandsetEvent(object sender, BuzzButtonChangedEventArgs e)
+        /** Event handler for first handset group */
+        private void HandleHandsetEvent0(object sender, BuzzButtonChangedEventArgs e)
         {
-            this.NextImage();
+            this.HandleHandsetEvent(0, e);         
         }
 
+        /** Event handler for second handset group, if present */
+        private void HandleHandsetEvent1(object sender, BuzzButtonChangedEventArgs e)
+        {
+            this.HandleHandsetEvent(1, e);
+        }
+
+        /** Handle the click of a handset button */
+        private void HandleHandsetEvent(int handsetGroupNumber, BuzzButtonChangedEventArgs e)
+        {
+            for (int i=0; i<e.Buttons.Length;i++)
+            {
+                var eachHandsetButtons = e.Buttons[i];
+                if (eachHandsetButtons.Any)
+                {
+                    var handsetId = HandsetIdTools.BuildHandsetId(handsetGroupNumber, i);
+                    if (eachHandsetButtons.Blue) { this.ScoreImage(handsetId, 5); continue; }
+                    if (eachHandsetButtons.Orange) { this.ScoreImage(handsetId, 4); continue; }
+                    if (eachHandsetButtons.Green) { this.ScoreImage(handsetId, 3); continue; }
+                    if (eachHandsetButtons.Yellow) { this.ScoreImage(handsetId, 2); continue; }
+                    if (eachHandsetButtons.Red) { this.ScoreImage(handsetId, 0); continue; }
+                }
+            }
+        }
+
+        /** Record the score associated with a pushed handset button */
+        private void ScoreImage(string handsetId, int score)
+        {
+            this.competitionImage.ScoreImage(handsetId, score);
+            this.handsets.SetLightsForThisImage(this.competitionImage);
+        }
+
+        /** Handle a key on the keyboard being pushed */
         private void HandleKeys(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
+                this.handsets.AllLightsOff();
                 this.Close();
             }
             else if (e.Key == Key.Right)
@@ -79,20 +125,27 @@ namespace TPhotoCompetitionViewer
             }
         }
 
+        /** Mark an image as held */
         private void HoldImage(int imageIndex)
         {
             this.competition.HoldImage(imageIndex);
         }
 
+        /** Initialise this window for a particular competition and show the first image */
         internal void Init(CompetitionManager competitionMgr, int competitionIndex)
         {
             this.competition = competitionMgr.GetCompetition(competitionIndex);
             this.ShowImage(imageIndex);
         }
 
+        /** Show the image at the specified index */
         private void ShowImage(int imageIndex)
         {
             this.imageIndex = imageIndex;
+            this.competitionImage = this.competition.GetImageObject(imageIndex);
+
+            this.handsets.SetLightsForThisImage(this.competitionImage);
+
             string imagePath = this.competition.GetImagePath(imageIndex);
             BitmapImage imageToShow = new BitmapImage();
             imageToShow.BeginInit();
@@ -101,17 +154,21 @@ namespace TPhotoCompetitionViewer
             this.ImagePane.Source = imageToShow;
 
             this.ShowTitle(imageIndex);
-          }
+        }
 
+        /** Show the image title for a short period of time */
         private void ShowTitle(int imageIndex)
         {
             string imageName = this.competition.GetImageName(imageIndex);
+
             this.ImageTitle.Content = imageName;
             this.ImageTitle.Visibility = Visibility.Visible;
 
             this.dispatcherTimer.Start();
+
         }
 
+        /** Show the next image */
         private void NextImage()
         {
             if (this.imageIndex < this.competition.MaxImageIndex())
@@ -120,6 +177,7 @@ namespace TPhotoCompetitionViewer
             }
         }
 
+        /** Show the previous image */
         private void PreviousImage()
         {
             if (this.imageIndex > 0)
