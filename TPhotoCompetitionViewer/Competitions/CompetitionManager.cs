@@ -41,7 +41,7 @@ namespace TPhotoCompetitionViewer.Competitions
 
             if (File.Exists(databaseFilePath))
             {
-                File.Move(databaseFilePath, databaseFilePath + "." + DateTime.Now.ToString("yyyyMMddhhmmss") + ".sqllite");
+                File.Move(databaseFilePath, databaseFilePath + "." + DateTime.Now.ToString("yyyyMMddhhmmss") + ".sqlite");
             }
 
             SQLiteConnection.CreateFile(databaseFilePath);
