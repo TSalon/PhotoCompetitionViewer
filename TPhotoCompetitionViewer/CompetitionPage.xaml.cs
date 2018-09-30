@@ -112,11 +112,11 @@ namespace TPhotoCompetitionViewer
                         this.MediaElement.Source = new Uri("Resources/Numbers/Brian/" + totalScore + ".mp3", UriKind.Relative);
                         this.MediaElement.Play();
 
-                    // allow time for number to be read out
-                    Thread.Sleep(1000);
+                        // allow time for number to be read out
+                        Thread.Sleep(1500);
 
-                    // Move to next image
-                    this.NextImage();
+                        // Move to next image
+                        this.NextImage();
                     });
                 }
             }

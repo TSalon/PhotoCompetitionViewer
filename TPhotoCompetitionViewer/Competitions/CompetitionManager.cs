@@ -38,6 +38,12 @@ namespace TPhotoCompetitionViewer.Competitions
             Directory.CreateDirectory(databaseDirectory);
 
             string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
+
+            if (File.Exists(databaseFilePath))
+            {
+                File.Move(databaseFilePath, databaseFilePath + "." + DateTime.Now.ToString("yyyyMMddhhmmss") + ".sqllite");
+            }
+
             SQLiteConnection.CreateFile(databaseFilePath);
 
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");

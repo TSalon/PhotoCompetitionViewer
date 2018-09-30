@@ -58,7 +58,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 this.imageScores[handsetId] = score;
             }
 
-            bool CompleteCriteraMet = this.imageScores.Keys.Count == 4;
+            bool CompleteCriteraMet = this.imageScores.Keys.Count == 8;
 
             // We have a complete score, write it to the database
             if (CompleteCriteraMet)
