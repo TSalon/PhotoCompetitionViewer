@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="CompetitionPage" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize" WindowStyle="None">
     <Grid>
+        <MediaElement x:Name="MediaElement" HorizontalAlignment="Left" Height="100" Margin="914,658,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.639,-0.257" Visibility="Hidden" LoadedBehavior="Manual" Volume="1" Source="Resources/Numbers/Brian/1.mp3"/>
         <Image x:Name="ImagePane" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
-        <Label x:Name="ImageTitle" Content="Label" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="48" Foreground="White" HorizontalContentAlignment="Center" Width="{Binding ElementName=CompetitionWindow,Path=ActualWidth}">
+        <Label x:Name="ImageTitle" Content="Label" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="48" Foreground="White" HorizontalContentAlignment="Center" Width="{Binding ActualWidth, ElementName=CompetitionWindow}">
             <Label.Background>
                 <SolidColorBrush Color="Black" Opacity="0.2"/>
             </Label.Background>

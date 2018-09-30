@@ -63,6 +63,7 @@ namespace TPhotoCompetitionViewer.Competitions
             // We have a complete score, write it to the database
             if (CompleteCriteraMet)
             {
+                // Calculate total score
                 int totalScore = 0;
                 foreach(string key in this.imageScores.Keys)
                 {
@@ -70,6 +71,7 @@ namespace TPhotoCompetitionViewer.Competitions
                     totalScore += eachScore;
                 }
 
+                // Write score to database
                 String sql = "INSERT INTO scores (timestamp, name, score) VALUES (CURRENT_TIMESTAMP, @name, @score)";
                 SQLiteCommand insertScore = new SQLiteCommand(sql, dbConnection);
                 insertScore.Parameters.Add(new SQLiteParameter("@name", this.getFilename()));

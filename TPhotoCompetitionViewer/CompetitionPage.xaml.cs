@@ -98,8 +98,18 @@ namespace TPhotoCompetitionViewer
         /** Record the score associated with a pushed handset button */
         private void ScoreImage(string handsetId, int score)
         {
-            this.competitionImage.ScoreImage(handsetId, score, this.dbConnection);
+            int totalScore = this.competitionImage.ScoreImage(handsetId, score, this.dbConnection);
             this.handsets.SetLightsForThisImage(this.competitionImage);
+
+            if (totalScore > 0)
+            {
+                // play mp3 of total score number
+                this.Dispatcher.Invoke(() =>
+                {
+                    this.MediaElement.Source = new Uri("Resources/Numbers/Brian/" + totalScore + ".mp3", UriKind.Relative);
+                    this.MediaElement.Play();
+                });
+            }
         }
 
         /** Handle a key on the keyboard being pushed */
