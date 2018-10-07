@@ -44,9 +44,14 @@ namespace TPhotoCompetitionViewer
             this.dispatcherTimer = new DispatcherTimer();
             this.dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
             this.dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+        }
 
+
+        /** Initialise this window for a particular competition and show the first image */
+        internal void Init(CompetitionManager competitionMgr, int competitionIndex, int scoresRequired, List<IBuzzHandsetDevice> handsets)
+        {
             // get handle to buzz controllers and register event handler
-            this.handsets = new HandsetWrapper(new BuzzHandsetFinder().FindHandsets().ToList());
+            this.handsets = new HandsetWrapper(handsets);
             this.handsets.Get(0).ButtonChanged += HandleHandsetEvent0;
             if (this.handsets.HasSecondHandsetGroup())
             {
@@ -55,6 +60,18 @@ namespace TPhotoCompetitionViewer
 
             // start with all handset lights turned off
             this.handsets.AllLightsOff();
+
+            // Get competition instance
+            this.competition = competitionMgr.GetCompetition(competitionIndex, scoresRequired);
+
+            // Get a handle to the database for this competition
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
+            this.dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            this.dbConnection.Open();
+
+            // Show first image
+            this.imageIndex = 0;
+            this.ShowImage(this.imageIndex);
         }
 
 
@@ -109,15 +126,15 @@ namespace TPhotoCompetitionViewer
                     // we have total score
                     this.Dispatcher.Invoke(() =>
                     {
-                        // Wait a bit, so that humans don't think we're reading their mind
-                        Thread.Sleep(1500);
+                        // Wait a bit, so that humans don't think we're reading their tiny little minds
+                        Thread.Sleep(1000);
 
                         // Read out the appropriate score
                         this.MediaElement.Source = new Uri("Resources/Numbers/Brian/" + totalScore + ".mp3", UriKind.Relative);
                         this.MediaElement.Play();
 
                         // allow time for number to be read out and human perception time
-                        Thread.Sleep(2500);
+                        Thread.Sleep(2000);
 
                         // Move to next image
                         this.NextImage();
@@ -162,22 +179,6 @@ namespace TPhotoCompetitionViewer
         private void HoldImage(int imageIndex)
         {
             this.competition.HoldImage(imageIndex);
-        }
-
-        /** Initialise this window for a particular competition and show the first image */
-        internal void Init(CompetitionManager competitionMgr, int competitionIndex, int scoresRequired)
-        {
-            // Get competition instance
-            this.competition = competitionMgr.GetCompetition(competitionIndex, scoresRequired);
-
-            // Get a handle to the database for this competition
-            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
-            this.dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-            this.dbConnection.Open();
-
-            // Show first image
-            this.imageIndex = 0;
-            this.ShowImage(this.imageIndex);
         }
 
         /** Show the image at the specified index */

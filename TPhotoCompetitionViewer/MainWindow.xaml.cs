@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuzzIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,14 +23,17 @@ namespace TPhotoCompetitionViewer
     public partial class MainWindow : Window
     {
         private CompetitionManager competitionMgr = new CompetitionManager();
+        private List<IBuzzHandsetDevice> handsets;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            this.handsets = new BuzzHandsetFinder().FindHandsets().ToList();
+
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
             this.LoadCompetitions();
-
         }
 
         private void LoadCompetitions()
@@ -70,7 +74,7 @@ namespace TPhotoCompetitionViewer
         {
             int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
             CompetitionPage competitionPage = new CompetitionPage();
-            competitionPage.Init(this.competitionMgr, 0, scoresRequired);
+            competitionPage.Init(this.competitionMgr, 0, scoresRequired, this.handsets);
             competitionPage.Show();
         }
 
@@ -78,7 +82,7 @@ namespace TPhotoCompetitionViewer
         {
             int scoresRequired = System.Convert.ToInt32(this.CompTwoScoresRequired.Text);
             CompetitionPage competitionPage = new CompetitionPage();
-            competitionPage.Init(this.competitionMgr, 1, scoresRequired);
+            competitionPage.Init(this.competitionMgr, 1, scoresRequired, this.handsets);
             competitionPage.Show();
         }
     }
