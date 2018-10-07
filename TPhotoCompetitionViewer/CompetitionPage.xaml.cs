@@ -106,14 +106,18 @@ namespace TPhotoCompetitionViewer
 
                 if (totalScore > 0)
                 {
-                    // play mp3 of total score number
+                    // we have total score
                     this.Dispatcher.Invoke(() =>
                     {
+                        // Wait a bit, so that humans don't think we're reading their mind
+                        Thread.Sleep(1500);
+
+                        // Read out the appropriate score
                         this.MediaElement.Source = new Uri("Resources/Numbers/Brian/" + totalScore + ".mp3", UriKind.Relative);
                         this.MediaElement.Play();
 
-                        // allow time for number to be read out
-                        Thread.Sleep(1500);
+                        // allow time for number to be read out and human perception time
+                        Thread.Sleep(2500);
 
                         // Move to next image
                         this.NextImage();
