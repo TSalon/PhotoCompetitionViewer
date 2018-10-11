@@ -67,7 +67,6 @@ namespace TPhotoCompetitionViewer
             // Get a handle to the database for this competition
             string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
             this.dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-            this.dbConnection.Open();
 
             // Show first image
             this.imageIndex = 0;
@@ -171,7 +170,6 @@ namespace TPhotoCompetitionViewer
         private void CloseWindow()
         {
             this.handsets.AllLightsOff();
-            this.dbConnection.Close();
             this.Close();
         }
 
@@ -184,6 +182,8 @@ namespace TPhotoCompetitionViewer
         /** Show the image at the specified index */
         private void ShowImage(int imageIndex)
         {
+	    this.dispatcherTimer.Stop();
+
             this.imageIndex = imageIndex;
             this.competitionImage = this.competition.GetImageObject(imageIndex);
 
@@ -223,6 +223,8 @@ namespace TPhotoCompetitionViewer
                 this.ImagePane.Source = null;
                 this.competitionImage = null;
                 this.ImageTitle.Content = "Finished";
+		this.dispatcherTimer.Stop();
+		this.dispatcherTimer.Start();
             }
         }
 

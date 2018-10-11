@@ -75,10 +75,12 @@ namespace TPhotoCompetitionViewer.Competitions
 
                 // Write score to database
                 String sql = "INSERT INTO scores (timestamp, name, score) VALUES (CURRENT_TIMESTAMP, @name, @score)";
+		dbConnection.Open();
                 SQLiteCommand insertScore = new SQLiteCommand(sql, dbConnection);
                 insertScore.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
                 insertScore.Parameters.Add(new SQLiteParameter("@score", totalScore));
                 insertScore.ExecuteNonQuery();
+		dbConnection.Close();
 
                 return totalScore;
             }
