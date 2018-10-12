@@ -39,6 +39,10 @@ namespace TPhotoCompetitionViewer
         private void LoadCompetitions()
         {
             this.StatusLabel.Content = "Loading competitions...";
+            this.Competition1Button.IsEnabled = false;
+            this.CompOneScoresRequired.IsEnabled = false;
+            this.Competition2Button.IsEnabled = false;
+            this.CompTwoScoresRequired.IsEnabled = false;
             List<string> competitionNames = this.competitionMgr.GetCompetitions();
 
             if (competitionNames.Count == 0)
@@ -48,15 +52,14 @@ namespace TPhotoCompetitionViewer
             else
             {
                 this.StatusLabel.Content = "Select competition to run:";
-
-                this.Competition1Button.Visibility = Visibility.Visible;
-                this.Competition1Button.Content = competitionNames[0];
-                this.CompOneScoresRequired.Visibility = Visibility.Visible;
+                this.Competition1Button.IsEnabled = true;
+                this.CompOneScoresRequired.IsEnabled = true;
+                this.CompetitionOneBox.Header = competitionNames[0];
                 if (competitionNames.Count > 1)
                 {
-                    this.Competition2Button.Visibility = Visibility.Visible;
-                    this.Competition2Button.Content = competitionNames[1];
-                    this.CompTwoScoresRequired.Visibility = Visibility.Visible;
+                    this.CompetitionTwoBox.Header = competitionNames[1];
+                    this.Competition2Button.IsEnabled = true;
+                    this.CompTwoScoresRequired.IsEnabled = true;
                 }
                 
             }

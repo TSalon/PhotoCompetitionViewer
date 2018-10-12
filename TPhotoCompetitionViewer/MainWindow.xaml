@@ -5,12 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPhotoCompetitionViewer"
         mc:Ignorable="d"
-        Title="Photo Competition Viewer" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize">
+        Title="Photo Competition Viewer" Height="768" Width="1316.408" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="StatusLabel" Content="Status Prompt" HorizontalAlignment="Left" Margin="87,44,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Foreground="White"/>
-        <Button x:Name="Competition1Button" Content="Button" HorizontalAlignment="Left" Height="84" Margin="243,157,0,0" VerticalAlignment="Top" Width="754" FontSize="48" Click="Competition1Button_Click" Visibility="Hidden"/>
-        <Button x:Name="Competition2Button" Content="Button" HorizontalAlignment="Left" Height="84" Margin="243,291,0,0" VerticalAlignment="Top" Width="754" FontSize="48" Click="Competition2Button_Click" Visibility="Hidden"/>
-        <TextBox x:Name="CompOneScoresRequired" HorizontalAlignment="Left" Height="84" Margin="122,157,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="86" FontSize="48" Visibility="Hidden"/>
-        <TextBox x:Name="CompTwoScoresRequired" HorizontalAlignment="Left" Height="84" Margin="122,291,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="86" FontSize="48" Visibility="Hidden"/>
+         <GroupBox x:Name="CompetitionOneBox" Header="GroupBox" HorizontalAlignment="Left" Height="246" Margin="112,129,0,0" VerticalAlignment="Top" Width="1085" FontSize="36">
+            <Grid Margin="52,41,0.333,15.333">
+                <TextBox x:Name="CompOneScoresRequired" HorizontalAlignment="Left" Height="84" Margin="0,
+                         0,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="86" FontSize="48"/>
+                <Button x:Name="Competition1Button" Content="Run Competition" HorizontalAlignment="Left" Height="84" Margin="127,0,0,0" VerticalAlignment="Top" Width="854" FontSize="48" Click="Competition1Button_Click"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="CompetitionTwoBox" Header="GroupBox" HorizontalAlignment="Left" Height="246" Margin="112,402,0,0" VerticalAlignment="Top" Width="1085" FontSize="36">
+            <Grid Margin="52,41,0.333,15.333">
+                <TextBox x:Name="CompTwoScoresRequired" HorizontalAlignment="Left" Height="84" Margin="0,0,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="86" FontSize="48"/>
+                <Button x:Name="Competition2Button" Content="Run Competition" HorizontalAlignment="Left" Height="84" Margin="122,0,0,0" VerticalAlignment="Top" Width="850" FontSize="48" Click="Competition2Button_Click"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>
