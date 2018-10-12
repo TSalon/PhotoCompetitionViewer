@@ -49,9 +49,13 @@ namespace TPhotoCompetitionViewer.Competitions
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
             dbConnection.Open();
 
-            String createTableCommandString = "CREATE TABLE scores (timestamp TEXT, name VARCHAR(50) NOT NULL, score NUMBER(2) not null)";
-            SQLiteCommand createTableCommand = new SQLiteCommand(createTableCommandString, dbConnection);
-            createTableCommand.ExecuteNonQuery();
+            String createScoresTableCommandString = "CREATE TABLE scores (timestamp TEXT, name VARCHAR(50) NOT NULL, score NUMBER(2) not null)";
+            SQLiteCommand createScoresTableCommand = new SQLiteCommand(createScoresTableCommandString, dbConnection);
+            createScoresTableCommand.ExecuteNonQuery();
+
+            String createHeldImagesTableCommandString = "CREATE TABLE held_images (timestamp TEXT, name VARCHAR(50) NOT NULL)";
+            SQLiteCommand createHeldImagesTableCommand = new SQLiteCommand(createHeldImagesTableCommandString, dbConnection);
+            createHeldImagesTableCommand.ExecuteNonQuery();
 
             dbConnection.Close();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -70,9 +71,9 @@ namespace TPhotoCompetitionViewer.Competitions
             return this.competitionFileName;
         }
 
-        internal void HoldImage(int imageIndex)
+        internal void HoldImage(int imageIndex, SQLiteConnection dbConnection)
         {
-            Boolean heldImage = this.images[imageIndex].ToggleHeld();
+            Boolean heldImage = this.images[imageIndex].ToggleHeld(dbConnection);
             if (heldImage)
             {
                 this.WriteImageToHeldDirectory(imageIndex);

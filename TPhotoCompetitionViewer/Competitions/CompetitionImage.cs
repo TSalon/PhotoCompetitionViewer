@@ -42,9 +42,28 @@ namespace TPhotoCompetitionViewer.Competitions
             return this.imageFilename;
         }
 
-        internal bool ToggleHeld()
+        internal bool ToggleHeld(SQLiteConnection dbConnection)
         {
             this.held = !this.held;
+
+            if (this.held)
+            {
+                String sql = "INSERT INTO held_images (timestamp, name) VALUES (CURRENT_TIMESTAMP, @name)";
+                dbConnection.Open();
+                SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
+                insertHeld.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
+                insertHeld.ExecuteNonQuery();
+                dbConnection.Close();
+            }
+            else
+            {
+                String sql = "DELETE FROM held_images WHERE name = @name";
+                dbConnection.Open();
+                SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
+                insertHeld.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
+                insertHeld.ExecuteNonQuery();
+                dbConnection.Close();
+            }
             return this.held;
         }
 

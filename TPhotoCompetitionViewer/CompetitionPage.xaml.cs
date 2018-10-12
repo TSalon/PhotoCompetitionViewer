@@ -192,7 +192,7 @@ namespace TPhotoCompetitionViewer
         /** Mark an image as held */
         private void HoldImage(int imageIndex)
         {
-            this.competition.HoldImage(imageIndex);
+            this.competition.HoldImage(imageIndex, this.dbConnection);
         }
 
         /** Show the image at the specified index */
