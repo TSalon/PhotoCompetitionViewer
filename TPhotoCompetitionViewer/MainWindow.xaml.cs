@@ -39,9 +39,13 @@ namespace TPhotoCompetitionViewer
         private void LoadCompetitions()
         {
             this.StatusLabel.Content = "Loading competitions...";
+
             this.Competition1Button.IsEnabled = false;
+            this.Competition1HeldButton.IsEnabled = false;
             this.CompOneScoresRequired.IsEnabled = false;
+
             this.Competition2Button.IsEnabled = false;
+            this.Competition2HeldButton.IsEnabled = false;
             this.CompTwoScoresRequired.IsEnabled = false;
             List<string> competitionNames = this.competitionMgr.GetCompetitions();
 
