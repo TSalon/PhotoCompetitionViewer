@@ -17,6 +17,17 @@ namespace TPhotoCompetitionViewer.Handsets
             this.handsets = list;
         }
 
+        /** Handsets are present or not */
+        internal bool HasHandsets()
+        {
+            if (this.handsets.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /** Second handset group is present */
         internal bool HasSecondHandsetGroup()
         {
             if (this.handsets.Count > 1)
@@ -29,34 +40,44 @@ namespace TPhotoCompetitionViewer.Handsets
         /** Turn off all handset lights */
         internal void AllLightsOff()
         {
-            this.handsets[0].SetLights(false, false, false, false);
-            if (this.HasSecondHandsetGroup())
+            if (this.HasHandsets())
             {
-                this.handsets[1].SetLights(false, false, false, false);
+                this.handsets[0].SetLights(false, false, false, false);
+                if (this.HasSecondHandsetGroup())
+                {
+                    this.handsets[1].SetLights(false, false, false, false);
+                }
             }
         }
 
         internal void SetLightsForThisImage(CompetitionImage competitionImage)
         {
-            this.AllLightsOff();
-
-            this.handsets[0].SetLights(competitionImage.GetLightStatus(0, 0),
-                                       competitionImage.GetLightStatus(0, 1),
-                                       competitionImage.GetLightStatus(0, 2),
-                                       competitionImage.GetLightStatus(0, 3));
-
-            if (this.HasSecondHandsetGroup())
+            if (this.HasHandsets())
             {
-                this.handsets[1].SetLights(competitionImage.GetLightStatus(1, 0),
-                                           competitionImage.GetLightStatus(1, 1),
-                                           competitionImage.GetLightStatus(1, 2),
-                                           competitionImage.GetLightStatus(1, 3));
+                this.AllLightsOff();
+
+                this.handsets[0].SetLights(competitionImage.GetLightStatus(0, 0),
+                                           competitionImage.GetLightStatus(0, 1),
+                                           competitionImage.GetLightStatus(0, 2),
+                                           competitionImage.GetLightStatus(0, 3));
+
+                if (this.HasSecondHandsetGroup())
+                {
+                    this.handsets[1].SetLights(competitionImage.GetLightStatus(1, 0),
+                                               competitionImage.GetLightStatus(1, 1),
+                                               competitionImage.GetLightStatus(1, 2),
+                                               competitionImage.GetLightStatus(1, 3));
+                }
             }
         }
 
         internal IBuzzHandsetDevice Get(int handsetGroup)
         {
-            return this.handsets[handsetGroup];
+            if (this.HasHandsets())
+            {
+                return this.handsets[handsetGroup];
+            }
+            return null;
         }
     }
 }

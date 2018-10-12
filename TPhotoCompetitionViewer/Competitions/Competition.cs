@@ -34,7 +34,8 @@ namespace TPhotoCompetitionViewer.Competitions
             orderingDocument.Load(competitionDirectory + "/" + CONTROL_FILENAME);
             var imageList = new List<CompetitionImage>();
             XmlNode rootNode = orderingDocument.FirstChild;
-            foreach (XmlNode eachImageNode in rootNode.ChildNodes)
+            XmlNode imagesNode = rootNode["Images"];
+            foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
             {
                 string imagePath = eachImageNode.InnerText;
                 string[] pathParts = Regex.Split(imagePath, @"/");

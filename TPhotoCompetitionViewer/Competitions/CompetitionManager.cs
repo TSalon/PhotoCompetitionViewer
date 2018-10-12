@@ -20,7 +20,7 @@ namespace TPhotoCompetitionViewer.Competitions
             foreach (var item in competitions)
             {
                 var today = DateTime.Now.ToString("yyyy-MM-dd");
-                var competitionFileName = ImagePaths.RemovePathStart(item);
+                var competitionFileName = ImagePaths.RemoveSourcePathStart(item);
                 var competitionName = competitionFileName.Substring(0, competitionFileName.Length - 4);
 
                 if (competitionName.StartsWith(today)){

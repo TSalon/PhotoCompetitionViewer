@@ -30,10 +30,10 @@ namespace TPhotoCompetitionViewer
         private CompetitionImage competitionImage;
         private int imageIndex = 0;
         private DispatcherTimer titleTimer;
-	private DispatcherTimer enableScoringTimer;
+	    private DispatcherTimer enableScoringTimer;
         private HandsetWrapper handsets;
         private SQLiteConnection dbConnection;
-	private bool scoringEnabled = false;
+	    private bool scoringEnabled = false;
 
         /** Initialise Window */
         public CompetitionPage()
@@ -59,15 +59,17 @@ namespace TPhotoCompetitionViewer
         {
             // get handle to buzz controllers and register event handler
             this.handsets = new HandsetWrapper(handsets);
-            this.handsets.Get(0).ButtonChanged += HandleHandsetEvent0;
-            if (this.handsets.HasSecondHandsetGroup())
+            if (this.handsets.HasHandsets())
             {
-                this.handsets.Get(1).ButtonChanged += HandleHandsetEvent1;
+                this.handsets.Get(0).ButtonChanged += HandleHandsetEvent0;
+                if (this.handsets.HasSecondHandsetGroup())
+                {
+                    this.handsets.Get(1).ButtonChanged += HandleHandsetEvent1;
+                }
+
+                // start with all handset lights turned off
+                this.handsets.AllLightsOff();
             }
-
-            // start with all handset lights turned off
-            this.handsets.AllLightsOff();
-
             // Get competition instance
             this.competition = competitionMgr.GetCompetition(competitionIndex, scoresRequired);
 
@@ -89,11 +91,11 @@ namespace TPhotoCompetitionViewer
            this.titleTimer.IsEnabled = false;
         }
 
-	/** Handler timer tick to enable scoring */
-	private void ScoringTimer_Tick(object sender, EventArgs e)
-	{
-	  this.scoringEnabled = true;
-	}
+	    /** Handler timer tick to enable scoring */
+	    private void ScoringTimer_Tick(object sender, EventArgs e)
+	    {
+	      this.scoringEnabled = true;
+	    }
 
 
         /** Event handler for first handset group */
@@ -198,7 +200,7 @@ namespace TPhotoCompetitionViewer
         {
 	    this.titleTimer.Stop();
 	
-	    this.enableScoring = false;
+	    this.scoringEnabled = false;
 	    this.enableScoringTimer.Stop();
 
 
@@ -210,7 +212,7 @@ namespace TPhotoCompetitionViewer
             string imagePath = this.competition.GetImagePath(imageIndex);
             BitmapImage imageToShow = new BitmapImage();
             imageToShow.BeginInit();
-            imageToShow.UriSource = new Uri("C:" + imagePath);
+            imageToShow.UriSource = new Uri(imagePath);
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
 
@@ -226,7 +228,7 @@ namespace TPhotoCompetitionViewer
             this.ImageTitle.Visibility = Visibility.Visible;
 
             this.titleTimer.Start();
-	    this.enableScoringTimer.Start();
+	        this.enableScoringTimer.Start();
         }
 
         /** Show the next image */
@@ -241,10 +243,10 @@ namespace TPhotoCompetitionViewer
                 this.ImagePane.Source = null;
                 this.competitionImage = null;
                 this.ImageTitle.Content = "Finished";
-		this.titleTimer.Stop();
-		this.titleTimer.Start();
-		this.enableScoringTimer.Stop();
-		this.scoringEnabled = false;
+		        this.titleTimer.Stop();
+		        this.titleTimer.Start();
+		        this.enableScoringTimer.Stop();
+		        this.scoringEnabled = false;
             }
         }
 

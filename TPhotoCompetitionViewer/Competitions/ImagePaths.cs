@@ -10,7 +10,8 @@ namespace TPhotoCompetitionViewer.Competitions
 {
     class ImagePaths
     {
-        private const string BASE_DIRECTORY = "/Competitions";
+        private static readonly string COMPETITION_SRC_DIRECTORY = Properties.Settings.Default.CompetitionSrcDir;
+        private static readonly string COMPETITION_EXTRACT_DIRECTORY = Properties.Settings.Default.CompetitionExtractDir;
         private const string EXTRACT_OFFSET = "extract";
         private const string ALL_OFFSET = "all";
         private const string HELD_OFFSET = "held";
@@ -18,32 +19,42 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal static string GetExtractDirectory(string competitionName)
         {
-            return BASE_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + ALL_OFFSET;
+            if (Directory.Exists(COMPETITION_EXTRACT_DIRECTORY) == false)
+            {
+                Directory.CreateDirectory(COMPETITION_EXTRACT_DIRECTORY);
+            }
+
+            return COMPETITION_EXTRACT_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + ALL_OFFSET;
         }
 
         internal static IEnumerable<string> GetCompetitionZipFilesList()
         {
-            return Directory.GetFiles(BASE_DIRECTORY);
+            if (Directory.Exists(COMPETITION_SRC_DIRECTORY) == false)
+            {
+                Directory.CreateDirectory(COMPETITION_SRC_DIRECTORY);
+            }
+
+            return Directory.GetFiles(COMPETITION_SRC_DIRECTORY);
         }
 
-        internal static string RemovePathStart(string item)
+        internal static string RemoveSourcePathStart(string filePath)
         {
-            return item.Substring(ImagePaths.BASE_DIRECTORY.Length + 1);
+            return filePath.Substring(ImagePaths.COMPETITION_SRC_DIRECTORY.Length + 1);
         }
 
         internal static string GetZipFile(string competitionName)
         {
-            return BASE_DIRECTORY + "/" + competitionName + ".zip";
+            return COMPETITION_SRC_DIRECTORY + "/" + competitionName + ".zip";
         }
 
         internal static string GetHeldDirectory(string competitionName)
         {
-            return BASE_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + HELD_OFFSET;
+            return COMPETITION_EXTRACT_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + HELD_OFFSET;
         }
 
         internal static string GetDatabaseDirectory(string competitionName)
         {
-            return BASE_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + DATABASE_OFFSET;
+            return COMPETITION_EXTRACT_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + DATABASE_OFFSET;
         }
 
         internal static string GetDatabaseFile(string competitionName)
