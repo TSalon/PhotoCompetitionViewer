@@ -47,6 +47,11 @@ namespace TPhotoCompetitionViewer.Competitions
             return COMPETITION_SRC_DIRECTORY + "/" + competitionName + ".zip";
         }
 
+        internal static string GetCompetitionsDirectory()
+        {
+            return COMPETITION_SRC_DIRECTORY;
+        }
+
         internal static string GetHeldDirectory(string competitionName)
         {
             return COMPETITION_EXTRACT_DIRECTORY + "/" + EXTRACT_OFFSET + "/" + competitionName + "/" + HELD_OFFSET;

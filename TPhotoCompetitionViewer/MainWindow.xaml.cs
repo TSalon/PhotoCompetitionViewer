@@ -47,7 +47,7 @@ namespace TPhotoCompetitionViewer
 
             if (competitionNames.Count == 0)
             {
-                this.StatusLabel.Content = "No competitions found";
+                this.StatusLabel.Content = "No competitions found in " + ImagePaths.GetCompetitionsDirectory();
             }
             else
             {
