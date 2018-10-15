@@ -41,7 +41,7 @@ namespace TPhotoCompetitionViewer.Competitions
             return this.imageFilename;
         }
 
-        internal bool ToggleHeld(SQLiteConnection dbConnection)
+        internal bool IsHeld(SQLiteConnection dbConnection)
         {
             dbConnection.Open();
 
@@ -58,6 +58,19 @@ namespace TPhotoCompetitionViewer.Competitions
                     isHeld = reader.GetInt16(0) > 0;
                 }
             }
+            reader.Close();
+
+
+            dbConnection.Close();
+
+            return isHeld;
+        }
+
+        internal bool ToggleHeld(SQLiteConnection dbConnection)
+        {
+            bool isHeld = this.IsHeld(dbConnection);
+
+            dbConnection.Open();
 
             if (isHeld == false)
             {
@@ -72,13 +85,13 @@ namespace TPhotoCompetitionViewer.Competitions
             {
                 // Already held - remove it from the database
                 String sql = "DELETE FROM held_images WHERE name = @name";
-                SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
-                insertHeld.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
-                insertHeld.ExecuteNonQuery();
+                SQLiteCommand deleteHeld = new SQLiteCommand(sql, dbConnection);
+                deleteHeld.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
+                deleteHeld.ExecuteNonQuery();
             }
 
             dbConnection.Close();
-            return isHeld;
+            return !isHeld;
         }
 
         internal int ScoreImage(string handsetId, int score, SQLiteConnection dbConnection)
@@ -113,6 +126,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 insertScore.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
                 insertScore.Parameters.Add(new SQLiteParameter("@score", totalScore));
                 insertScore.ExecuteNonQuery();
+
 		        dbConnection.Close();
 
                 return totalScore;

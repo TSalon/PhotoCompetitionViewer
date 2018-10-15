@@ -41,18 +41,19 @@ namespace TPhotoCompetitionViewer.Competitions
 
             if (File.Exists(databaseFilePath) == false)
             {
-                SQLiteConnection.CreateFile(databaseFilePath);
+                //SQLiteConnection.CreateFile(databaseFilePath);
 
                 SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
                 dbConnection.Open();
 
-                String createScoresTableCommandString = "CREATE TABLE scores (timestamp TEXT, name VARCHAR(50) NOT NULL, score NUMBER(2) not null)";
+                String createScoresTableCommandString = "CREATE TABLE IF NOT EXISTS scores (timestamp TEXT, name VARCHAR(50) NOT NULL, score NUMBER(2) not null)";
                 SQLiteCommand createScoresTableCommand = new SQLiteCommand(createScoresTableCommandString, dbConnection);
                 createScoresTableCommand.ExecuteNonQuery();
 
-                String createHeldImagesTableCommandString = "CREATE TABLE held_images (timestamp TEXT, name VARCHAR(50) NOT NULL)";
+                String createHeldImagesTableCommandString = "CREATE TABLE IF NOT EXISTS held_images (timestamp TEXT, name VARCHAR(50) NOT NULL)";
                 SQLiteCommand createHeldImagesTableCommand = new SQLiteCommand(createHeldImagesTableCommandString, dbConnection);
                 createHeldImagesTableCommand.ExecuteNonQuery();
+
                 dbConnection.Close();
             }          
         }
@@ -95,11 +96,10 @@ namespace TPhotoCompetitionViewer.Competitions
         {
             string zipFilePath = ImagePaths.GetZipFile(competitionName);
             string destination = ImagePaths.GetExtractDirectory(competitionName);
-            if (Directory.Exists(destination))
+            if (Directory.Exists(destination) == false)
             {
-                Directory.Delete(destination, true);
+                ZipFile.ExtractToDirectory(zipFilePath, destination);
             }
-            ZipFile.ExtractToDirectory(zipFilePath, destination);
         }
     }
 

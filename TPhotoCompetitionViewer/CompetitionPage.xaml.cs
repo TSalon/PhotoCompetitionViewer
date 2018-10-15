@@ -47,10 +47,10 @@ namespace TPhotoCompetitionViewer
             this.titleTimer.Tick += new EventHandler(TitleTimer_Tick);
             this.titleTimer.Interval = new TimeSpan(0, 0, 5);
 
-	    //Create a timer with interval of 2 second to prevent immadiate scoring
-	    this.enableScoringTimer = new DispatcherTimer();
-	    this.enableScoringTimer.Tick += new EventHandler(ScoringTimer_Tick);
-	    this.enableScoringTimer.Interval = new TimeSpan(0,0,2);
+	        //Create a timer with interval of 2 second to prevent immadiate scoring
+	        this.enableScoringTimer = new DispatcherTimer();
+	        this.enableScoringTimer.Tick += new EventHandler(ScoringTimer_Tick);
+	        this.enableScoringTimer.Interval = new TimeSpan(0,0,2);
         }
 
 
@@ -193,15 +193,16 @@ namespace TPhotoCompetitionViewer
         private void HoldImage(int imageIndex)
         {
             this.competition.HoldImage(imageIndex, this.dbConnection);
+            this.ShowTitle(this.imageIndex);
         }
 
         /** Show the image at the specified index */
         private void ShowImage(int imageIndex)
         {
-	    this.titleTimer.Stop();
+	        this.titleTimer.Stop();
 	
-	    this.scoringEnabled = false;
-	    this.enableScoringTimer.Stop();
+	        this.scoringEnabled = false;
+	        this.enableScoringTimer.Stop();
 
 
             this.imageIndex = imageIndex;
@@ -223,6 +224,11 @@ namespace TPhotoCompetitionViewer
         private void ShowTitle(int imageIndex)
         {
             string imageName = this.competitionImage.GetTitle();
+
+            if (this.competitionImage.IsHeld(this.dbConnection))
+            {
+                imageName = "[" + imageName + "]";
+            }
 
             this.ImageTitle.Content = imageName;
             this.ImageTitle.Visibility = Visibility.Visible;
