@@ -99,7 +99,7 @@ namespace TPhotoCompetitionViewer
         {
             int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
             CompetitionPage competitionPage = new CompetitionPage();
-            competitionPage.Init(this.competitionMgr, 0, scoresRequired, this.handsets);
+            competitionPage.Init(this.competitionMgr, 0, scoresRequired, this.handsets, this);
             competitionPage.Show();
         }
 
@@ -107,8 +107,13 @@ namespace TPhotoCompetitionViewer
         {
             int scoresRequired = System.Convert.ToInt32(this.CompTwoScoresRequired.Text);
             CompetitionPage competitionPage = new CompetitionPage();
-            competitionPage.Init(this.competitionMgr, 1, scoresRequired, this.handsets);
+            competitionPage.Init(this.competitionMgr, 1, scoresRequired, this.handsets, this);
             competitionPage.Show();
+        }
+
+        internal void UpdateHeldCount(int competitionIndex)
+        {
+            this.RefreshHeldImagesButtons();
         }
     }
 }

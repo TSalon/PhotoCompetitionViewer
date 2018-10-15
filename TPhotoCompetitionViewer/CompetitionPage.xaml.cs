@@ -31,6 +31,8 @@ namespace TPhotoCompetitionViewer
         private int imageIndex = 0;
         private DispatcherTimer titleTimer;
 	    private DispatcherTimer enableScoringTimer;
+        private MainWindow mainWindow;
+        private int competitionIndex;
         private HandsetWrapper handsets;
         private SQLiteConnection dbConnection;
 	    private bool scoringEnabled = false;
@@ -55,8 +57,12 @@ namespace TPhotoCompetitionViewer
 
 
         /** Initialise this window for a particular competition and show the first image */
-        internal void Init(CompetitionManager competitionMgr, int competitionIndex, int scoresRequired, List<IBuzzHandsetDevice> handsets)
+        internal void Init(CompetitionManager competitionMgr, int competitionIndex, int scoresRequired, List<IBuzzHandsetDevice> handsets, MainWindow mainWindow)
         {
+            // Get handle to main window
+            this.mainWindow = mainWindow;
+            this.competitionIndex = competitionIndex;
+
             // get handle to buzz controllers and register event handler
             this.handsets = new HandsetWrapper(handsets);
             if (this.handsets.HasHandsets())
@@ -194,6 +200,8 @@ namespace TPhotoCompetitionViewer
         {
             this.competition.HoldImage(imageIndex, this.dbConnection);
             this.ShowTitle(this.imageIndex);
+
+            this.mainWindow.UpdateHeldCount(this.competitionIndex);
         }
 
         /** Show the image at the specified index */
