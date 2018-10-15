@@ -72,7 +72,6 @@ namespace TPhotoCompetitionViewer
             };
 
             return imageControlList;
-
         }
 
         /** Handle a key on the keyboard being pushed */
@@ -82,6 +81,24 @@ namespace TPhotoCompetitionViewer
                 {
                     this.Close();
                 }
+        }
+
+        private void Image0_Click(object sender, MouseEventArgs e) => this.ImageClick(0, sender, e);
+        private void Image1_Click(object sender, MouseEventArgs e) => this.ImageClick(1, sender, e);
+        private void Image2_Click(object sender, MouseEventArgs e) => this.ImageClick(2, sender, e);
+        private void Image3_Click(object sender, MouseEventArgs e) => this.ImageClick(3, sender, e);
+        private void Image4_Click(object sender, MouseEventArgs e) => this.ImageClick(4, sender, e);
+        private void Image5_Click(object sender, MouseEventArgs e) => this.ImageClick(5, sender, e);
+        private void Image6_Click(object sender, MouseEventArgs e) => this.ImageClick(6, sender, e);
+        private void Image7_Click(object sender, MouseEventArgs e) => this.ImageClick(7, sender, e);
+        private void Image8_Click(object sender, MouseEventArgs e) => this.ImageClick(8, sender, e);
+        private void Image9_Click(object sender, MouseEventArgs e) => this.ImageClick(9, sender, e);
+        private void Image10_Click(object sender, MouseEventArgs e) => this.ImageClick(10, sender, e);
+        private void Image11_Click(object sender, MouseEventArgs e) => this.ImageClick(11, sender, e);
+
+        private void ImageClick(int v, object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

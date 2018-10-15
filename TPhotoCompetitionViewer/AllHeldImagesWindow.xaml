@@ -18,17 +18,17 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Image x:Name="Image0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
-        <Image x:Name="Image1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
-        <Image x:Name="Image2" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2"/>
-        <Image x:Name="Image3" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3"/>
-        <Image x:Name="Image4" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
-        <Image x:Name="Image5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
-        <Image x:Name="Image6" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
-        <Image x:Name="Image7" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3"/>
-        <Image x:Name="Image8" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
-        <Image x:Name="Image9" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
-        <Image x:Name="Image10" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"/>
-        <Image x:Name="Image11" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3"/>
+        <Image x:Name="Image0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" MouseDown="Image0_Click"/>
+        <Image x:Name="Image1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" MouseDown="Image1_Click"/>
+        <Image x:Name="Image2" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" MouseDown="Image2_Click"/>
+        <Image x:Name="Image3" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3" MouseDown="Image3_Click"/>
+        <Image x:Name="Image4" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" MouseDown="Image4_Click"/>
+        <Image x:Name="Image5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" MouseDown="Image5_Click"/>
+        <Image x:Name="Image6" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" MouseDown="Image6_Click"/>
+        <Image x:Name="Image7" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" MouseDown="Image7_Click"/>
+        <Image x:Name="Image8" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" MouseDown="Image8_Click"/>
+        <Image x:Name="Image9" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" MouseDown="Image9_Click"/>
+        <Image x:Name="Image10" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" MouseDown="Image10_Click"/>
+        <Image x:Name="Image11" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" MouseDown="Image11_Click"/>
     </Grid>
 </Window>
