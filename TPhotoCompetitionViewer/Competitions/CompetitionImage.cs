@@ -49,7 +49,7 @@ namespace TPhotoCompetitionViewer.Competitions
             string isHeldSql = "SELECT COUNT(*) FROM held_images WHERE name = @name";
 
             SQLiteCommand cmd = new SQLiteCommand(isHeldSql, dbConnection);
-            cmd.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
+            cmd.Parameters.Add(new SQLiteParameter("@name", this.imageAuthor + "/" + this.imageFilename));
             SQLiteDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {
@@ -78,7 +78,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 String sql = "INSERT INTO held_images (timestamp, name) VALUES (CURRENT_TIMESTAMP, @name)";
                 
                 SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
-                insertHeld.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
+                insertHeld.Parameters.Add(new SQLiteParameter("@name", this.imageAuthor + "/" + this.imageFilename));
                 insertHeld.ExecuteNonQuery();
             }
             else
@@ -86,7 +86,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 // Already held - remove it from the database
                 String sql = "DELETE FROM held_images WHERE name = @name";
                 SQLiteCommand deleteHeld = new SQLiteCommand(sql, dbConnection);
-                deleteHeld.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
+                deleteHeld.Parameters.Add(new SQLiteParameter("@name", this.imageAuthor + "/" + this.imageFilename));
                 deleteHeld.ExecuteNonQuery();
             }
 

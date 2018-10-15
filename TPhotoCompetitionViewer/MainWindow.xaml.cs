@@ -111,6 +111,20 @@ namespace TPhotoCompetitionViewer
             competitionPage.Show();
         }
 
+        private void Held1Button_Click(object sender, RoutedEventArgs e)
+        {
+            AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
+            heldPage.Init(this.competitionMgr, 0);
+            heldPage.Show();
+        }
+
+        private void Held2Button_Click(object sender, RoutedEventArgs e)
+        {
+            AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
+            heldPage.Init(this.competitionMgr, 1);
+            heldPage.Show();
+        }
+
         internal void UpdateHeldCount(int competitionIndex)
         {
             this.RefreshHeldImagesButtons();

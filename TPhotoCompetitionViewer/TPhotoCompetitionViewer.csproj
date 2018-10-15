@@ -135,6 +135,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AllHeldImagesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -168,6 +172,9 @@
     <Compile Include="Competitions\CompetitionImage.cs" />
     <Compile Include="Competitions\CompetitionManager.cs" />
     <Compile Include="Handsets\HandsetWrapper.cs" />
+    <Compile Include="AllHeldImagesWindow.xaml.cs">
+      <DependentUpon>AllHeldImagesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
