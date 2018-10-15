@@ -14,7 +14,6 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string imageAuthor; // Tim Sawyer
         private readonly string imagePath; // Tim Sawyer/221_1_Lone Tree.jpg
         private readonly string imageFilename; // 221_1_Lone Tree.jpg
-        private bool held = false;
         private readonly IDictionary<String, int> imageScores = new Dictionary<string,int>();
         private readonly Competition competition;
         
@@ -44,27 +43,42 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal bool ToggleHeld(SQLiteConnection dbConnection)
         {
-            this.held = !this.held;
+            dbConnection.Open();
 
-            if (this.held)
+            bool isHeld = false;
+            string isHeldSql = "SELECT COUNT(*) FROM held_images WHERE name = @name";
+
+            SQLiteCommand cmd = new SQLiteCommand(isHeldSql, dbConnection);
+            cmd.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
             {
+                while (reader.Read())
+                {
+                    isHeld = reader.GetInt16(0) > 0;
+                }
+            }
+
+            if (isHeld == false)
+            {
+                // Not held - hold it in the database
                 String sql = "INSERT INTO held_images (timestamp, name) VALUES (CURRENT_TIMESTAMP, @name)";
-                dbConnection.Open();
+                
                 SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
                 insertHeld.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
                 insertHeld.ExecuteNonQuery();
-                dbConnection.Close();
             }
             else
             {
+                // Already held - remove it from the database
                 String sql = "DELETE FROM held_images WHERE name = @name";
-                dbConnection.Open();
                 SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
                 insertHeld.Parameters.Add(new SQLiteParameter("@name", this.GetFilename()));
                 insertHeld.ExecuteNonQuery();
-                dbConnection.Close();
             }
-            return this.held;
+
+            dbConnection.Close();
+            return isHeld;
         }
 
         internal int ScoreImage(string handsetId, int score, SQLiteConnection dbConnection)

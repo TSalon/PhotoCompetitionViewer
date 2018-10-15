@@ -39,27 +39,49 @@ namespace TPhotoCompetitionViewer.Competitions
 
             string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
 
-            if (File.Exists(databaseFilePath))
+            if (File.Exists(databaseFilePath) == false)
             {
-                File.Move(databaseFilePath, databaseFilePath + "." + DateTime.Now.ToString("yyyyMMddhhmmss") + ".sqlite");
-            }
+                SQLiteConnection.CreateFile(databaseFilePath);
 
-            SQLiteConnection.CreateFile(databaseFilePath);
+                SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+                dbConnection.Open();
 
+                String createScoresTableCommandString = "CREATE TABLE scores (timestamp TEXT, name VARCHAR(50) NOT NULL, score NUMBER(2) not null)";
+                SQLiteCommand createScoresTableCommand = new SQLiteCommand(createScoresTableCommandString, dbConnection);
+                createScoresTableCommand.ExecuteNonQuery();
+
+                String createHeldImagesTableCommandString = "CREATE TABLE held_images (timestamp TEXT, name VARCHAR(50) NOT NULL)";
+                SQLiteCommand createHeldImagesTableCommand = new SQLiteCommand(createHeldImagesTableCommandString, dbConnection);
+                createHeldImagesTableCommand.ExecuteNonQuery();
+                dbConnection.Close();
+            }          
+        }
+
+        internal int FetchHeldImageCount(string competitionName)
+        {
+            int heldImagesCount = 0;
+
+            string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
             dbConnection.Open();
 
-            String createScoresTableCommandString = "CREATE TABLE scores (timestamp TEXT, name VARCHAR(50) NOT NULL, score NUMBER(2) not null)";
-            SQLiteCommand createScoresTableCommand = new SQLiteCommand(createScoresTableCommandString, dbConnection);
-            createScoresTableCommand.ExecuteNonQuery();
+            string sql = "SELECT count(*) FROM held_images";
 
-            String createHeldImagesTableCommandString = "CREATE TABLE held_images (timestamp TEXT, name VARCHAR(50) NOT NULL)";
-            SQLiteCommand createHeldImagesTableCommand = new SQLiteCommand(createHeldImagesTableCommandString, dbConnection);
-            createHeldImagesTableCommand.ExecuteNonQuery();
+            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    heldImagesCount = reader.GetInt16(0); 
+                }
+            }
 
             dbConnection.Close();
-        }
 
+            return heldImagesCount;
+        }
+        
         internal Competition GetCompetition(int competitionIndex, int scoresRequired)
         {
             string competitionName = this.competitionList[competitionIndex];

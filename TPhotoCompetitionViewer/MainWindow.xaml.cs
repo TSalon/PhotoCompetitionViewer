@@ -59,13 +59,29 @@ namespace TPhotoCompetitionViewer
                 this.Competition1Button.IsEnabled = true;
                 this.CompOneScoresRequired.IsEnabled = true;
                 this.CompetitionOneBox.Header = competitionNames[0];
+
                 if (competitionNames.Count > 1)
                 {
                     this.CompetitionTwoBox.Header = competitionNames[1];
                     this.Competition2Button.IsEnabled = true;
                     this.CompTwoScoresRequired.IsEnabled = true;
                 }
-                
+
+                this.RefreshHeldImagesButtons(competitionNames);
+            }
+        }
+
+        private void RefreshHeldImagesButtons(List<String> competitionNames)
+        {
+            int lCompetitionOneHeldImageCount = this.competitionMgr.FetchHeldImageCount(competitionNames[0]);
+            this.Competition1HeldButton.IsEnabled = lCompetitionOneHeldImageCount > 0;
+            this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held Images";
+
+            if (competitionNames.Count > 1)
+            {
+                int lCompetitionTwoHeldImageCount = this.competitionMgr.FetchHeldImageCount(competitionNames[1]);
+                this.Competition2HeldButton.IsEnabled = lCompetitionTwoHeldImageCount > 0;
+                this.Competition2HeldButton.Content = lCompetitionTwoHeldImageCount + " Held Images";
             }
         }
 
