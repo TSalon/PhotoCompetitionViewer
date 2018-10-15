@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPhotoCompetitionViewer"
         mc:Ignorable="d"
-         Title="AllHeldImagesWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize" WindowStyle="None">
+        Title="AllHeldImagesWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize" WindowStyle="None">
     <Grid x:Name="gfOuter" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition/>

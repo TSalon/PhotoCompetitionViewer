@@ -77,10 +77,10 @@ namespace TPhotoCompetitionViewer
         /** Handle a key on the keyboard being pushed */
         private void HandleKeys(object sender, KeyEventArgs e)
         {
-                if (e.Key == Key.Escape)
-                {
-                    this.Close();
-                }
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
         }
 
         private void Image0_Click(object sender, MouseEventArgs e) => this.ImageClick(0, sender, e);
