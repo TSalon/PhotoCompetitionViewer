@@ -55,12 +55,21 @@ namespace TPhotoCompetitionViewer
 
         private List<Image> BuildArrayOfImageControls()
         {
-            List<Image> imageControlList = new List<Image>();
-
-            imageControlList.Add(this.Image0);
-            imageControlList.Add(this.Image1);
-            imageControlList.Add(this.Image2);
-            imageControlList.Add(this.Image3);
+            List<Image> imageControlList = new List<Image>
+            {
+                this.Image0,
+                this.Image1,
+                this.Image2,
+                this.Image3,
+                this.Image4,
+                this.Image5,
+                this.Image6,
+                this.Image7,
+                this.Image8,
+                this.Image9,
+                this.Image10,
+                this.Image11,
+            };
 
             return imageControlList;
 
