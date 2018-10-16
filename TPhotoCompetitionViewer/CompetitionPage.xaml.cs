@@ -175,11 +175,27 @@ namespace TPhotoCompetitionViewer
             {
                 this.NextImage();
             }
+            else if (e.Key == Key.Next)
+            {
+                this.NextImage();
+            }
+            else if (e.Key == Key.PageDown)
+            {
+                this.NextImage();
+            }
             else if (e.Key == Key.Left)
             {
                 this.PreviousImage();
             }
+            else if (e.Key == Key.PageUp)
+            {
+                this.PreviousImage();
+            }
             else if (e.Key == Key.T)
+            {
+                this.ShowTitle(this.imageIndex);
+            }
+            else if (e.Key == Key.B) // clicker stop
             {
                 this.ShowTitle(this.imageIndex);
             }
