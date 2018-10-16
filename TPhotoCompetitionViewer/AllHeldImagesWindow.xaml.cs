@@ -20,6 +20,10 @@ namespace TPhotoCompetitionViewer
     /// </summary>
     public partial class AllHeldImagesWindow : Window
     {
+        private string competitionName;
+        private List<string> heldImagesList = null;
+
+
         public AllHeldImagesWindow()
         {
             InitializeComponent();
@@ -31,7 +35,8 @@ namespace TPhotoCompetitionViewer
         internal void Init(CompetitionManager competitionMgr, int competitionIndex)
         {
             Competition competition = competitionMgr.GetCompetition(competitionIndex, 0);
-            List<string> heldImagesList = competitionMgr.GetHeldImages(competition.GetName());
+            this.competitionName = competition.GetName();
+            this.heldImagesList = competitionMgr.GetHeldImages(competition.GetName());
             List<Image> imageControls = this.BuildArrayOfImageControls();
 
             this.AssignImagesToControls(heldImagesList, imageControls, competition.GetName());
@@ -98,7 +103,9 @@ namespace TPhotoCompetitionViewer
 
         private void ImageClick(int v, object sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            SingleHeldImageWindow heldImageWindow = new SingleHeldImageWindow();
+            heldImageWindow.Init(this.competitionName, this.heldImagesList[v]);
+            heldImageWindow.Show();
         }
     }
 }

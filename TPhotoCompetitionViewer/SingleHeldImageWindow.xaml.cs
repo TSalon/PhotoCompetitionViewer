@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TPhotoCompetitionViewer.Competitions;
 
 namespace TPhotoCompetitionViewer
 {
@@ -24,6 +25,20 @@ namespace TPhotoCompetitionViewer
             InitializeComponent();
 
             this.PreviewKeyDown += new KeyEventHandler(HandleKeys);
+        }
+
+        /** Show specified image in window */
+        internal void Init(string competitionName, string imageName)
+        {
+            string basePath = ImagePaths.GetExtractDirectory(competitionName);
+           
+            string imagePath = basePath + "/" + imageName;
+            BitmapImage imageToShow = new BitmapImage();
+            imageToShow.BeginInit();
+            imageToShow.UriSource = new Uri(imagePath);
+            imageToShow.EndInit();
+
+            this.ImagePane.Source = imageToShow;
         }
 
         /** Handle a key on the keyboard being pushed */
