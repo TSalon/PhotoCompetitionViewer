@@ -75,6 +75,14 @@ namespace TPhotoCompetitionViewer
                 this.Image9,
                 this.Image10,
                 this.Image11,
+                this.Image12,
+                this.Image13,
+                this.Image14,
+                this.Image15,
+                this.Image16,
+                this.Image17,
+                this.Image18,
+                this.Image19,
             };
 
             return imageControlList;
@@ -101,6 +109,14 @@ namespace TPhotoCompetitionViewer
         private void Image9_Click(object sender, MouseEventArgs e) => this.ImageClick(9, sender, e);
         private void Image10_Click(object sender, MouseEventArgs e) => this.ImageClick(10, sender, e);
         private void Image11_Click(object sender, MouseEventArgs e) => this.ImageClick(11, sender, e);
+        private void Image12_Click(object sender, MouseEventArgs e) => this.ImageClick(12, sender, e);
+        private void Image13_Click(object sender, MouseEventArgs e) => this.ImageClick(13, sender, e);
+        private void Image14_Click(object sender, MouseEventArgs e) => this.ImageClick(14, sender, e);
+        private void Image15_Click(object sender, MouseEventArgs e) => this.ImageClick(15, sender, e);
+        private void Image16_Click(object sender, MouseEventArgs e) => this.ImageClick(16, sender, e);
+        private void Image17_Click(object sender, MouseEventArgs e) => this.ImageClick(17, sender, e);
+        private void Image18_Click(object sender, MouseEventArgs e) => this.ImageClick(18, sender, e);
+        private void Image19_Click(object sender, MouseEventArgs e) => this.ImageClick(19, sender, e);
 
         private void ImageClick(int v, object sender, MouseEventArgs e)
         {

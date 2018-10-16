@@ -11,6 +11,8 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -30,5 +32,13 @@
         <Image x:Name="Image9" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" MouseDown="Image9_Click"/>
         <Image x:Name="Image10" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" MouseDown="Image10_Click"/>
         <Image x:Name="Image11" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" MouseDown="Image11_Click"/>
+        <Image x:Name="Image12" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" MouseDown="Image12_Click"/>
+        <Image x:Name="Image13" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" MouseDown="Image13_Click"/>
+        <Image x:Name="Image14" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" MouseDown="Image14_Click"/>
+        <Image x:Name="Image15" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" MouseDown="Image15_Click"/>
+        <Image x:Name="Image16" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" MouseDown="Image16_Click"/>
+        <Image x:Name="Image17" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" MouseDown="Image17_Click"/>
+        <Image x:Name="Image18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="2" MouseDown="Image18_Click"/>
+        <Image x:Name="Image19" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" MouseDown="Image19_Click"/>
     </Grid>
 </Window>
