@@ -167,41 +167,30 @@ namespace TPhotoCompetitionViewer
         /** Handle a key on the keyboard being pushed */
         private void HandleKeys(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
+            switch (e.Key)
             {
-                this.CloseWindow();
-            }
-            else if (e.Key == Key.Right)
-            {
-                this.NextImage();
-            }
-            else if (e.Key == Key.Next)
-            {
-                this.NextImage();
-            }
-            else if (e.Key == Key.PageDown)
-            {
-                this.NextImage();
-            }
-            else if (e.Key == Key.Left)
-            {
-                this.PreviousImage();
-            }
-            else if (e.Key == Key.PageUp)
-            {
-                this.PreviousImage();
-            }
-            else if (e.Key == Key.T)
-            {
-                this.ShowTitle(this.imageIndex);
-            }
-            else if (e.Key == Key.B) // clicker stop
-            {
-                this.ShowTitle(this.imageIndex);
-            }
-            else if (e.Key == Key.H)
-            {
-                this.HoldImage(this.imageIndex);
+                case Key.Escape:
+                    this.CloseWindow();
+                    break;
+
+                case Key.Right:
+                case Key.PageDown:
+                    this.NextImage();
+                    break;
+
+                case Key.Left:
+                case Key.PageUp:
+                    this.PreviousImage();
+                    break;
+
+                case Key.T:
+                case Key.B: // clicker stop button
+                    this.ShowTitle(this.imageIndex);
+                    break;
+
+                case Key.H:
+                    this.HoldImage(this.imageIndex);
+                    break;
             }
         }
 
