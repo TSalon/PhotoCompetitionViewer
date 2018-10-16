@@ -47,9 +47,9 @@ namespace TPhotoCompetitionViewerTests.Competitions
             Assert.AreEqual(0, heldImageCount);
 
             // Get hold of competition object and look at methods on that
-            Competition competition = competitionMgr.GetCompetition(0, 10);
+            Competition competition = competitionMgr.GetCompetition(0, 3);
             Assert.AreEqual("2018-12-25 Test Competition", competition.GetName());
-            Assert.AreEqual(10, competition.GetScoresRequired());
+            Assert.AreEqual(3, competition.GetScoresRequired());
 
             Assert.AreEqual(2, competition.MaxImageIndex());  // 3 images = 0, 1, 2.
             Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_2_Reflective.jpg", competition.GetImagePath(0));
@@ -135,6 +135,28 @@ namespace TPhotoCompetitionViewerTests.Competitions
             List<string> heldImagesAfterUnHoldingThroughCompetition = competitionMgr.GetHeldImages(competition.GetName());
             Assert.AreEqual(1, heldImagesAfterUnHoldingThroughCompetition.Count);
             Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterUnHoldingThroughCompetition[0]);
+
+            // Test scoring
+            int totalScore = firstImage.ScoreImage("0_0", 5, dbConnection);
+            Assert.AreEqual(0, totalScore);
+            totalScore = firstImage.ScoreImage("0_1", 4, dbConnection);
+            Assert.AreEqual(0, totalScore);
+            totalScore = firstImage.ScoreImage("0_2", 3, dbConnection);
+            Assert.AreEqual(12, totalScore);
+
+            totalScore = secondImage.ScoreImage("1_0", 2, dbConnection);
+            Assert.AreEqual(0, totalScore);
+            totalScore = secondImage.ScoreImage("0_0", 2, dbConnection);
+            Assert.AreEqual(0, totalScore);
+            totalScore = secondImage.ScoreImage("1_3", 2, dbConnection);
+            Assert.AreEqual(6, totalScore);
+
+            totalScore = thirdImage.ScoreImage("1_0", 5, dbConnection);
+            Assert.AreEqual(0, totalScore);
+            totalScore = thirdImage.ScoreImage("0_0", 5, dbConnection);
+            Assert.AreEqual(0, totalScore);
+            totalScore = thirdImage.ScoreImage("1_3", 5, dbConnection);
+            Assert.AreEqual(15, totalScore);
         }
     }
 }
