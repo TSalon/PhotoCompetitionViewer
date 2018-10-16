@@ -19,14 +19,20 @@ namespace TPhotoCompetitionViewer.Competitions
 
             foreach (var item in competitions)
             {
-                var today = DateTime.Now.ToString("yyyy-MM-dd");
+                var today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
                 var competitionFileName = ImagePaths.RemoveSourcePathStart(item);
-                var competitionName = competitionFileName.Substring(0, competitionFileName.Length - 4);
+                if (competitionFileName.ToLower().EndsWith(".zip"))
+                {
+                    var competitionDateString = competitionFileName.Substring(0, 10);
+                    var competitionDate = DateTime.Parse(competitionDateString);
+                    var competitionName = competitionFileName.Substring(0, competitionFileName.Length - 4);
 
-                if (competitionName.StartsWith(today)){
-                    this.ExtractFiles(competitionName);
-                    this.CreateDatabase(competitionName);
-                    this.competitionList.Add(competitionName);
+                    if (competitionDate >= today)
+                    {
+                        this.ExtractFiles(competitionName);
+                        this.CreateDatabase(competitionName);
+                        this.competitionList.Add(competitionName);
+                    }
                 }
             }
             return competitionList;
