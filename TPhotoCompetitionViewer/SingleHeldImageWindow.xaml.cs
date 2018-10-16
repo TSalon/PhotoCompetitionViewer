@@ -20,6 +20,11 @@ namespace TPhotoCompetitionViewer
     /// </summary>
     public partial class SingleHeldImageWindow : Window
     {
+        private string imageName;
+        private string imageAuthor;
+
+        enum Result { First, Second, Third, HighlyCommended, Commended };
+
         public SingleHeldImageWindow()
         {
             InitializeComponent();
@@ -30,6 +35,11 @@ namespace TPhotoCompetitionViewer
         /** Show specified image in window */
         internal void Init(string competitionName, string imageName)
         {
+            string imageFileName = imageName.Split('/')[1];
+            imageFileName = imageFileName.Substring(imageFileName.LastIndexOf("_"));
+            this.imageName = imageFileName.Substring(0, imageFileName.Length - 4);
+            this.imageAuthor = imageName.Split('/')[0];
+
             string basePath = ImagePaths.GetExtractDirectory(competitionName);
            
             string imagePath = basePath + "/" + imageName;
@@ -39,6 +49,9 @@ namespace TPhotoCompetitionViewer
             imageToShow.EndInit();
 
             this.ImagePane.Source = imageToShow;
+
+            this.ImagePosition.Visibility = Visibility.Hidden;
+            this.ImageAuthor.Visibility = Visibility.Hidden;
         }
 
         /** Handle a key on the keyboard being pushed */
@@ -48,6 +61,58 @@ namespace TPhotoCompetitionViewer
             {
                 this.Close();
             }
+            else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                if (e.Key == Key.D1)
+                {
+                    this.AwardResult(Result.First);
+                }
+                else if (e.Key == Key.D2)
+                {
+                    this.AwardResult(Result.Second);
+                }
+                else if (e.Key == Key.D3)
+                {
+                    this.AwardResult(Result.Third);
+                }
+                else if (e.Key == Key.C)
+                {
+                    this.AwardResult(Result.Commended);
+                }
+                else if (e.Key == Key.H)
+                {
+                    this.AwardResult(Result.HighlyCommended);
+                }
+            }
+        }
+
+        private void AwardResult(Result result)
+        {
+            string resultPosition = "";
+            switch (result)
+            {
+                case Result.First:
+                    resultPosition = "First Place";
+                    break;
+                case Result.Second:
+                    resultPosition = "Second Place";
+                    break;
+                case Result.Third:
+                    resultPosition = "Third Place";
+                    break;
+                case Result.HighlyCommended:
+                    resultPosition = "Highly Commended";
+                    break;
+                case Result.Commended:
+                    resultPosition = "Commended";
+                    break;
+            }
+
+            this.ImagePosition.Content = resultPosition;
+            this.ImagePosition.Visibility = Visibility.Visible;
+
+            this.ImageAuthor.Content = this.imageAuthor;
+            this.ImageAuthor.Visibility = Visibility.Visible;
         }
     }
 }
