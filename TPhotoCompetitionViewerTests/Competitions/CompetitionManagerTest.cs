@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TPhotoCompetitionViewer.Competitions;
 using TPhotoCompetitionViewer.Properties;
@@ -19,15 +21,90 @@ namespace TPhotoCompetitionViewerTests.Competitions
 
             Settings.Default.PropertyValues["CompetitionExtractDir"].PropertyValue = "./TestData";
             Settings.Default.PropertyValues["CompetitionSrcDir"].PropertyValue = "./TestCompetitionZip";
+
+            // delete database.  Test will recreate it when reading the competition zip file
+            String databaseFile = ImagePaths.GetDatabaseFile("2018-12-25 Test Competition");
+            File.Delete(databaseFile);
         }
 
         [TestMethod]
-        public void TestGetCompetitions()
+        public void TestCompetitions()
         {
+            // Test competition manager method
             CompetitionManager competitionMgr = new CompetitionManager();
             List<string> competitionsList = competitionMgr.GetCompetitions();
             Assert.AreEqual(1, competitionsList.Count);
             Assert.AreEqual("2018-12-25 Test Competition", competitionsList[0]);
+
+            List<string> heldImages = competitionMgr.GetHeldImages("2018-12-25 Test Competition");
+            Assert.AreEqual(0, heldImages.Count);
+
+            int heldImageCount = competitionMgr.FetchHeldImageCount("2018-12-25 Test Competition");
+            Assert.AreEqual(0, heldImageCount);
+
+            // Get hold of competition object and look at methods on that
+            Competition competition = competitionMgr.GetCompetition(0, 10);
+            Assert.AreEqual("2018-12-25 Test Competition", competition.GetName());
+            Assert.AreEqual(10, competition.GetScoresRequired());
+
+            Assert.AreEqual(2, competition.MaxImageIndex());  // 3 images = 0, 1, 2.
+            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_2_Reflective.jpg", competition.GetImagePath(0));
+            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_1_Bridgewater.jpg", competition.GetImagePath(1));
+            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_3_Young Red Kite.jpg", competition.GetImagePath(2));
+
+            // Get hold of the first three images and look at the methods there
+            CompetitionImage firstImage = competition.GetImageObject(0);
+            Assert.AreEqual("221_2_Reflective.jpg", firstImage.GetFilename());
+            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", firstImage.GetFilePath());
+            Assert.AreEqual("Reflective", firstImage.GetTitle());
+
+            CompetitionImage secondImage = competition.GetImageObject(1);
+            Assert.AreEqual("221_1_Bridgewater.jpg", secondImage.GetFilename());
+            Assert.AreEqual("Tim Sawyer/221_1_Bridgewater.jpg", secondImage.GetFilePath());
+            Assert.AreEqual("Bridgewater", secondImage.GetTitle());
+
+            CompetitionImage thirdImage = competition.GetImageObject(2);
+            Assert.AreEqual("221_3_Young Red Kite.jpg", thirdImage.GetFilename());
+            Assert.AreEqual("Tim Sawyer/221_3_Young Red Kite.jpg", thirdImage.GetFilePath());
+            Assert.AreEqual("Young Red Kite", thirdImage.GetTitle());
+
+            // Test held functionality
+            string databaseFilePath = ImagePaths.GetDatabaseFile(competition.GetName());
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+
+            Assert.AreEqual(false, firstImage.IsHeld(dbConnection));
+            Assert.AreEqual(false, secondImage.IsHeld(dbConnection));
+            Assert.AreEqual(false, thirdImage.IsHeld(dbConnection));
+
+            // Hold one
+            bool thirdHeld = thirdImage.ToggleHeld(dbConnection);
+            Assert.AreEqual(true, thirdHeld);
+            int heldImageCountAfterHoldingOneImage = competitionMgr.FetchHeldImageCount(competition.GetName());
+            Assert.AreEqual(1, heldImageCountAfterHoldingOneImage);
+
+            List<string> heldImagesAfterHoldingOneImage = competitionMgr.GetHeldImages(competition.GetName());
+            Assert.AreEqual(1, heldImagesAfterHoldingOneImage.Count);
+            Assert.AreEqual("Tim Sawyer/221_3_Young Red Kite.jpg", heldImagesAfterHoldingOneImage[0]);
+
+            // Hold another
+            bool firstHeld = firstImage.ToggleHeld(dbConnection);
+            Assert.AreEqual(true, firstHeld);
+            int heldImageCountAfterHoldingTwoImages = competitionMgr.FetchHeldImageCount(competition.GetName());
+            Assert.AreEqual(2, heldImageCountAfterHoldingTwoImages);
+
+            List<string> heldImagesAfterHoldingTwoImages = competitionMgr.GetHeldImages(competition.GetName());
+            Assert.AreEqual(2, heldImagesAfterHoldingTwoImages.Count);
+            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterHoldingTwoImages[1]);
+
+            // Unhold first one
+            bool thirdUnHeld = thirdImage.ToggleHeld(dbConnection);
+            Assert.AreEqual(false, thirdUnHeld);
+            int heldImageCountAfterUnHoldingImage = competitionMgr.FetchHeldImageCount(competition.GetName());
+            Assert.AreEqual(1, heldImageCountAfterUnHoldingImage);
+
+            List<string> heldImagesAfterUnHoldingImage = competitionMgr.GetHeldImages(competition.GetName());
+            Assert.AreEqual(1, heldImagesAfterUnHoldingImage.Count);
+            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterUnHoldingImage[0]);
         }
     }
 }
