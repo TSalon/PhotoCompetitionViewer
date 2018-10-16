@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace TPhotoCompetitionViewer.Competitions
 {
-    class ImagePaths
+    public class ImagePaths
     {
         private static readonly string COMPETITION_SRC_DIRECTORY = Properties.Settings.Default.CompetitionSrcDir;
         private static readonly string COMPETITION_EXTRACT_DIRECTORY = Properties.Settings.Default.CompetitionExtractDir;
