@@ -45,14 +45,15 @@ namespace TPhotoCompetitionViewer.Competitions
                 string[] imageFilenameParts = Regex.Split(imageFilename, @"_");
                 string memberNumber = imageFilenameParts[0];
                 string imageNumber = imageFilenameParts[1];
-                string imageTitle = imageFilenameParts[2].Substring(0, imageFilenameParts[2].LastIndexOf("."));
-                if (imageFilenameParts.Length > 3)
+                string imageTitle = imageFilenameParts[2];
+                if (imageFilenameParts.Length > 2)
                 {
                     for (int i=3; i<imageFilenameParts.Length; i++)
                     {
                         imageTitle += " " + imageFilenameParts[i];
                     }
                 }
+                imageTitle = imageTitle.Substring(0, imageTitle.LastIndexOf("."));
 
                 CompetitionImage eachImage = new CompetitionImage(this, imageTitle, imageAuthor, imagePath, imageFilename);
                 imageList.Add(eachImage);

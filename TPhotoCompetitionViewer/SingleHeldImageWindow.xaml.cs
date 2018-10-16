@@ -20,7 +20,6 @@ namespace TPhotoCompetitionViewer
     /// </summary>
     public partial class SingleHeldImageWindow : Window
     {
-        private string imageName;
         private string imageAuthor;
 
         enum Result { First, Second, Third, HighlyCommended, Commended };
@@ -35,13 +34,9 @@ namespace TPhotoCompetitionViewer
         /** Show specified image in window */
         internal void Init(string competitionName, string imageName)
         {
-            string imageFileName = imageName.Split('/')[1];
-            imageFileName = imageFileName.Substring(imageFileName.LastIndexOf("_"));
-            this.imageName = imageFileName.Substring(0, imageFileName.Length - 4);
             this.imageAuthor = imageName.Split('/')[0];
 
             string basePath = ImagePaths.GetExtractDirectory(competitionName);
-           
             string imagePath = basePath + "/" + imageName;
             BitmapImage imageToShow = new BitmapImage();
             imageToShow.BeginInit();
