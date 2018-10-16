@@ -124,8 +124,17 @@ namespace TPhotoCompetitionViewerTests.Competitions
             Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterHoldingThroughCompetition[0]);
             Assert.AreEqual("Tim Sawyer/221_1_Bridgewater.jpg", heldImagesAfterHoldingThroughCompetition[1]);
 
+            // Test unholding through competition method
+            competition.HoldImage(1, dbConnection);
 
+            bool secondUnHeld = secondImage.IsHeld(dbConnection);
+            Assert.AreEqual(false, secondUnHeld);
+            int heldImageCountAfterUnHoldingThroughCompetition = competitionMgr.FetchHeldImageCount(competition.GetName());
+            Assert.AreEqual(1, heldImageCountAfterUnHoldingThroughCompetition);
 
+            List<string> heldImagesAfterUnHoldingThroughCompetition = competitionMgr.GetHeldImages(competition.GetName());
+            Assert.AreEqual(1, heldImagesAfterUnHoldingThroughCompetition.Count);
+            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterUnHoldingThroughCompetition[0]);
         }
     }
 }
