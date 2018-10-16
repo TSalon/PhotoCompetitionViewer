@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,7 +105,11 @@ namespace TPhotoCompetitionViewer
         private void ImageClick(int v, object sender, MouseEventArgs e)
         {
             SingleHeldImageWindow heldImageWindow = new SingleHeldImageWindow();
-            heldImageWindow.Init(this.competitionName, this.heldImagesList[v]);
+
+            string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+
+            heldImageWindow.Init(this.competitionName, this.heldImagesList[v], dbConnection);
             heldImageWindow.Show();
         }
     }

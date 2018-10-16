@@ -85,6 +85,10 @@ namespace TPhotoCompetitionViewer.Competitions
                 SQLiteCommand createHeldImagesTableCommand = new SQLiteCommand(createHeldImagesTableCommandString, dbConnection);
                 createHeldImagesTableCommand.ExecuteNonQuery();
 
+                String createWinnersTableCommandString = "CREATE TABLE IF NOT EXISTS winners (timestamp TEXT, name VARCHAR(255) NOT NULL, position VARCHAR(30) NOT NULL)";
+                SQLiteCommand createWinnersTableCommand = new SQLiteCommand(createWinnersTableCommandString, dbConnection);
+                createWinnersTableCommand.ExecuteNonQuery();
+
                 dbConnection.Close();
             }          
         }

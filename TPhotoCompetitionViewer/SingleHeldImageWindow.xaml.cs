@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,8 @@ namespace TPhotoCompetitionViewer
     /// </summary>
     public partial class SingleHeldImageWindow : Window
     {
+        private SQLiteConnection dbConnection;
+        private string imageFileName;
         private string imageAuthor;
 
         enum Result { First, Second, Third, HighlyCommended, Commended };
@@ -32,8 +36,11 @@ namespace TPhotoCompetitionViewer
         }
 
         /** Show specified image in window */
-        internal void Init(string competitionName, string imageName)
+        internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection)
         {
+            this.dbConnection = dbConnection;
+            this.imageFileName = imageName;
+
             this.imageAuthor = imageName.Split('/')[0];
 
             string basePath = ImagePaths.GetExtractDirectory(competitionName);
@@ -108,6 +115,22 @@ namespace TPhotoCompetitionViewer
 
             this.ImageAuthor.Content = this.imageAuthor;
             this.ImageAuthor.Visibility = Visibility.Visible;
+
+            this.WriteResultToDatabase(this.imageFileName, resultPosition);
+        }
+
+        private void WriteResultToDatabase(string imageFileName, string resultPosition)
+        {
+            this.dbConnection.Open();
+
+            String sql = "INSERT INTO winners (timestamp, name, position) VALUES (CURRENT_TIMESTAMP, @name, @position)";
+
+            SQLiteCommand insertWinner = new SQLiteCommand(sql, this.dbConnection);
+            insertWinner.Parameters.Add(new SQLiteParameter("@name", imageFileName));
+            insertWinner.Parameters.Add(new SQLiteParameter("@position", resultPosition));
+            insertWinner.ExecuteNonQuery();
+
+            this.dbConnection.Close();
         }
     }
 }
