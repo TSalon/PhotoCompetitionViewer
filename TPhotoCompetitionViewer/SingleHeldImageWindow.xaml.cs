@@ -24,6 +24,7 @@ namespace TPhotoCompetitionViewer
     {
         private SQLiteConnection dbConnection;
         private string imageFileName;
+        private AllHeldImagesWindow allHeldImagesWindow;
         private string imageAuthor;
 
         enum Result { First, Second, Third, HighlyCommended, Commended };
@@ -36,10 +37,11 @@ namespace TPhotoCompetitionViewer
         }
 
         /** Show specified image in window */
-        internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection)
+        internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection, AllHeldImagesWindow allHeldImagesWindow)
         {
             this.dbConnection = dbConnection;
             this.imageFileName = imageName;
+            this.allHeldImagesWindow = allHeldImagesWindow;
 
             this.imageAuthor = imageName.Split('/')[0];
 
@@ -117,6 +119,8 @@ namespace TPhotoCompetitionViewer
             this.ImageAuthor.Visibility = Visibility.Visible;
 
             this.WriteResultToDatabase(this.imageFileName, resultPosition);
+
+            this.allHeldImagesWindow.GreyOutAwardedImages();
         }
 
         private void WriteResultToDatabase(string imageFileName, string resultPosition)

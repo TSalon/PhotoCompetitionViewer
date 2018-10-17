@@ -23,6 +23,7 @@ namespace TPhotoCompetitionViewer
     {
         private string competitionName;
         private List<string> heldImagesList = null;
+        private List<Image> imageControls = null;
 
 
         public AllHeldImagesWindow()
@@ -38,24 +39,59 @@ namespace TPhotoCompetitionViewer
             Competition competition = competitionMgr.GetCompetition(competitionIndex, 0);
             this.competitionName = competition.GetName();
             this.heldImagesList = competitionMgr.GetHeldImages(competition.GetName());
-            List<Image> imageControls = this.BuildArrayOfImageControls();
+            this.imageControls = this.BuildArrayOfImageControls();
 
-            this.AssignImagesToControls(heldImagesList, imageControls, competition.GetName());
+            this.AssignImagesToControls();
+            this.GreyOutAwardedImages();
         }
 
-        private void AssignImagesToControls(List<string> heldImagesList, List<Image> imageControls, string competitionName)
+        internal void GreyOutAwardedImages()
         {
-            string basePath = ImagePaths.GetExtractDirectory(competitionName);
-            for (int i=0; i < heldImagesList.Count; i++)
+            // Fetch list of awarded images
+            List<string> awardedImages = new List<string>();
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            dbConnection.Open();
+
+            string sql = "SELECT name FROM winners";
+
+            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
             {
-                string imageName = heldImagesList[i];
+                while (reader.Read())
+                {
+                    awardedImages.Add(reader.GetString(0));
+                }
+            }
+
+            dbConnection.Close();
+
+            for (int i=0; i<this.heldImagesList.Count();i++)
+            {
+                foreach (string awardedImage in awardedImages)
+                {
+                    if (this.heldImagesList[i] == awardedImage)
+                    {
+                        this.imageControls[i].Opacity = 0.3;
+                    }
+                }
+            }
+        }
+
+        private void AssignImagesToControls()
+        {
+            string basePath = ImagePaths.GetExtractDirectory(this.competitionName);
+            for (int i=0; i < this.heldImagesList.Count; i++)
+            {
+                string imageName = this.heldImagesList[i];
                 string imagePath = basePath + "/" + imageName;
                 BitmapImage imageToShow = new BitmapImage();
                 imageToShow.BeginInit();
                 imageToShow.UriSource = new Uri(imagePath);
                 imageToShow.EndInit();
 
-                imageControls[i].Source = imageToShow;
+                this.imageControls[i].Source = imageToShow;
             }
         }
 
@@ -125,7 +161,7 @@ namespace TPhotoCompetitionViewer
             string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
 
-            heldImageWindow.Init(this.competitionName, this.heldImagesList[v], dbConnection);
+            heldImageWindow.Init(this.competitionName, this.heldImagesList[v], dbConnection, this);
             heldImageWindow.Show();
         }
     }
