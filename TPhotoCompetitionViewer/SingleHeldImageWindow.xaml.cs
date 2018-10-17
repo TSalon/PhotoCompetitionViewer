@@ -134,7 +134,7 @@ namespace TPhotoCompetitionViewer
             }
             this.WriteResultToDatabase(this.imageFileName, resultPosition);
 
-            this.allHeldImagesWindow.GreyOutAwardedImages();
+            this.allHeldImagesWindow.MarkAwardedImages();
         }
 
         private void WriteResultToDatabase(string imageFileName, string resultPosition)

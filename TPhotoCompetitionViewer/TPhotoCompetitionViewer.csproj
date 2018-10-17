@@ -131,6 +131,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HeldImages.cs" />
     <Compile Include="SingleHeldImageWindow.xaml.cs">
       <DependentUpon>SingleHeldImageWindow.xaml</DependentUpon>
     </Compile>

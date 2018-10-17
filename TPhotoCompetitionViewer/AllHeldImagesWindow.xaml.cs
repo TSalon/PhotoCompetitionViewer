@@ -22,9 +22,7 @@ namespace TPhotoCompetitionViewer
     public partial class AllHeldImagesWindow : Window
     {
         private string competitionName;
-        private List<string> heldImagesList = null;
-        private List<Image> imageControls = null;
-
+        private HeldImages heldImages = null;
 
         public AllHeldImagesWindow()
         {
@@ -38,69 +36,16 @@ namespace TPhotoCompetitionViewer
         {
             Competition competition = competitionMgr.GetCompetition(competitionIndex, 0);
             this.competitionName = competition.GetName();
-            this.heldImagesList = competitionMgr.GetHeldImages(competition.GetName());
-            this.imageControls = this.BuildArrayOfImageControls();
+            var heldImages = competitionMgr.GetHeldImages(competition.GetName());
+            var imageControls = this.BuildArrayOfImageControls();
+            this.heldImages = new HeldImages(this.competitionName, heldImages, imageControls);
 
-            this.AssignImagesToControls();
-            this.GreyOutAwardedImages();
+            this.MarkAwardedImages();
         }
 
-        internal void GreyOutAwardedImages()
+        internal void MarkAwardedImages()
         {
-            // Fetch list of awarded images
-            List<string> awardedImages = new List<string>();
-            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
-            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-            dbConnection.Open();
-
-            string sql = "SELECT name FROM winners";
-
-            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    awardedImages.Add(reader.GetString(0));
-                }
-            }
-
-            dbConnection.Close();
-
-            // Make all visible
-            foreach (var eachImageControl in this.imageControls)
-            {
-                eachImageControl.Opacity = 1.0;
-            }
-
-            // Grey out images with positions
-            for (int i=0; i<this.heldImagesList.Count();i++)
-            {
-                foreach (string awardedImage in awardedImages)
-                {
-                    if (this.heldImagesList[i] == awardedImage)
-                    {
-                        this.imageControls[i].Opacity = 0.3;
-                        continue;
-                    }
-                }
-            }
-        }
-
-        private void AssignImagesToControls()
-        {
-            string basePath = ImagePaths.GetExtractDirectory(this.competitionName);
-            for (int i=0; i < this.heldImagesList.Count; i++)
-            {
-                string imageName = this.heldImagesList[i];
-                string imagePath = basePath + "/" + imageName;
-                BitmapImage imageToShow = new BitmapImage();
-                imageToShow.BeginInit();
-                imageToShow.UriSource = new Uri(imagePath);
-                imageToShow.EndInit();
-
-                this.imageControls[i].Source = imageToShow;
-            }
+            this.heldImages.MarkAwardedImages();
         }
 
         private List<Image> BuildArrayOfImageControls()
@@ -162,14 +107,14 @@ namespace TPhotoCompetitionViewer
         private void Image18_Click(object sender, MouseEventArgs e) => this.ImageClick(18, sender, e);
         private void Image19_Click(object sender, MouseEventArgs e) => this.ImageClick(19, sender, e);
 
-        private void ImageClick(int v, object sender, MouseEventArgs e)
+        private void ImageClick(int position, object sender, MouseEventArgs e)
         {
             SingleHeldImageWindow heldImageWindow = new SingleHeldImageWindow();
 
             string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
 
-            heldImageWindow.Init(this.competitionName, this.heldImagesList[v], dbConnection, this);
+            heldImageWindow.Init(this.competitionName, this.heldImages.GetImagePath(position), dbConnection, this);
             heldImageWindow.Show();
         }
     }
