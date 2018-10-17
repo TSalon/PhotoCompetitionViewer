@@ -97,25 +97,32 @@ namespace TPhotoCompetitionViewer
         private void AwardResult(Result result)
         {
             string resultPosition = "";
+            string shortPosition = "";
             switch (result)
             {
                 case Result.None:
                     resultPosition = null;
+                    shortPosition = null;
                     break;
                 case Result.First:
                     resultPosition = "First Place";
+                    shortPosition = "1";
                     break;
                 case Result.Second:
                     resultPosition = "Second Place";
+                    shortPosition = "2";
                     break;
                 case Result.Third:
                     resultPosition = "Third Place";
+                    shortPosition = "3";
                     break;
                 case Result.HighlyCommended:
                     resultPosition = "Highly Commended";
+                    shortPosition = "HC";
                     break;
                 case Result.Commended:
                     resultPosition = "Commended";
+                    shortPosition = "C";
                     break;
             }
 
@@ -132,22 +139,22 @@ namespace TPhotoCompetitionViewer
                 this.ImagePosition.Content = "Cleared";
                 this.ImagePosition.Visibility = Visibility.Visible;
             }
-            this.WriteResultToDatabase(this.imageFileName, resultPosition);
+            this.WriteResultToDatabase(this.imageFileName, shortPosition);
 
             this.allHeldImagesWindow.MarkAwardedImages();
         }
 
-        private void WriteResultToDatabase(string imageFileName, string resultPosition)
+        private void WriteResultToDatabase(string imageFileName, string shortPosition)
         {
             this.dbConnection.Open();
 
-            if (resultPosition != null)
+            if (shortPosition != null)
             {
                 String sql = "INSERT INTO winners (timestamp, name, position) VALUES (CURRENT_TIMESTAMP, @name, @position)";
 
                 SQLiteCommand insertWinner = new SQLiteCommand(sql, this.dbConnection);
                 insertWinner.Parameters.Add(new SQLiteParameter("@name", imageFileName));
-                insertWinner.Parameters.Add(new SQLiteParameter("@position", resultPosition));
+                insertWinner.Parameters.Add(new SQLiteParameter("@position", shortPosition));
                 insertWinner.ExecuteNonQuery();
             }
             else

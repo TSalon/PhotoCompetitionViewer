@@ -38,7 +38,8 @@ namespace TPhotoCompetitionViewer
             this.competitionName = competition.GetName();
             var heldImages = competitionMgr.GetHeldImages(competition.GetName());
             var imageControls = this.BuildArrayOfImageControls();
-            this.heldImages = new HeldImages(this.competitionName, heldImages, imageControls);
+            var labelControls = this.BuildArrayOfLabelControls();
+            this.heldImages = new HeldImages(this.competitionName, heldImages, imageControls, labelControls);
 
             this.MarkAwardedImages();
         }
@@ -46,6 +47,35 @@ namespace TPhotoCompetitionViewer
         internal void MarkAwardedImages()
         {
             this.heldImages.MarkAwardedImages();
+        }
+
+        private List<Label> BuildArrayOfLabelControls()
+        {
+            List<Label> labelControlList = new List<Label>
+            {
+                this.Label0,
+                this.Label1,
+                this.Label2,
+                this.Label3,
+                this.Label4,
+                this.Label5,
+                this.Label6,
+                this.Label7,
+                this.Label8,
+                this.Label9,
+                this.Label10,
+                this.Label11,
+                this.Label12,
+                this.Label13,
+                this.Label14,
+                this.Label15,
+                this.Label16,
+                this.Label17,
+                this.Label18,
+                this.Label19,
+            };
+
+            return labelControlList;
         }
 
         private List<Image> BuildArrayOfImageControls()

@@ -40,5 +40,105 @@
         <Image x:Name="Image17" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" MouseDown="Image17_Click"/>
         <Image x:Name="Image18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="2" MouseDown="Image18_Click"/>
         <Image x:Name="Image19" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" MouseDown="Image19_Click"/>
+        <Label x:Name="Label0" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label1" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label2" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label3" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label4" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label5" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label6" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label7" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label8" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label9" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label10" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label11" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label12" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label13" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label14" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label15" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="3" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label16" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="4" Grid.Column="0" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label17" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label18" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="4" Grid.Column="2" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="Label19" Content="" HorizontalAlignment="Left" Foreground="White" Margin="135,66,0,0" VerticalAlignment="Top" Grid.Row="4" Grid.Column="3" Visibility="Hidden" Opacity="0.5" FontSize="48">
+            <Label.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.Background>
+        </Label>
     </Grid>
 </Window>
