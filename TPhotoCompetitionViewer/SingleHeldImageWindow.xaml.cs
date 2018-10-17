@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -131,7 +133,10 @@ namespace TPhotoCompetitionViewer
                 this.ImagePosition.Content = resultPosition;
                 this.ImagePosition.Visibility = Visibility.Visible;
 
-                this.ImageAuthor.Content = this.imageAuthor;
+                CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+                TextInfo textInfo = cultureInfo.TextInfo;
+
+                this.ImageAuthor.Content = textInfo.ToTitleCase(this.imageAuthor);
                 this.ImageAuthor.Visibility = Visibility.Visible;
             }
             else
