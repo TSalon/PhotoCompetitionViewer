@@ -67,6 +67,13 @@ namespace TPhotoCompetitionViewer
 
             dbConnection.Close();
 
+            // Make all visible
+            foreach (var eachImageControl in this.imageControls)
+            {
+                eachImageControl.Opacity = 1.0;
+            }
+
+            // Grey out images with positions
             for (int i=0; i<this.heldImagesList.Count();i++)
             {
                 foreach (string awardedImage in awardedImages)
@@ -74,6 +81,7 @@ namespace TPhotoCompetitionViewer
                     if (this.heldImagesList[i] == awardedImage)
                     {
                         this.imageControls[i].Opacity = 0.3;
+                        continue;
                     }
                 }
             }

@@ -27,7 +27,7 @@ namespace TPhotoCompetitionViewer
         private AllHeldImagesWindow allHeldImagesWindow;
         private string imageAuthor;
 
-        enum Result { First, Second, Third, HighlyCommended, Commended };
+        enum Result { First, Second, Third, HighlyCommended, Commended, None };
 
         public SingleHeldImageWindow()
         {
@@ -79,6 +79,10 @@ namespace TPhotoCompetitionViewer
                 {
                     this.AwardResult(Result.Third);
                 }
+                else if (e.Key == Key.D0)
+                {
+                    this.AwardResult(Result.None);
+                }
                 else if (e.Key == Key.C)
                 {
                     this.AwardResult(Result.Commended);
@@ -95,6 +99,9 @@ namespace TPhotoCompetitionViewer
             string resultPosition = "";
             switch (result)
             {
+                case Result.None:
+                    resultPosition = null;
+                    break;
                 case Result.First:
                     resultPosition = "First Place";
                     break;
@@ -112,12 +119,19 @@ namespace TPhotoCompetitionViewer
                     break;
             }
 
-            this.ImagePosition.Content = resultPosition;
-            this.ImagePosition.Visibility = Visibility.Visible;
+            if (resultPosition != null)
+            {
+                this.ImagePosition.Content = resultPosition;
+                this.ImagePosition.Visibility = Visibility.Visible;
 
-            this.ImageAuthor.Content = this.imageAuthor;
-            this.ImageAuthor.Visibility = Visibility.Visible;
-
+                this.ImageAuthor.Content = this.imageAuthor;
+                this.ImageAuthor.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.ImagePosition.Content = "Cleared";
+                this.ImagePosition.Visibility = Visibility.Visible;
+            }
             this.WriteResultToDatabase(this.imageFileName, resultPosition);
 
             this.allHeldImagesWindow.GreyOutAwardedImages();
@@ -127,13 +141,23 @@ namespace TPhotoCompetitionViewer
         {
             this.dbConnection.Open();
 
-            String sql = "INSERT INTO winners (timestamp, name, position) VALUES (CURRENT_TIMESTAMP, @name, @position)";
+            if (resultPosition != null)
+            {
+                String sql = "INSERT INTO winners (timestamp, name, position) VALUES (CURRENT_TIMESTAMP, @name, @position)";
 
-            SQLiteCommand insertWinner = new SQLiteCommand(sql, this.dbConnection);
-            insertWinner.Parameters.Add(new SQLiteParameter("@name", imageFileName));
-            insertWinner.Parameters.Add(new SQLiteParameter("@position", resultPosition));
-            insertWinner.ExecuteNonQuery();
+                SQLiteCommand insertWinner = new SQLiteCommand(sql, this.dbConnection);
+                insertWinner.Parameters.Add(new SQLiteParameter("@name", imageFileName));
+                insertWinner.Parameters.Add(new SQLiteParameter("@position", resultPosition));
+                insertWinner.ExecuteNonQuery();
+            }
+            else
+            {
+                String sql = "DELETE FROM winners WHERE name = @name";
 
+                SQLiteCommand deleteAward = new SQLiteCommand(sql, this.dbConnection);
+                deleteAward.Parameters.Add(new SQLiteParameter("@name", imageFileName));
+                deleteAward.ExecuteNonQuery();
+            }
             this.dbConnection.Close();
         }
     }
