@@ -56,9 +56,17 @@ namespace TPhotoCompetitionViewer
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
-                    MaxWidth = 250,
-                    MaxHeight = 200,
                 };
+                if (lRows < 3)
+                {
+                    eachImage.MaxWidth = 500;
+                    eachImage.MaxHeight = 400;
+                }
+                else
+                {
+                    eachImage.MaxWidth = 250;
+                    eachImage.MaxHeight = 200;
+                }
                 eachImage.SetValue(ImageNumberProperty, i);
                 eachImage.MouseDown += EachImage_MouseDown;
                 this.imageControls.Add(eachImage);
