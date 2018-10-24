@@ -60,11 +60,17 @@ namespace TPhotoCompetitionViewer
                 eachImage.SetValue(ImageNumberProperty, i);
                 eachImage.MouseDown += EachImage_MouseDown;
                 this.imageControls.Add(eachImage);
-                Grid.SetRow(eachImage, gridRow);
-                Grid.SetColumn(eachImage, gridColumn);
-                this.gfOuter.Children.Add(eachImage);
 
-                
+                Border eachBorder = new Border
+                {
+                    Child = eachImage,
+                };
+                Grid.SetRow(eachBorder, gridRow);
+                Grid.SetColumn(eachBorder, gridColumn);
+                this.gfOuter.Children.Add(eachBorder);
+
+
+
                 Label eachLabel = new Label
                 {
                     Content = "",
@@ -82,7 +88,7 @@ namespace TPhotoCompetitionViewer
                 Grid.SetRow(eachLabel, gridRow);
                 Grid.SetColumn(eachLabel, gridColumn);
                 this.gfOuter.Children.Add(eachLabel);
-                
+
                 gridColumn++;
                 if (gridColumn > (IMAGES_ACROSS - 1)){
                     gridColumn = 0;

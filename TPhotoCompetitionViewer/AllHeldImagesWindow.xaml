@@ -8,6 +8,11 @@
         Title="AllHeldImagesWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize" WindowStyle="None">
     <ScrollViewer Foreground="Black" VerticalScrollBarVisibility="Auto">
         <Grid x:Name="gfOuter" Margin="10">
+            <Grid.Resources >
+                <Style TargetType="Border" >
+                    <Setter Property="Padding" Value="5,5,5,5" />
+                </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
