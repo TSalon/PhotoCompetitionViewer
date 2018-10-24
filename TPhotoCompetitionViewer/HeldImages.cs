@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TPhotoCompetitionViewer.Competitions;
 
@@ -13,22 +14,94 @@ namespace TPhotoCompetitionViewer
 {
     class HeldImages
     {
-        private readonly List<Image> imageControls;
-        private readonly List<Label> labelControls;
+        private const int IMAGES_ACROSS = 5;
+
+        private readonly List<Image> imageControls = new List<Image>();
+        private readonly List<Label> labelControls = new List<Label>();
         private readonly string competitionName;
         private readonly List<string> imageFilePaths;
         private Dictionary<string, string> awards;
+        private readonly Grid gfOuter;
+        private readonly AllHeldImagesWindow AllHeldImagesWindow;
 
-        public HeldImages(string competitionName, List<String> imageList, List<Image> controlList, List<Label> labelControlsList)
+        public static readonly DependencyProperty ImageNumberProperty = DependencyProperty.RegisterAttached("ImageNumber", typeof(int), typeof(Image), new PropertyMetadata(default(int)));
+
+
+        public HeldImages(string competitionName, List<string> heldImages, Grid gfOuter, AllHeldImagesWindow allHeldImagesWindow)
         {
             this.competitionName = competitionName;
-            this.imageFilePaths = imageList;
-            this.imageControls = controlList;
-            this.labelControls = labelControlsList;
+            this.imageFilePaths = heldImages;
+            this.gfOuter = gfOuter;
+            this.AllHeldImagesWindow = allHeldImagesWindow;
 
+            this.BuildArrayOfControls(heldImages.Count);
+            
             this.AssignImagesToControls();
         }
-               
+
+        private void BuildArrayOfControls(int imageCount)
+        {
+            int lRows = (imageCount / IMAGES_ACROSS) + 1;
+            for (int i=0; i<lRows; i++)
+            {
+                this.gfOuter.RowDefinitions.Add(new RowDefinition());
+            }
+
+            int gridRow = 0;
+            int gridColumn = 0;
+
+            for (int i=0; i<imageCount; i++)
+            {
+                Image eachImage = new Image
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                eachImage.SetValue(ImageNumberProperty, i);
+                eachImage.MouseDown += EachImage_MouseDown;
+                this.imageControls.Add(eachImage);
+                Grid.SetRow(eachImage, gridRow);
+                Grid.SetColumn(eachImage, gridColumn);
+                this.gfOuter.Children.Add(eachImage);
+
+                
+                Label eachLabel = new Label
+                {
+                    Content = "",
+                    Foreground = new SolidColorBrush(Colors.White),
+                    Margin = new Thickness(0),
+                    Visibility = Visibility.Hidden,
+                    Opacity = 0.5,
+                    FontSize = 72,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Background = new SolidColorBrush(Colors.Black)
+                };
+                eachLabel.Background.Opacity = 0.7;
+                this.labelControls.Add(eachLabel);
+                Grid.SetRow(eachLabel, gridRow);
+                Grid.SetColumn(eachLabel, gridColumn);
+                this.gfOuter.Children.Add(eachLabel);
+                
+                gridColumn++;
+                if (gridColumn > (IMAGES_ACROSS - 1)){
+                    gridColumn = 0;
+                    gridRow++;
+                }
+            }
+        }
+
+        private void EachImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Image clickedImage = (Image)sender;
+            int position = (int)clickedImage.GetValue(ImageNumberProperty);
+        
+            string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+
+            this.AllHeldImagesWindow.ShowSingleImageWindow(this.competitionName, this.GetImagePath(position), dbConnection);
+        }
+
         private void AssignImagesToControls()
         {
             string basePath = ImagePaths.GetExtractDirectory(this.competitionName);
