@@ -73,6 +73,11 @@ namespace TPhotoCompetitionViewer
                 this.Label17,
                 this.Label18,
                 this.Label19,
+                this.Label20,
+                this.Label21,
+                this.Label22,
+                this.Label23,
+                this.Label24,
             };
 
             return labelControlList;
@@ -102,6 +107,11 @@ namespace TPhotoCompetitionViewer
                 this.Image17,
                 this.Image18,
                 this.Image19,
+                this.Image20,
+                this.Image21,
+                this.Image22,
+                this.Image23,
+                this.Image24,
             };
 
             return imageControlList;
@@ -136,6 +146,11 @@ namespace TPhotoCompetitionViewer
         private void Image17_Click(object sender, MouseEventArgs e) => this.ImageClick(17, sender, e);
         private void Image18_Click(object sender, MouseEventArgs e) => this.ImageClick(18, sender, e);
         private void Image19_Click(object sender, MouseEventArgs e) => this.ImageClick(19, sender, e);
+        private void Image20_Click(object sender, MouseEventArgs e) => this.ImageClick(20, sender, e);
+        private void Image21_Click(object sender, MouseEventArgs e) => this.ImageClick(21, sender, e);
+        private void Image22_Click(object sender, MouseEventArgs e) => this.ImageClick(22, sender, e);
+        private void Image23_Click(object sender, MouseEventArgs e) => this.ImageClick(23, sender, e);
+        private void Image24_Click(object sender, MouseEventArgs e) => this.ImageClick(24, sender, e);
 
         private void ImageClick(int position, object sender, MouseEventArgs e)
         {
