@@ -19,7 +19,7 @@ namespace TPhotoCompetitionViewer
         private readonly List<Image> imageControls = new List<Image>();
         private readonly List<Label> labelControls = new List<Label>();
         private readonly string competitionName;
-        private readonly List<string> imageFilePaths;
+        private List<string> imageFilePaths;
         private Dictionary<string, string> awards;
         private readonly Grid gfOuter;
         private readonly AllHeldImagesWindow AllHeldImagesWindow;
@@ -55,7 +55,9 @@ namespace TPhotoCompetitionViewer
                 Image eachImage = new Image
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
+                    VerticalAlignment = VerticalAlignment.Center,
+                    MaxWidth = 250,
+                    MaxHeight = 200,
                 };
                 eachImage.SetValue(ImageNumberProperty, i);
                 eachImage.MouseDown += EachImage_MouseDown;
@@ -81,7 +83,8 @@ namespace TPhotoCompetitionViewer
                     FontSize = 72,
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Background = new SolidColorBrush(Colors.Black)
+                    Background = new SolidColorBrush(Colors.Black),
+                    IsHitTestVisible = false,
                 };
                 eachLabel.Background.Opacity = 0.7;
                 this.labelControls.Add(eachLabel);
@@ -132,7 +135,7 @@ namespace TPhotoCompetitionViewer
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
             dbConnection.Open();
 
-            string sql = "SELECT name, position FROM winners";
+            string sql = "SELECT name, position, CASE WHEN position = '1' THEN 1 WHEN position = '2' THEN 2 WHEN position = '3' THEN 3 WHEN position = 'HC' THEN 4 WHEN position = 'C' THEN 5 ELSE 0 END FROM winners order by 3";
 
             SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
             SQLiteDataReader reader = cmd.ExecuteReader();
@@ -157,6 +160,12 @@ namespace TPhotoCompetitionViewer
             {
                 eachLabelControl.Visibility = Visibility.Hidden;
             }
+
+            // Take the existing image paths, and remove those with awards
+            this.imageFilePaths = this.imageFilePaths.Except(this.awards.Keys).ToList();
+            // Add the award holders on at the end
+            this.imageFilePaths.AddRange(this.awards.Keys);
+            this.AssignImagesToControls();
 
             // Grey out images with positions
             for (int i = 0; i < this.imageFilePaths.Count(); i++)

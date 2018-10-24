@@ -100,7 +100,7 @@ namespace TPhotoCompetitionViewer
             int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
             CompetitionPage competitionPage = new CompetitionPage();
             competitionPage.Init(this.competitionMgr, 0, scoresRequired, this.handsets, this);
-            competitionPage.Show();
+            competitionPage.ShowDialog();
         }
 
         private void Competition2Button_Click(object sender, RoutedEventArgs e)
@@ -108,21 +108,21 @@ namespace TPhotoCompetitionViewer
             int scoresRequired = System.Convert.ToInt32(this.CompTwoScoresRequired.Text);
             CompetitionPage competitionPage = new CompetitionPage();
             competitionPage.Init(this.competitionMgr, 1, scoresRequired, this.handsets, this);
-            competitionPage.Show();
+            competitionPage.ShowDialog();
         }
 
         private void Held1Button_Click(object sender, RoutedEventArgs e)
         {
             AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
             heldPage.Init(this.competitionMgr, 0);
-            heldPage.Show();
+            heldPage.ShowDialog();
         }
 
         private void Held2Button_Click(object sender, RoutedEventArgs e)
         {
             AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
             heldPage.Init(this.competitionMgr, 1);
-            heldPage.Show();
+            heldPage.ShowDialog();
         }
 
         internal void UpdateHeldCount(int competitionIndex)
