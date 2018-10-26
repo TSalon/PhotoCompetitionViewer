@@ -18,6 +18,7 @@ namespace TPhotoCompetitionViewer
 
         private readonly List<Image> imageControls = new List<Image>();
         private readonly List<Label> labelControls = new List<Label>();
+        private readonly List<Label> titleControls = new List<Label>();
         private readonly string competitionName;
         private List<string> imageFilePaths;
         private Dictionary<string, string> awards;
@@ -79,8 +80,6 @@ namespace TPhotoCompetitionViewer
                 Grid.SetColumn(eachBorder, gridColumn);
                 this.gfOuter.Children.Add(eachBorder);
 
-
-
                 Label eachLabel = new Label
                 {
                     Content = "",
@@ -99,6 +98,25 @@ namespace TPhotoCompetitionViewer
                 Grid.SetRow(eachLabel, gridRow);
                 Grid.SetColumn(eachLabel, gridColumn);
                 this.gfOuter.Children.Add(eachLabel);
+
+                Label eachTitle = new Label()
+                {
+                    Content = "",
+                    Foreground = new SolidColorBrush(Colors.White),
+                    Margin = new Thickness(0),
+                    Visibility = Visibility.Visible,
+                    Opacity = 0.5,
+                    FontSize = 16,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Background = new SolidColorBrush(Colors.Black),
+                    IsHitTestVisible = false,
+                };
+                eachTitle.Background.Opacity = 0.7;
+                this.titleControls.Add(eachTitle);
+                Grid.SetRow(eachTitle, gridRow);
+                Grid.SetColumn(eachTitle, gridColumn);
+                this.gfOuter.Children.Add(eachTitle);
 
                 gridColumn++;
                 if (gridColumn > (IMAGES_ACROSS - 1)){
@@ -132,6 +150,7 @@ namespace TPhotoCompetitionViewer
                 imageToShow.EndInit();
 
                 this.imageControls[i].Source = imageToShow;
+                this.titleControls[i].Content = this.GetImageTitle(i);
             }
         }
 
@@ -168,6 +187,10 @@ namespace TPhotoCompetitionViewer
             {
                 eachLabelControl.Visibility = Visibility.Hidden;
             }
+            foreach (var eachTitleControl in this.titleControls)
+            {
+                eachTitleControl.Visibility = Visibility.Visible;
+            }
 
             // Take the existing image paths, and remove those with awards
             this.imageFilePaths = this.imageFilePaths.Except(this.awards.Keys).ToList();
@@ -185,6 +208,7 @@ namespace TPhotoCompetitionViewer
                         this.imageControls[i].Opacity = 0.2;
                         this.labelControls[i].Content = entry.Value;
                         this.labelControls[i].Visibility = Visibility.Visible;
+                        this.titleControls[i].Visibility = Visibility.Hidden;
                         continue;
                     }
                 }
@@ -194,6 +218,17 @@ namespace TPhotoCompetitionViewer
         internal string GetImagePath(int position)
         {
             return this.imageFilePaths[position];
+        }
+
+        internal string GetImageTitle(int position)
+        {
+            string imagePath = this.imageFilePaths[position];
+            string[] authorFile = imagePath.Split('/');
+            string filename = authorFile[1];
+            string filenameNoExt = filename.Substring(0, filename.Length - 4);
+            string filenameNoPrefix = filenameNoExt.Substring(filename.IndexOf("_"));
+            filenameNoPrefix = filenameNoPrefix.Substring(filename.IndexOf("_"));
+            return filenameNoPrefix;
         }
     }
 
