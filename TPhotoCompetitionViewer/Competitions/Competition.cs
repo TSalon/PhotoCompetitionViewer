@@ -39,23 +39,7 @@ namespace TPhotoCompetitionViewer.Competitions
             foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
             {
                 string imagePath = eachImageNode.InnerText;
-                string[] pathParts = Regex.Split(imagePath, @"/");
-                string imageAuthor = pathParts[0];
-                string imageFilename = pathParts[1];
-                string[] imageFilenameParts = Regex.Split(imageFilename, @"_");
-                string memberNumber = imageFilenameParts[0];
-                string imageNumber = imageFilenameParts[1];
-                string imageTitle = imageFilenameParts[2];
-                if (imageFilenameParts.Length > 2)
-                {
-                    for (int i=3; i<imageFilenameParts.Length; i++)
-                    {
-                        imageTitle += " " + imageFilenameParts[i];
-                    }
-                }
-                imageTitle = imageTitle.Substring(0, imageTitle.LastIndexOf("."));
-
-                CompetitionImage eachImage = new CompetitionImage(this, imageTitle, imageAuthor, imagePath, imageFilename);
+                CompetitionImage eachImage = new CompetitionImage(this, imagePath);
                 imageList.Add(eachImage);
             }
 

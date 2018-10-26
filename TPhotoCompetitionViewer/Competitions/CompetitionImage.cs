@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TPhotoCompetitionViewer.Competitions
@@ -17,9 +18,26 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly IDictionary<String, int> imageScores = new Dictionary<string,int>();
         private readonly Competition competition;
         
-        public CompetitionImage(Competition competition, string imageTitle, string imageAuthor, string imagePath, string imageFilename)
+        public CompetitionImage(Competition competition, string imagePath)
         {
             this.competition = competition;
+
+            string[] pathParts = Regex.Split(imagePath, @"/");
+            string imageAuthor = pathParts[0];
+            string imageFilename = pathParts[1];
+            string[] imageFilenameParts = Regex.Split(imageFilename, @"_");
+            string memberNumber = imageFilenameParts[0];
+            string imageNumber = imageFilenameParts[1];
+            string imageTitle = imageFilenameParts[2];
+            if (imageFilenameParts.Length > 2)
+            {
+                for (int i = 3; i < imageFilenameParts.Length; i++)
+                {
+                    imageTitle += " " + imageFilenameParts[i];
+                }
+            }
+            imageTitle = imageTitle.Substring(0, imageTitle.LastIndexOf("."));
+
             this.imageTitle = imageTitle;
             this.imageAuthor = imageAuthor;
             this.imagePath = imagePath;
