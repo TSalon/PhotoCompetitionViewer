@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 
 namespace TPhotoCompetitionViewer.Competitions
 {
-    class CompetitionManager
+    class CompetitionHelper
     {
-        readonly List<string> competitionList = new List<String>();
+        private CompetitionHelper()
+        {
+            // Prevent instantiation
+        }
 
-        internal List<string> GetCompetitions()
+        internal static List<string> GetCompetitions()
         {
             IEnumerable<string> competitions = ImagePaths.GetCompetitionZipFilesList();
-
+            List<string> competitionList = new List<String>();
             foreach (var item in competitions)
             {
                 var today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
@@ -29,16 +32,16 @@ namespace TPhotoCompetitionViewer.Competitions
 
                     if (competitionDate >= today)
                     {
-                        this.ExtractFiles(competitionName);
-                        this.CreateDatabase(competitionName);
-                        this.competitionList.Add(competitionName);
+                        CompetitionHelper.ExtractFiles(competitionName);
+                        CompetitionHelper.CreateDatabase(competitionName);
+                        competitionList.Add(competitionName);
                     }
                 }
             }
             return competitionList;
         }
 
-        internal List<string> GetHeldImages(string competitionName)
+        internal static List<string> GetHeldImages(string competitionName)
         {
             List<string> heldImages = new List<string>();
 
@@ -63,7 +66,7 @@ namespace TPhotoCompetitionViewer.Competitions
             return heldImages;
         }
 
-        private void CreateDatabase(string competitionName)
+        private static void CreateDatabase(string competitionName)
         {
             string databaseDirectory = ImagePaths.GetDatabaseDirectory(competitionName);
             Directory.CreateDirectory(databaseDirectory);
@@ -93,7 +96,7 @@ namespace TPhotoCompetitionViewer.Competitions
             }          
         }
 
-        internal int FetchHeldImageCount(string competitionName)
+        internal static int FetchHeldImageCount(string competitionName)
         {
             int heldImagesCount = 0;
 
@@ -118,16 +121,16 @@ namespace TPhotoCompetitionViewer.Competitions
             return heldImagesCount;
         }
         
-        internal Competition GetCompetition(int competitionIndex, int scoresRequired)
+        internal static Competition GetCompetition(int competitionIndex, int scoresRequired)
         {
-            string competitionName = this.competitionList[competitionIndex];
+            string competitionName = CompetitionHelper.GetCompetitions()[competitionIndex];
             Competition competition = new Competition(competitionName, scoresRequired);
             competition.LoadImages(ImagePaths.GetExtractDirectory(competitionName));
             return competition;
         }
 
         /** Extract from zip file to tmp directory */
-        private void ExtractFiles(string competitionName)
+        private static void ExtractFiles(string competitionName)
         {
             string zipFilePath = ImagePaths.GetZipFile(competitionName);
             string destination = ImagePaths.GetExtractDirectory(competitionName);
@@ -137,6 +140,4 @@ namespace TPhotoCompetitionViewer.Competitions
             }
         }
     }
-
-
 }

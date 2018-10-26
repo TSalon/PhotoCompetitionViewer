@@ -22,7 +22,6 @@ namespace TPhotoCompetitionViewer.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private CompetitionManager competitionMgr = new CompetitionManager();
         private List<IBuzzHandsetDevice> handsets;
 
         public MainWindow()
@@ -47,7 +46,7 @@ namespace TPhotoCompetitionViewer.Views
             this.Competition2Button.IsEnabled = false;
             this.Competition2HeldButton.IsEnabled = false;
             this.CompTwoScoresRequired.IsEnabled = false;
-            List<string> competitionNames = this.competitionMgr.GetCompetitions();
+            List<string> competitionNames = CompetitionHelper.GetCompetitions();
 
             if (competitionNames.Count == 0)
             {
@@ -73,15 +72,15 @@ namespace TPhotoCompetitionViewer.Views
 
         private void RefreshHeldImagesButtons()
         {
-            List<string> competitionNames = this.competitionMgr.GetCompetitions();
+            List<string> competitionNames = CompetitionHelper.GetCompetitions();
 
-            int lCompetitionOneHeldImageCount = this.competitionMgr.FetchHeldImageCount(competitionNames[0]);
+            int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[0]);
             this.Competition1HeldButton.IsEnabled = lCompetitionOneHeldImageCount > 0;
             this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held Images";
 
             if (competitionNames.Count > 1)
             {
-                int lCompetitionTwoHeldImageCount = this.competitionMgr.FetchHeldImageCount(competitionNames[1]);
+                int lCompetitionTwoHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[1]);
                 this.Competition2HeldButton.IsEnabled = lCompetitionTwoHeldImageCount > 0;
                 this.Competition2HeldButton.Content = lCompetitionTwoHeldImageCount + " Held Images";
             }
@@ -99,7 +98,8 @@ namespace TPhotoCompetitionViewer.Views
         {
             int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
             SingleCompetitionImageWindow competitionPage = new SingleCompetitionImageWindow();
-            competitionPage.Init(this.competitionMgr, 0, scoresRequired, this.handsets, this);
+            Competition competition = CompetitionHelper.GetCompetition(0, scoresRequired);
+            competitionPage.Init(competition, this.handsets, this);
             competitionPage.ShowDialog();
         }
 
@@ -107,25 +107,26 @@ namespace TPhotoCompetitionViewer.Views
         {
             int scoresRequired = System.Convert.ToInt32(this.CompTwoScoresRequired.Text);
             SingleCompetitionImageWindow competitionPage = new SingleCompetitionImageWindow();
-            competitionPage.Init(this.competitionMgr, 1, scoresRequired, this.handsets, this);
+            Competition competition = CompetitionHelper.GetCompetition(1, scoresRequired);
+            competitionPage.Init(competition, this.handsets, this);
             competitionPage.ShowDialog();
         }
 
         private void Held1Button_Click(object sender, RoutedEventArgs e)
         {
             AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
-            heldPage.Init(this.competitionMgr, 0);
+            heldPage.Init(0);
             heldPage.ShowDialog();
         }
 
         private void Held2Button_Click(object sender, RoutedEventArgs e)
         {
             AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
-            heldPage.Init(this.competitionMgr, 1);
+            heldPage.Init(1);
             heldPage.ShowDialog();
         }
 
-        internal void UpdateHeldCount(int competitionIndex)
+        internal void UpdateHeldCount()
         {
             this.RefreshHeldImagesButtons();
         }
