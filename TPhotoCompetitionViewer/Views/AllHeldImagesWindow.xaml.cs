@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TPhotoCompetitionViewer.Competitions;
 
-namespace TPhotoCompetitionViewer
+namespace TPhotoCompetitionViewer.Views
 {
     /// <summary>
     /// Interaction logic for HeldWindow.xaml

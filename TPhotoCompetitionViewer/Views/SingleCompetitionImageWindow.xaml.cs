@@ -17,14 +17,15 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using TPhotoCompetitionViewer.Competitions;
 using TPhotoCompetitionViewer.Handsets;
+using TPhotoCompetitionViewer.Views;
 
-namespace TPhotoCompetitionViewer
+namespace TPhotoCompetitionViewer.Views
 {
     /// <summary>
-    /// Interaction logic for CompetitionPage.xaml
+    /// Interaction logic for SingleCompetitionImageWindow.xaml
     ///   - Responsible for handling all interaction with scoring controllers
     /// </summary>
-    public partial class CompetitionPage : Window
+    public partial class SingleCompetitionImageWindow : Window
     {
         private Competition competition;
         private CompetitionImage competitionImage;
@@ -38,7 +39,7 @@ namespace TPhotoCompetitionViewer
 	    private bool scoringEnabled = false;
 
         /** Initialise Window */
-        public CompetitionPage()
+        public SingleCompetitionImageWindow()
         {
             InitializeComponent();
 

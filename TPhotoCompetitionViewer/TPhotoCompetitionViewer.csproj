@@ -132,18 +132,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="HeldImages.cs" />
-    <Compile Include="SingleHeldImageWindow.xaml.cs">
+    <Compile Include="Views\SingleHeldImageWindow.xaml.cs">
       <DependentUpon>SingleHeldImageWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="CompetitionPage.xaml">
+    <Page Include="Views\SingleCompetitionImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AllHeldImagesWindow.xaml">
+    <Page Include="Views\AllHeldImagesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -167,8 +167,8 @@
     <Compile Include="BuzzIO\Report.cs" />
     <Compile Include="BuzzIO\UsbEventService.cs" />
     <Compile Include="BuzzIO\Win32USB.cs" />
-    <Compile Include="CompetitionPage.xaml.cs">
-      <DependentUpon>CompetitionPage.xaml</DependentUpon>
+    <Compile Include="Views\SingleCompetitionImageWindow.xaml.cs">
+      <DependentUpon>SingleCompetitionImageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Handsets\HandsetIdTools.cs" />
     <Compile Include="Competitions\ImagePaths.cs" />
@@ -176,14 +176,14 @@
     <Compile Include="Competitions\CompetitionImage.cs" />
     <Compile Include="Competitions\CompetitionManager.cs" />
     <Compile Include="Handsets\HandsetWrapper.cs" />
-    <Compile Include="AllHeldImagesWindow.xaml.cs">
+    <Compile Include="Views\AllHeldImagesWindow.xaml.cs">
       <DependentUpon>AllHeldImagesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SingleHeldImageWindow.xaml">
+    <Page Include="Views\SingleHeldImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

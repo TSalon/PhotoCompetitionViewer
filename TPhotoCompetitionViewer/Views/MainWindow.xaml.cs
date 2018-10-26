@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TPhotoCompetitionViewer.Competitions;
 
-namespace TPhotoCompetitionViewer
+namespace TPhotoCompetitionViewer.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -98,7 +98,7 @@ namespace TPhotoCompetitionViewer
         private void Competition1Button_Click(object sender, RoutedEventArgs e)
         {
             int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
-            CompetitionPage competitionPage = new CompetitionPage();
+            SingleCompetitionImageWindow competitionPage = new SingleCompetitionImageWindow();
             competitionPage.Init(this.competitionMgr, 0, scoresRequired, this.handsets, this);
             competitionPage.ShowDialog();
         }
@@ -106,7 +106,7 @@ namespace TPhotoCompetitionViewer
         private void Competition2Button_Click(object sender, RoutedEventArgs e)
         {
             int scoresRequired = System.Convert.ToInt32(this.CompTwoScoresRequired.Text);
-            CompetitionPage competitionPage = new CompetitionPage();
+            SingleCompetitionImageWindow competitionPage = new SingleCompetitionImageWindow();
             competitionPage.Init(this.competitionMgr, 1, scoresRequired, this.handsets, this);
             competitionPage.ShowDialog();
         }
