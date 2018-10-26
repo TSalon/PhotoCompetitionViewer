@@ -34,7 +34,9 @@ namespace TPhotoCompetitionViewer.Competitions
                 Directory.CreateDirectory(COMPETITION_SRC_DIRECTORY);
             }
 
-            return Directory.GetFiles(COMPETITION_SRC_DIRECTORY);
+            string[] competitionZipFiles = Directory.GetFiles(COMPETITION_SRC_DIRECTORY);
+            Array.Sort(competitionZipFiles, StringComparer.InvariantCultureIgnoreCase);
+            return competitionZipFiles;
         }
 
         internal static string RemoveSourcePathStart(string filePath)
