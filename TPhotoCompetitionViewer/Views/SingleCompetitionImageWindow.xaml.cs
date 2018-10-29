@@ -252,6 +252,11 @@ namespace TPhotoCompetitionViewer.Views
         /** Mark an image as held */
         private void HoldImage(int imageIndex)
         {
+            if (this.currentMode != PageMode.Image)
+            {
+                return;
+            }
+
             this.competition.HoldImage(imageIndex, this.dbConnection);
             this.ShowTitle(this.imageIndex);
 
@@ -285,14 +290,26 @@ namespace TPhotoCompetitionViewer.Views
         /** Show the image title for a short period of time */
         private void ShowTitle(int imageIndex)
         {
-            string imageName = this.competitionImage.GetTitle();
-
-            if (this.competitionImage.IsHeld(this.dbConnection))
+            if (this.currentMode != PageMode.Image)
             {
-                imageName = "[" + imageName + "]";
+                return;
             }
 
-            this.ImageTitle.Content = imageName;
+            string imageName = this.competitionImage.GetTitle();
+            int imageCount = this.competition.MaxImageIndex() + 1;
+            int imagePosition = this.imageIndex + 1;
+
+            string imageTitle;
+            if (this.competitionImage.IsHeld(this.dbConnection))
+            {
+                imageTitle = "[" + imagePosition + "/" + imageCount + "] " + imageName;
+            }
+            else
+            {
+                imageTitle = "(" + imagePosition + "/" + imageCount + ") " + imageName;
+            }
+
+            this.ImageTitle.Content = imageTitle;
             this.ImageTitle.Visibility = Visibility.Visible;
 
             this.titleTimer.Start();
