@@ -14,7 +14,7 @@
                 <SolidColorBrush Color="Black" Opacity="0.5"/>
             </Label.Background>
         </Label>
-        <Label x:Name="ImagePosition" Content="Label" Margin="20,0,0,20" VerticalAlignment="Bottom" FontSize="16" Foreground="White" HorizontalContentAlignment="Left" HorizontalAlignment="Left">
+        <Label x:Name="ImagePosition" Content="Label" Margin="20,0,0,20" VerticalAlignment="Bottom" FontSize="24" Foreground="White" HorizontalContentAlignment="Left" HorizontalAlignment="Left">
             <Label.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"/>
             </Label.Background>
