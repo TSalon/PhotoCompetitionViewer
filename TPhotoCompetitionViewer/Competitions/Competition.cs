@@ -55,43 +55,6 @@ namespace TPhotoCompetitionViewer.Competitions
             return this.competitionFileName;
         }
 
-        internal void HoldImage(int imageIndex, SQLiteConnection dbConnection)
-        {
-            Boolean heldImage = this.images[imageIndex].ToggleHeld(dbConnection);
-            if (heldImage)
-            {
-                this.WriteImageToHeldDirectory(imageIndex);
-            }
-            else
-            {
-                this.DeleteImageFromHeldDirectory(imageIndex);
-            }
-        }
-
-        private void WriteImageToHeldDirectory(int imageIndex)
-        {
-            String heldDirectory = ImagePaths.GetHeldDirectory(this.competitionFileName);
-            if (Directory.Exists(heldDirectory) == false)
-            {
-                Directory.CreateDirectory(heldDirectory);
-            }
-            string source = this.GetImagePath(imageIndex);
-            string destination = heldDirectory + "/" + this.GetImageFileName(imageIndex) + ".jpg";
-            File.Copy(source, destination, true);
-        }
-
-        private void DeleteImageFromHeldDirectory(int imageIndex)
-        {
-            String heldDirectory = ImagePaths.GetHeldDirectory(this.competitionFileName);
-            string heldImageFile = heldDirectory + "/" + this.GetImageFileName(imageIndex) + ".jpg";
-            File.Delete(heldImageFile);
-        }
-
-        private string GetImageFileName(int imageIndex)
-        {
-            return this.images[imageIndex].GetFilename();
-        }
-
         internal int MaxImageIndex()
         {
             return this.images.Count - 1;

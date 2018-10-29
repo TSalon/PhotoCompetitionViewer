@@ -258,8 +258,8 @@ namespace TPhotoCompetitionViewer.Views
             {
                 return;
             }
-
-            this.competition.HoldImage(imageIndex, this.dbConnection);
+            
+            this.competitionImage.ToggleHeld(this.dbConnection);
             this.ShowTitle(this.imageIndex);
 
             this.mainWindow.UpdateHeldCount();

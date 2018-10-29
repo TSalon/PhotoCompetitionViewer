@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -16,7 +17,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string imageAuthor; // Tim Sawyer
         private readonly string imagePath; // Tim Sawyer/221_1_Lone Tree.jpg
         private readonly string imageFilename; // 221_1_Lone Tree.jpg
-        private readonly IDictionary<String, int> imageScores = new Dictionary<string,int>();
+        private readonly IDictionary<String, int> handsetScores = new Dictionary<string,int>(); // Dictionary of handset id -> score
         private readonly Competition competition;
         
         public CompetitionImage(Competition competition, XmlNode imageNode)
@@ -101,6 +102,8 @@ namespace TPhotoCompetitionViewer.Competitions
                 SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
                 insertHeld.Parameters.Add(new SQLiteParameter("@name", this.imageAuthor + "/" + this.imageFilename));
                 insertHeld.ExecuteNonQuery();
+
+                this.WriteImageToHeldDirectory();
             }
             else
             {
@@ -109,10 +112,31 @@ namespace TPhotoCompetitionViewer.Competitions
                 SQLiteCommand deleteHeld = new SQLiteCommand(sql, dbConnection);
                 deleteHeld.Parameters.Add(new SQLiteParameter("@name", this.imageAuthor + "/" + this.imageFilename));
                 deleteHeld.ExecuteNonQuery();
+
+                this.DeleteImageFromHeldDirectory();
             }
 
             dbConnection.Close();
             return !isHeld;
+        }
+
+        private void WriteImageToHeldDirectory()
+        {
+            String heldDirectory = ImagePaths.GetHeldDirectory(this.competition.GetName());
+            if (Directory.Exists(heldDirectory) == false)
+            {
+                Directory.CreateDirectory(heldDirectory);
+            }
+            string source = ImagePaths.GetExtractDirectory(this.competition.GetName()) + "/" + this.imagePath;
+            string destination = heldDirectory + "/" + this.imageFilename;
+            File.Copy(source, destination, true);
+        }
+
+        private void DeleteImageFromHeldDirectory()
+        {
+            String heldDirectory = ImagePaths.GetHeldDirectory(this.competition.GetName());
+            string heldImageFile = heldDirectory + "/" + this.imageFilename;
+            File.Delete(heldImageFile);
         }
 
         internal int ScoreImage(string handsetId, int score, SQLiteConnection dbConnection)
@@ -120,23 +144,23 @@ namespace TPhotoCompetitionViewer.Competitions
             // record score
             if (score == 0)
             {
-                this.imageScores.Remove(handsetId);
+                this.handsetScores.Remove(handsetId);
             }
             else
             {
-                this.imageScores[handsetId] = score;
+                this.handsetScores[handsetId] = score;
             }
 
-            bool CompleteCriteraMet = this.imageScores.Keys.Count == this.competition.GetScoresRequired();
+            bool CompleteCriteraMet = this.handsetScores.Keys.Count == this.competition.GetScoresRequired();
 
             // We have a complete score, write it to the database
             if (CompleteCriteraMet)
             {
                 // Calculate total score
                 int totalScore = 0;
-                foreach(string key in this.imageScores.Keys)
+                foreach(string key in this.handsetScores.Keys)
                 {
-                    int eachScore = this.imageScores[key];
+                    int eachScore = this.handsetScores[key];
                     totalScore += eachScore;
                 }
 
@@ -159,7 +183,7 @@ namespace TPhotoCompetitionViewer.Competitions
         internal bool GetLightStatus(int handsetGroup, int handsetNumber)
         {
             String key = handsetGroup + "_" + handsetNumber;
-            if (this.imageScores.ContainsKey(key)) return true;
+            if (this.handsetScores.ContainsKey(key)) return true;
             return false;
         }
     }
