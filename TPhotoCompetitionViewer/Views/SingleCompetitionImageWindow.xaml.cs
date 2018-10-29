@@ -114,7 +114,9 @@ namespace TPhotoCompetitionViewer.Views
                     this.ClubNameLabel.Visibility = Visibility.Visible;
                     this.ClubNameLabel.Content = this.competition.GetClubName();
                     this.CompetitionNameLabel.Visibility = Visibility.Visible;
-                    this.CompetitionNameLabel.Content = this.competition.GetName();
+                    string competitionName = this.competition.GetName();
+                    string competitionNameLessDate = this.competition.GetName().Substring(11);
+                    this.CompetitionNameLabel.Content = competitionNameLessDate;
                     this.TrophyNameLabel.Visibility = Visibility.Visible;
                     this.TrophyNameLabel.Content = this.competition.GetTrophyName();
 
