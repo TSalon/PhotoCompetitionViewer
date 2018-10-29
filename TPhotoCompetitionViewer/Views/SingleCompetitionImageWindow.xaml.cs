@@ -91,6 +91,7 @@ namespace TPhotoCompetitionViewer.Views
         {
             this.ImagePane.Visibility = Visibility.Hidden;
             this.ImageTitle.Visibility = Visibility.Hidden;
+            this.ImagePosition.Visibility = Visibility.Hidden;
             this.ClubNameLabel.Visibility = Visibility.Hidden;
             this.CompetitionNameLabel.Visibility = Visibility.Hidden;
             this.TrophyNameLabel.Visibility = Visibility.Hidden;
@@ -142,6 +143,7 @@ namespace TPhotoCompetitionViewer.Views
         private void TitleTimer_Tick(object sender, EventArgs e)
         {
            this.ImageTitle.Visibility = Visibility.Hidden;
+           this.ImagePosition.Visibility = Visibility.Hidden;
 
            this.titleTimer.IsEnabled = false;
         }
@@ -297,20 +299,22 @@ namespace TPhotoCompetitionViewer.Views
 
             string imageName = this.competitionImage.GetTitle();
             int imageCount = this.competition.MaxImageIndex() + 1;
-            int imagePosition = this.imageIndex + 1;
+            int imageCurrentIndex = this.imageIndex + 1;
+            string imagePosition;
 
-            string imageTitle;
             if (this.competitionImage.IsHeld(this.dbConnection))
             {
-                imageTitle = "[" + imagePosition + "/" + imageCount + "] " + imageName;
+                imagePosition = "[" + imageCurrentIndex + "/" + imageCount + "]" ;
             }
             else
             {
-                imageTitle = "(" + imagePosition + "/" + imageCount + ") " + imageName;
+                imagePosition = "(" + imageCurrentIndex + "/" + imageCount + ")";
             }
 
-            this.ImageTitle.Content = imageTitle;
+            this.ImageTitle.Content = imageName;
+            this.ImagePosition.Content = imagePosition;
             this.ImageTitle.Visibility = Visibility.Visible;
+            this.ImagePosition.Visibility = Visibility.Visible;
 
             this.titleTimer.Start();
 	        this.enableScoringTimer.Start();
