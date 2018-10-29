@@ -206,7 +206,7 @@ namespace TPhotoCompetitionViewer
                 {
                     if (this.imageFilePaths[i] == entry.Key)
                     {
-                        this.imageControls[i].Opacity = 0.2;
+                        this.imageControls[i].Opacity = 0.5;
                         this.labelControls[i].Content = entry.Value;
                         this.labelControls[i].Visibility = Visibility.Visible;
                         this.titleControls[i].Visibility = Visibility.Hidden;
