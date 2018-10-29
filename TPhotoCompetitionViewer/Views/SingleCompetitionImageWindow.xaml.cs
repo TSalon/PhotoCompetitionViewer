@@ -27,6 +27,7 @@ namespace TPhotoCompetitionViewer.Views
     /// </summary>
     public partial class SingleCompetitionImageWindow : Window
     {
+        private enum PageMode { Start, Image, End };
         private Competition competition;
         private CompetitionImage competitionImage;
         private int imageIndex = 0;
@@ -36,6 +37,7 @@ namespace TPhotoCompetitionViewer.Views
         private HandsetWrapper handsets;
         private SQLiteConnection dbConnection;
 	    private bool scoringEnabled = false;
+        private PageMode currentMode = PageMode.Start;
 
         /** Initialise Window */
         public SingleCompetitionImageWindow()
@@ -82,9 +84,57 @@ namespace TPhotoCompetitionViewer.Views
             string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
             this.dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
 
-            // Show first image
-            this.imageIndex = 0;
-            this.ShowImage(this.imageIndex);
+            this.SetPageMode(PageMode.Start);
+        }
+
+        private void HideAllControls()
+        {
+            this.ImagePane.Visibility = Visibility.Hidden;
+            this.ImageTitle.Visibility = Visibility.Hidden;
+            this.ClubNameLabel.Visibility = Visibility.Hidden;
+            this.CompetitionNameLabel.Visibility = Visibility.Hidden;
+            this.TrophyNameLabel.Visibility = Visibility.Hidden;
+
+            this.titleTimer.Stop();
+            this.enableScoringTimer.Stop();
+
+            this.scoringEnabled = false;
+        }
+
+        private void SetPageMode(PageMode pageMode)
+        {
+            this.currentMode = pageMode;
+
+            switch (this.currentMode)
+            {
+                case PageMode.Start:
+                    this.HideAllControls();
+
+                    this.ClubNameLabel.Visibility = Visibility.Visible;
+                    this.ClubNameLabel.Content = this.competition.GetClubName();
+                    this.CompetitionNameLabel.Visibility = Visibility.Visible;
+                    this.CompetitionNameLabel.Content = this.competition.GetName();
+                    this.TrophyNameLabel.Visibility = Visibility.Visible;
+                    this.TrophyNameLabel.Content = this.competition.GetTrophyName();
+
+                    break;
+
+                case PageMode.Image:
+                    this.HideAllControls();
+
+                    this.ImagePane.Visibility = Visibility.Visible;
+
+                    break;
+
+                case PageMode.End:
+                    this.HideAllControls();
+
+                    this.CompetitionNameLabel.Visibility = Visibility.Visible;
+                    this.CompetitionNameLabel.Content = "That's All Folks!";
+                    
+                    break;
+                
+            }
         }
 
 
@@ -252,28 +302,50 @@ namespace TPhotoCompetitionViewer.Views
         /** Show the next image */
         private void NextImage()
         {
-            if (this.imageIndex < this.competition.MaxImageIndex())
+            switch (this.currentMode)
             {
-                this.ShowImage(this.imageIndex + 1);
-            }
-            else
-            {
-                this.ImagePane.Source = null;
-                this.competitionImage = null;
-                this.ImageTitle.Content = "Finished";
-		        this.titleTimer.Stop();
-		        this.titleTimer.Start();
-		        this.enableScoringTimer.Stop();
-		        this.scoringEnabled = false;
+                case PageMode.Start:
+                    this.SetPageMode(PageMode.Image);
+                    // Show first image
+                    this.imageIndex = 0;
+                    this.ShowImage(this.imageIndex);
+                    break;
+
+                case PageMode.Image:
+                    // Show next image, or end page
+                    if (this.imageIndex < this.competition.MaxImageIndex())
+                    {
+                        this.ShowImage(this.imageIndex + 1);
+                    }
+                    else
+                    {
+                        this.SetPageMode(PageMode.End);
+
+                    }
+                    break;
             }
         }
 
         /** Show the previous image */
         private void PreviousImage()
         {
-            if (this.imageIndex > 0)
+            switch (this.currentMode)
             {
-                this.ShowImage(this.imageIndex - 1);
+                case PageMode.Image:
+                    if (this.imageIndex > 0)
+                    {
+                        this.ShowImage(this.imageIndex - 1);
+                    }
+                    else
+                    {
+                        this.SetPageMode(PageMode.Start);
+                    }
+                    break;
+                case PageMode.End:
+                    this.SetPageMode(PageMode.Image);
+                    this.ShowImage(this.imageIndex);
+                    break;
+
             }
         }
     }

@@ -14,5 +14,8 @@
                 <SolidColorBrush Color="Black" Opacity="0.5"/>
             </Label.Background>
         </Label>
+        <Label x:Name="ClubNameLabel" Content="Club Name" FontSize="72" Foreground="White"></Label>
+        <Label x:Name="CompetitionNameLabel" Content="Competition Name" FontSize="72" Foreground="White" Margin="10,301,-10,-301"></Label>
+        <Label x:Name="TrophyNameLabel" Content="Trophy Name" FontSize="72" Foreground="White" Margin="10,575,-10,-575"></Label>
     </Grid>
 </Window>

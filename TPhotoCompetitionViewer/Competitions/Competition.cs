@@ -107,5 +107,15 @@ namespace TPhotoCompetitionViewer.Competitions
         {
             return this.images[imageIndex];
         }
+
+        internal object GetClubName()
+        {
+            return "Club Name";
+        }
+
+        internal object GetTrophyName()
+        {
+            return "Trophy Name";
+        }
     }
 }
