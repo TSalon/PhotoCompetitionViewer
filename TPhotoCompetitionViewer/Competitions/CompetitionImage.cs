@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace TPhotoCompetitionViewer.Competitions
 {
@@ -18,8 +19,10 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly IDictionary<String, int> imageScores = new Dictionary<string,int>();
         private readonly Competition competition;
         
-        public CompetitionImage(Competition competition, string imagePath)
+        public CompetitionImage(Competition competition, XmlNode imageNode)
         {
+            string imagePath = imageNode.InnerText;
+
             this.competition = competition;
 
             string[] pathParts = Regex.Split(imagePath, @"/");

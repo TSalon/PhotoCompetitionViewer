@@ -38,8 +38,7 @@ namespace TPhotoCompetitionViewer.Competitions
             XmlNode imagesNode = rootNode["Images"];
             foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
             {
-                string imagePath = eachImageNode.InnerText;
-                CompetitionImage eachImage = new CompetitionImage(this, imagePath);
+                CompetitionImage eachImage = new CompetitionImage(this, eachImageNode);
                 imageList.Add(eachImage);
             }
 
