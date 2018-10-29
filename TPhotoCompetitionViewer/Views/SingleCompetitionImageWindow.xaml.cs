@@ -279,7 +279,7 @@ namespace TPhotoCompetitionViewer.Views
 
             this.handsets.SetLightsForThisImage(this.competitionImage);
 
-            string imagePath = this.competition.GetImagePath(imageIndex);
+            string imagePath = this.competition.GetImageObject(imageIndex).GetFullFilePath();
             BitmapImage imageToShow = new BitmapImage();
             imageToShow.BeginInit();
             imageToShow.UriSource = new Uri(imagePath);

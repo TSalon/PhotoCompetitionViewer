@@ -63,6 +63,11 @@ namespace TPhotoCompetitionViewer.Competitions
             return this.imageFilename;
         }
 
+        internal String GetFullFilePath()
+        {
+            return this.competition.GetCompetitionDirectory() + "/" + this.GetFilePath();
+        }
+
         internal bool IsHeld(SQLiteConnection dbConnection)
         {
             dbConnection.Open();

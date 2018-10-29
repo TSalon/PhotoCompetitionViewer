@@ -51,9 +51,9 @@ namespace TPhotoCompetitionViewerTests.Competitions
             Assert.AreEqual(3, competition.GetScoresRequired());
 
             Assert.AreEqual(2, competition.MaxImageIndex());  // 3 images = 0, 1, 2.
-            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_2_Reflective.jpg", competition.GetImagePath(0));
-            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_1_Bridgewater.jpg", competition.GetImagePath(1));
-            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_3_Young Red_Kite.jpg", competition.GetImagePath(2));
+            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_2_Reflective.jpg", competition.GetImageObject(0).GetFullFilePath());
+            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_1_Bridgewater.jpg", competition.GetImageObject(1).GetFullFilePath());
+            Assert.AreEqual("./TestData/extract/2018-12-25 Test Competition/all/Tim Sawyer/221_3_Young Red_Kite.jpg", competition.GetImageObject(2).GetFullFilePath());
 
             // Get hold of the first three images and look at the methods there
             CompetitionImage firstImage = competition.GetImageObject(0);

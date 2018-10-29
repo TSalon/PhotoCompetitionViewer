@@ -18,6 +18,8 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string competitionFileName;
         private readonly int scoresRequired;
         private string competitionDirectory;
+        private string clubName;
+        private string trophyName;
 
         public Competition(string competitionFileName, int scoresRequired)
         {
@@ -35,6 +37,8 @@ namespace TPhotoCompetitionViewer.Competitions
             orderingDocument.Load(competitionDirectory + "/" + CONTROL_FILENAME);
             var imageList = new List<CompetitionImage>();
             XmlNode rootNode = orderingDocument.FirstChild;
+            this.clubName = rootNode["Club"].InnerText;
+            this.trophyName = rootNode["Trophy"].InnerText;
             XmlNode imagesNode = rootNode["Images"];
             foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
             {
@@ -60,11 +64,6 @@ namespace TPhotoCompetitionViewer.Competitions
             return this.images.Count - 1;
         }
 
-        internal string GetImagePath(int imageIndex)
-        {
-            return this.competitionDirectory + "/" + this.images[imageIndex].GetFilePath();
-        }
-
         internal CompetitionImage GetImageObject(int imageIndex)
         {
             return this.images[imageIndex];
@@ -72,12 +71,17 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal object GetClubName()
         {
-            return "Club Name";
+            return this.clubName;
         }
 
         internal object GetTrophyName()
         {
-            return "Trophy Name";
+            return this.trophyName;
+        }
+
+        internal string GetCompetitionDirectory()
+        {
+            return this.competitionDirectory;
         }
     }
 }
