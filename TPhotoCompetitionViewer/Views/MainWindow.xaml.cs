@@ -126,6 +126,20 @@ namespace TPhotoCompetitionViewer.Views
             heldPage.ShowDialog();
         }
 
+        private void Slideshow1Button_Click(object sender, RoutedEventArgs e)
+        {
+            WinnersSlideshowWindow winnersPage = new WinnersSlideshowWindow();
+            winnersPage.Init(0);
+            winnersPage.ShowDialog();
+        }
+
+        private void Slideshow2Button_Click(object sender, RoutedEventArgs e)
+        {
+            WinnersSlideshowWindow winnersPage = new WinnersSlideshowWindow();
+            winnersPage.Init(1);
+            winnersPage.ShowDialog();
+        }
+
         internal void UpdateHeldCount()
         {
             this.RefreshHeldImagesButtons();

@@ -135,6 +135,9 @@
     <Compile Include="Views\SingleHeldImageWindow.xaml.cs">
       <DependentUpon>SingleHeldImageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinnersSlideshowWindow.xaml.cs">
+      <DependentUpon>WinnersSlideshowWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\SingleCompetitionImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -184,6 +187,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\SingleHeldImageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinnersSlideshowWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
