@@ -66,31 +66,6 @@ namespace TPhotoCompetitionViewer.Competitions
             return heldImages;
         }
 
-        internal static List<string> GetAwardedImages(string competitionName)
-        {
-            List<string> awardedImages = new List<string>();
-
-            string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
-            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-            dbConnection.Open();
-
-            string sql = "SELECT name FROM winners";
-
-            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    awardedImages.Add(reader.GetString(0));
-                }
-            }
-
-            dbConnection.Close();
-
-            return awardedImages;
-        }
-
         private static void CreateDatabase(string competitionName)
         {
             string databaseDirectory = ImagePaths.GetDatabaseDirectory(competitionName);

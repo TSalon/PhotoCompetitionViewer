@@ -24,7 +24,7 @@ namespace TPhotoCompetitionViewer.Views
     {
         private DispatcherTimer titleTimer;
         private string competitionName;
-        private List<string> awardedImages;
+        private List<CompetitionImage> awardedImages;
         private int currentIndex;
         private DispatcherTimer nextImageTimer;
 
@@ -49,7 +49,7 @@ namespace TPhotoCompetitionViewer.Views
         {
             Competition competition = CompetitionHelper.GetCompetition(competitionIndex, 0);
             this.competitionName = competition.GetName();
-            this.awardedImages = CompetitionHelper.GetAwardedImages(competition.GetName());
+            this.awardedImages = competition.GetAwardedImages();
 
             this.ShowImage(0);
         }
@@ -61,14 +61,17 @@ namespace TPhotoCompetitionViewer.Views
             this.nextImageTimer.Stop();
 
             this.currentIndex = imageIndex;
-            var imageFilePath = this.awardedImages[imageIndex];
+            var awardedImage = this.awardedImages[imageIndex];
 
-            string imagePath = ImagePaths.GetExtractDirectory(this.competitionName) + "/" + imageFilePath;
+            string imagePath = awardedImage.GetFullFilePath();
             BitmapImage imageToShow = new BitmapImage();
             imageToShow.BeginInit();
             imageToShow.UriSource = new Uri(imagePath);
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
+
+            this.ImageTitle.Content = awardedImage.GetTitle() + " - " + awardedImage.GetResult() + " - " + awardedImage.GetAuthor();
+            this.ImageTitle.Visibility = Visibility.Visible;
 
             this.titleTimer.Start();
             this.nextImageTimer.Start();
@@ -99,7 +102,7 @@ namespace TPhotoCompetitionViewer.Views
         {
             int maxIndex = this.awardedImages.Count;
             int nextIndex = this.currentIndex + 1;
-            if (nextIndex > maxIndex)
+            if (nextIndex >= maxIndex)
             {
                 nextIndex = 0;
             }

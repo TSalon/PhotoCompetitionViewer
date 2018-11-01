@@ -49,6 +49,42 @@ namespace TPhotoCompetitionViewer.Competitions
             this.images = imageList;   
         }
 
+        internal List<CompetitionImage> GetAwardedImages()
+        {
+            List<CompetitionImage> awardedImages = new List<CompetitionImage>();
+
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.GetName());
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            dbConnection.Open();
+
+            string sql = "SELECT name, position FROM winners";
+
+            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    var imageName = reader.GetString(0);
+                    var result = reader.GetString(1);
+
+                    foreach (CompetitionImage eachImage in this.images)
+                    {
+                        if (eachImage.GetFilePath() == imageName)
+                        {
+                            eachImage.SetResult(result);
+                            awardedImages.Add(eachImage);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            dbConnection.Close();
+
+            return awardedImages;
+        }
+
         internal int GetScoresRequired()
         {
             return this.scoresRequired;

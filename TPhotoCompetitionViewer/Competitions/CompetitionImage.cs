@@ -19,6 +19,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string imageFilename; // 221_1_Lone Tree.jpg
         private readonly IDictionary<String, int> handsetScores = new Dictionary<string,int>(); // Dictionary of handset id -> score
         private readonly Competition competition;
+        private string displayResult = "";
         
         public CompetitionImage(Competition competition, XmlNode imageNode)
         {
@@ -91,6 +92,38 @@ namespace TPhotoCompetitionViewer.Competitions
             dbConnection.Close();
 
             return isHeld;
+        }
+
+        internal string GetAuthor()
+        {
+            return this.imageAuthor;
+        }
+
+        internal void SetResult(string result)
+        {
+            switch (result)
+            {
+                case "1":
+                    this.displayResult = "First";
+                    break;
+                case "2":
+                    this.displayResult = "Second";
+                    break;
+                case "3":
+                    this.displayResult = "Third";
+                    break;
+                case "HC":
+                    this.displayResult = "Highly Commended";
+                    break;
+                case "C":
+                    this.displayResult = "Commended";
+                    break;
+            }
+        }
+
+        internal string GetResult()
+        {
+            return this.displayResult;
         }
 
         internal bool ToggleHeld(SQLiteConnection dbConnection)
