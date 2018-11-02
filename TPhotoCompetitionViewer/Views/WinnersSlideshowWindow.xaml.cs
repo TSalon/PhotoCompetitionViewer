@@ -70,8 +70,11 @@ namespace TPhotoCompetitionViewer.Views
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
 
-            this.ImageTitle.Content = awardedImage.GetTitle() + " - " + awardedImage.GetResult() + " - " + awardedImage.GetAuthor();
+            this.ImageTitle.Content = awardedImage.GetTitle();
             this.ImageTitle.Visibility = Visibility.Visible;
+
+            this.ResultsLabel.Content = awardedImage.GetResult() + " - " + awardedImage.GetAuthor();
+            this.ResultsLabel.Visibility = Visibility.Visible;
 
             this.titleTimer.Start();
             this.nextImageTimer.Start();
@@ -93,6 +96,7 @@ namespace TPhotoCompetitionViewer.Views
         private void TitleTimer_Tick(object sender, EventArgs e)
         {
             this.ImageTitle.Visibility = Visibility.Hidden;
+            this.ResultsLabel.Visibility = Visibility.Hidden;
             
             this.titleTimer.IsEnabled = false;
         }
