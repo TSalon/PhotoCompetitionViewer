@@ -49,7 +49,8 @@ namespace TPhotoCompetitionViewer.Competitions
             this.images = imageList;   
         }
 
-        internal List<CompetitionImage> GetAwardedImages()
+        /** Return images with results if there are any, or return all the held images if there aren't */
+        internal List<CompetitionImage> GetSlideshowImages()
         {
             List<CompetitionImage> awardedImages = new List<CompetitionImage>();
 
@@ -57,16 +58,16 @@ namespace TPhotoCompetitionViewer.Competitions
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
             dbConnection.Open();
 
-            string sql = "SELECT name, position FROM winners";
+            string winners_sql = "SELECT name, position FROM winners";
 
-            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            if (reader.HasRows)
+            SQLiteCommand winners_cmd = new SQLiteCommand(winners_sql, dbConnection);
+            SQLiteDataReader winners_reader = winners_cmd.ExecuteReader();
+            if (winners_reader.HasRows)
             {
-                while (reader.Read())
+                while (winners_reader.Read())
                 {
-                    var imageName = reader.GetString(0);
-                    var result = reader.GetString(1);
+                    var imageName = winners_reader.GetString(0);
+                    var result = winners_reader.GetString(1);
 
                     foreach (CompetitionImage eachImage in this.images)
                     {
@@ -75,6 +76,30 @@ namespace TPhotoCompetitionViewer.Competitions
                             eachImage.SetResult(result);
                             awardedImages.Add(eachImage);
                             break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // No images with results, so return all held images instead
+                string held_sql = "SELECT name FROM held_images";
+
+                SQLiteCommand held_cmd = new SQLiteCommand(held_sql, dbConnection);
+                SQLiteDataReader held_reader = held_cmd.ExecuteReader();
+                if (held_reader.HasRows)
+                {
+                    while (held_reader.Read())
+                    {
+                        var imageName = held_reader.GetString(0);
+
+                        foreach (CompetitionImage eachImage in this.images)
+                        {
+                            if (eachImage.GetFilePath() == imageName)
+                            {
+                                awardedImages.Add(eachImage);
+                                break;
+                            }
                         }
                     }
                 }

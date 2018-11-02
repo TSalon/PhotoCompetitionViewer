@@ -49,7 +49,7 @@ namespace TPhotoCompetitionViewer.Views
         {
             Competition competition = CompetitionHelper.GetCompetition(competitionIndex, 0);
             this.competitionName = competition.GetName();
-            this.awardedImages = competition.GetAwardedImages();
+            this.awardedImages = competition.GetSlideshowImages();
 
             this.ShowImage(0);
         }
@@ -73,9 +73,12 @@ namespace TPhotoCompetitionViewer.Views
             this.ImageTitle.Content = awardedImage.GetTitle();
             this.ImageTitle.Visibility = Visibility.Visible;
 
-            this.ResultsLabel.Content = awardedImage.GetResult() + " - " + awardedImage.GetAuthor();
-            this.ResultsLabel.Visibility = Visibility.Visible;
-
+            this.ResultsLabel.Visibility = Visibility.Hidden;
+            if (awardedImage.GetResult() != null && awardedImage.GetResult().Length > 0)
+            {
+                this.ResultsLabel.Content = awardedImage.GetResult() + " - " + awardedImage.GetAuthor();
+                this.ResultsLabel.Visibility = Visibility.Visible;
+            }
             this.titleTimer.Start();
             this.nextImageTimer.Start();
         }
