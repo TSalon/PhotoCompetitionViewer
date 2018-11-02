@@ -41,10 +41,12 @@ namespace TPhotoCompetitionViewer.Views
 
             this.Competition1Button.IsEnabled = false;
             this.Competition1HeldButton.IsEnabled = false;
+            this.Competition1SlideshowButton.IsEnabled = false;
             this.CompOneScoresRequired.IsEnabled = false;
 
             this.Competition2Button.IsEnabled = false;
             this.Competition2HeldButton.IsEnabled = false;
+            this.Competition2SlideshowButton.IsEnabled = false;
             this.CompTwoScoresRequired.IsEnabled = false;
             List<string> competitionNames = CompetitionHelper.GetCompetitions();
 
@@ -77,12 +79,14 @@ namespace TPhotoCompetitionViewer.Views
             int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[0]);
             this.Competition1HeldButton.IsEnabled = lCompetitionOneHeldImageCount > 0;
             this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held Images";
+            this.Competition1SlideshowButton.IsEnabled = this.Competition1HeldButton.IsEnabled;
 
             if (competitionNames.Count > 1)
             {
                 int lCompetitionTwoHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[1]);
                 this.Competition2HeldButton.IsEnabled = lCompetitionTwoHeldImageCount > 0;
                 this.Competition2HeldButton.Content = lCompetitionTwoHeldImageCount + " Held Images";
+                this.Competition2SlideshowButton.IsEnabled = this.Competition2HeldButton.IsEnabled;
             }
         }
 
