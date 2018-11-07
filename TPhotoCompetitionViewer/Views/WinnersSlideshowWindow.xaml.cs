@@ -23,7 +23,6 @@ namespace TPhotoCompetitionViewer.Views
     public partial class WinnersSlideshowWindow : Window
     {
         private DispatcherTimer titleTimer;
-        private string competitionName;
         private List<CompetitionImage> awardedImages;
         private int currentIndex;
         private DispatcherTimer nextImageTimer;
@@ -47,7 +46,6 @@ namespace TPhotoCompetitionViewer.Views
 
         internal void Init(Competition competition)
         {
-            this.competitionName = competition.GetName();
             this.awardedImages = competition.GetSlideshowImages();
 
             this.ShowImage(0);
