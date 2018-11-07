@@ -18,6 +18,9 @@
                     <StackPanel>
                         <Image x:Name="Competition1SlideshowImage" Source="../Resources/slideshow_black_72x72.png" />
                     </StackPanel>
+                    <Button.ToolTip>
+                        <ToolTip Content="Show slideshow of held images, or awarded images"/>
+                    </Button.ToolTip>
                 </Button>
             </Grid>
         </GroupBox>
@@ -31,6 +34,9 @@
                     <StackPanel>
                         <Image x:Name="Competition2SlideshowImage" Source="../Resources/slideshow_black_72x72.png" />
                     </StackPanel>
+                    <Button.ToolTip>
+                        <ToolTip Content="Show slideshow of held images, or awarded images"/>
+                    </Button.ToolTip>
                 </Button>
             </Grid>
         </GroupBox>
