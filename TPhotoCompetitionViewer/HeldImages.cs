@@ -163,7 +163,7 @@ namespace TPhotoCompetitionViewer
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
             dbConnection.Open();
 
-            string sql = "SELECT name, position, CASE WHEN position = '1' THEN 1 WHEN position = '2' THEN 2 WHEN position = '3' THEN 3 WHEN position = 'HC' THEN 4 WHEN position = 'C' THEN 5 ELSE 0 END FROM winners order by 3";
+            string sql = "SELECT w.name, w.position, CASE WHEN w.position = '1' THEN 1 WHEN w.position = '2' THEN 2 WHEN w.position = '3' THEN 3 WHEN w.position = 'HC' THEN 4 WHEN w.position = 'C' THEN 5 ELSE 0 END FROM winners w INNER JOIN held_images h ON (h.name=w.name) order by 3";
 
             SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
             SQLiteDataReader reader = cmd.ExecuteReader();
