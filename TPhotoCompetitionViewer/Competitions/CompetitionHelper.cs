@@ -124,14 +124,6 @@ namespace TPhotoCompetitionViewer.Competitions
             return heldImagesCount;
         }
         
-        internal static Competition GetCompetition(int competitionIndex, int scoresRequired)
-        {
-            Competition competition = CompetitionHelper.GetCompetitions()[competitionIndex];
-            competition.SetScoresRequired(scoresRequired);
-            competition.LoadImages(ImagePaths.GetExtractDirectory(competition.GetName()));
-            return competition;
-        }
-
         /** Extract from zip file to tmp directory */
         private static void ExtractFiles(string competitionName)
         {

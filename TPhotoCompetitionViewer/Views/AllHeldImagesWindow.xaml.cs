@@ -32,9 +32,8 @@ namespace TPhotoCompetitionViewer.Views
         }
 
         /** Initialise screen with held images */
-        internal void Init(int competitionIndex)
+        internal void Init(Competition competition)
         {
-            Competition competition = CompetitionHelper.GetCompetition(competitionIndex, 0);
             this.competitionName = competition.GetName();
             var heldImages = CompetitionHelper.GetHeldImages(competition.GetName());
             this.heldImages = new HeldImages(this.competitionName, heldImages, this.gfOuter, this);

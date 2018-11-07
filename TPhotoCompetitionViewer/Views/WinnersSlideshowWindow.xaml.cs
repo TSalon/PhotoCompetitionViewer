@@ -45,9 +45,8 @@ namespace TPhotoCompetitionViewer.Views
             this.nextImageTimer.Interval = new TimeSpan(0, 0, 20);
         }
 
-        public void Init(int competitionIndex)
+        internal void Init(Competition competition)
         {
-            Competition competition = CompetitionHelper.GetCompetition(competitionIndex, 0);
             this.competitionName = competition.GetName();
             this.awardedImages = competition.GetSlideshowImages();
 

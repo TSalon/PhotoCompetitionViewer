@@ -23,6 +23,7 @@ namespace TPhotoCompetitionViewer.Views
     public partial class MainWindow : Window
     {
         private List<IBuzzHandsetDevice> handsets;
+        private List<Competition> competitionList;
 
         public MainWindow()
         {
@@ -47,9 +48,9 @@ namespace TPhotoCompetitionViewer.Views
 
             this.DisableBothHeldButtons();
 
-            List<Competition> competitions = CompetitionHelper.GetCompetitions();
+            this.competitionList = CompetitionHelper.GetCompetitions();
 
-            if (competitions.Count == 0)
+            if (this.competitionList.Count == 0)
             {
                 this.StatusLabel.Content = "No competitions found in " + ImagePaths.GetCompetitionsDirectory();
             }
@@ -58,21 +59,21 @@ namespace TPhotoCompetitionViewer.Views
                 this.StatusLabel.Content = "Select competition to run:";
                 this.Competition1Button.IsEnabled = true;
                 this.CompOneScoresRequired.IsEnabled = true;
-                this.CompetitionOneBox.Header = competitions[0].GetName();
+                this.CompetitionOneBox.Header = this.competitionList[0].GetName();
 
-                if (competitions[0].ScoringEnabled())
+                if (this.competitionList[0].ScoringEnabled())
                 {
                     this.CompOneScoresRequired.Visibility = Visibility.Visible;
                     this.CompOneScorersLabel.Visibility = Visibility.Visible;
                 }
 
-                if (competitions.Count > 1)
+                if (this.competitionList.Count > 1)
                 {
-                    this.CompetitionTwoBox.Header = competitions[1].GetName();
+                    this.CompetitionTwoBox.Header = this.competitionList[1].GetName();
                     this.Competition2Button.IsEnabled = true;
                     this.CompTwoScoresRequired.IsEnabled = true;
 
-                    if (competitions[1].ScoringEnabled())
+                    if (this.competitionList[1].ScoringEnabled())
                     {
                         this.CompTwoScoresRequired.Visibility = Visibility.Visible;
                         this.CompTwoScorersLabel.Visibility = Visibility.Visible;
@@ -143,18 +144,21 @@ namespace TPhotoCompetitionViewer.Views
 
         private void Competition1Button_Click(object sender, RoutedEventArgs e)
         {
-            int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
+            
             SingleCompetitionImageWindow competitionPage = new SingleCompetitionImageWindow();
-            Competition competition = CompetitionHelper.GetCompetition(0, scoresRequired);
+            Competition competition = this.competitionList[0];
+            int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
+            competition.SetScoresRequired(scoresRequired);
             competitionPage.Init(competition, this.handsets, this);
             competitionPage.ShowDialog();
         }
 
         private void Competition2Button_Click(object sender, RoutedEventArgs e)
         {
-            int scoresRequired = System.Convert.ToInt32(this.CompTwoScoresRequired.Text);
             SingleCompetitionImageWindow competitionPage = new SingleCompetitionImageWindow();
-            Competition competition = CompetitionHelper.GetCompetition(1, scoresRequired);
+            int scoresRequired = System.Convert.ToInt32(this.CompTwoScoresRequired.Text);
+            Competition competition = this.competitionList[1];
+            competition.SetScoresRequired(scoresRequired);
             competitionPage.Init(competition, this.handsets, this);
             competitionPage.ShowDialog();
         }
@@ -162,28 +166,28 @@ namespace TPhotoCompetitionViewer.Views
         private void Held1Button_Click(object sender, RoutedEventArgs e)
         {
             AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
-            heldPage.Init(0);
+            heldPage.Init(this.competitionList[0]);
             heldPage.ShowDialog();
         }
 
         private void Held2Button_Click(object sender, RoutedEventArgs e)
         {
             AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
-            heldPage.Init(1);
+            heldPage.Init(this.competitionList[1]);
             heldPage.ShowDialog();
         }
 
         private void Slideshow1Button_Click(object sender, RoutedEventArgs e)
         {
             WinnersSlideshowWindow winnersPage = new WinnersSlideshowWindow();
-            winnersPage.Init(0);
+            winnersPage.Init(this.competitionList[0]);
             winnersPage.ShowDialog();
         }
 
         private void Slideshow2Button_Click(object sender, RoutedEventArgs e)
         {
             WinnersSlideshowWindow winnersPage = new WinnersSlideshowWindow();
-            winnersPage.Init(1);
+            winnersPage.Init(this.competitionList[1]);
             winnersPage.ShowDialog();
         }
 
