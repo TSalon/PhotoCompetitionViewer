@@ -32,21 +32,30 @@ namespace TPhotoCompetitionViewer.Competitions
             // Store path to images
             this.competitionDirectory = competitionDirectory;
 
-            // Load image order details
-            XmlDocument orderingDocument = new XmlDocument();
-            orderingDocument.Load(competitionDirectory + "/" + CONTROL_FILENAME);
-            var imageList = new List<CompetitionImage>();
-            XmlNode rootNode = orderingDocument.FirstChild;
-            this.clubName = rootNode["Club"].InnerText;
-            this.trophyName = rootNode["Trophy"].InnerText;
-            XmlNode imagesNode = rootNode["Images"];
-            foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
+            try
             {
-                CompetitionImage eachImage = new CompetitionImage(this, eachImageNode);
-                imageList.Add(eachImage);
+                // Load image order details
+                XmlDocument orderingDocument = new XmlDocument();
+                orderingDocument.Load(competitionDirectory + "/" + CONTROL_FILENAME);
+                var imageList = new List<CompetitionImage>();
+                XmlNode rootNode = orderingDocument.FirstChild;
+                this.clubName = rootNode["Club"].InnerText;
+                this.trophyName = rootNode["Trophy"].InnerText;
+                XmlNode imagesNode = rootNode["Images"];
+                foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
+                {
+                    CompetitionImage eachImage = new CompetitionImage(this, eachImageNode);
+                    imageList.Add(eachImage);
+                }
+
+                this.images = imageList;
+            }
+            catch (Exception e)
+            {
+                this.clubName = "Competition zip file broken";
+                this.trophyName = e.Message;
             }
 
-            this.images = imageList;   
         }
 
         /** Return images with results if there are any, or return all the held images if there aren't */
