@@ -40,14 +40,13 @@ namespace TPhotoCompetitionViewer.Views
             this.StatusLabel.Content = "Loading competitions...";
 
             this.Competition1Button.IsEnabled = false;
-            this.Competition1HeldButton.IsEnabled = false;
-            this.Competition1SlideshowButton.IsEnabled = false;
             this.CompOneScoresRequired.IsEnabled = false;
 
             this.Competition2Button.IsEnabled = false;
-            this.Competition2HeldButton.IsEnabled = false;
-            this.Competition2SlideshowButton.IsEnabled = false;
             this.CompTwoScoresRequired.IsEnabled = false;
+
+            this.DisableBothHeldButtons();
+
             List<string> competitionNames = CompetitionHelper.GetCompetitions();
 
             if (competitionNames.Count == 0)
@@ -72,21 +71,53 @@ namespace TPhotoCompetitionViewer.Views
             }
         }
 
+        private void DisableBothHeldButtons()
+        {
+            BitmapImage greySlideshowIcon = new BitmapImage();
+            greySlideshowIcon.BeginInit();
+            greySlideshowIcon.UriSource = new Uri("pack://application:,,,/Resources/slideshow_grey_72x72.png");
+            greySlideshowIcon.EndInit();
+
+            this.Competition1HeldButton.IsEnabled = false;
+            this.Competition1SlideshowButton.IsEnabled = false;
+            this.Competition1SlideshowImage.Source = greySlideshowIcon;
+
+            this.Competition2HeldButton.IsEnabled = false;
+            this.Competition2SlideshowButton.IsEnabled = false;
+            this.Competition2SlideshowImage.Source = greySlideshowIcon;
+
+        }
+
         private void RefreshHeldImagesButtons()
         {
+            this.DisableBothHeldButtons();
+
             List<string> competitionNames = CompetitionHelper.GetCompetitions();
+
+            BitmapImage blackSlideshowIcon = new BitmapImage();
+            blackSlideshowIcon.BeginInit();
+            blackSlideshowIcon.UriSource = new Uri("pack://application:,,,/Resources/slideshow_black_72x72.png");
+            blackSlideshowIcon.EndInit();
 
             int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[0]);
             this.Competition1HeldButton.IsEnabled = lCompetitionOneHeldImageCount > 0;
             this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held Images";
-            this.Competition1SlideshowButton.IsEnabled = this.Competition1HeldButton.IsEnabled;
+            if (this.Competition1HeldButton.IsEnabled)
+            {
+                this.Competition1SlideshowButton.IsEnabled = true;
+                this.Competition1SlideshowImage.Source = blackSlideshowIcon;
+            }
 
             if (competitionNames.Count > 1)
             {
                 int lCompetitionTwoHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[1]);
                 this.Competition2HeldButton.IsEnabled = lCompetitionTwoHeldImageCount > 0;
                 this.Competition2HeldButton.Content = lCompetitionTwoHeldImageCount + " Held Images";
-                this.Competition2SlideshowButton.IsEnabled = this.Competition2HeldButton.IsEnabled;
+                if (this.Competition2HeldButton.IsEnabled)
+                {
+                    this.Competition2SlideshowButton.IsEnabled = true;
+                    this.Competition2SlideshowImage.Source = blackSlideshowIcon;
+                }
             }
         }
 
