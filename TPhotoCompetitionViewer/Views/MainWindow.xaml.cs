@@ -47,9 +47,9 @@ namespace TPhotoCompetitionViewer.Views
 
             this.DisableBothHeldButtons();
 
-            List<string> competitionNames = CompetitionHelper.GetCompetitions();
+            List<Competition> competitions = CompetitionHelper.GetCompetitions();
 
-            if (competitionNames.Count == 0)
+            if (competitions.Count == 0)
             {
                 this.StatusLabel.Content = "No competitions found in " + ImagePaths.GetCompetitionsDirectory();
             }
@@ -58,13 +58,25 @@ namespace TPhotoCompetitionViewer.Views
                 this.StatusLabel.Content = "Select competition to run:";
                 this.Competition1Button.IsEnabled = true;
                 this.CompOneScoresRequired.IsEnabled = true;
-                this.CompetitionOneBox.Header = competitionNames[0];
+                this.CompetitionOneBox.Header = competitions[0].GetName();
 
-                if (competitionNames.Count > 1)
+                if (competitions[0].ScoringEnabled())
                 {
-                    this.CompetitionTwoBox.Header = competitionNames[1];
+                    this.CompOneScoresRequired.Visibility = Visibility.Visible;
+                    this.CompOneScorersLabel.Visibility = Visibility.Visible;
+                }
+
+                if (competitions.Count > 1)
+                {
+                    this.CompetitionTwoBox.Header = competitions[1].GetName();
                     this.Competition2Button.IsEnabled = true;
                     this.CompTwoScoresRequired.IsEnabled = true;
+
+                    if (competitions[1].ScoringEnabled())
+                    {
+                        this.CompTwoScoresRequired.Visibility = Visibility.Visible;
+                        this.CompTwoScorersLabel.Visibility = Visibility.Visible;
+                    }
                 }
 
                 this.RefreshHeldImagesButtons();
@@ -92,14 +104,14 @@ namespace TPhotoCompetitionViewer.Views
         {
             this.DisableBothHeldButtons();
 
-            List<string> competitionNames = CompetitionHelper.GetCompetitions();
+            List<Competition> competitionNames = CompetitionHelper.GetCompetitions();
 
             BitmapImage blackSlideshowIcon = new BitmapImage();
             blackSlideshowIcon.BeginInit();
             blackSlideshowIcon.UriSource = new Uri("pack://application:,,,/Resources/slideshow_black_72x72.png");
             blackSlideshowIcon.EndInit();
 
-            int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[0]);
+            int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[0].GetName());
             this.Competition1HeldButton.IsEnabled = lCompetitionOneHeldImageCount > 0;
             this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held Images";
             if (this.Competition1HeldButton.IsEnabled)
@@ -110,7 +122,7 @@ namespace TPhotoCompetitionViewer.Views
 
             if (competitionNames.Count > 1)
             {
-                int lCompetitionTwoHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[1]);
+                int lCompetitionTwoHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitionNames[1].GetName());
                 this.Competition2HeldButton.IsEnabled = lCompetitionTwoHeldImageCount > 0;
                 this.Competition2HeldButton.Content = lCompetitionTwoHeldImageCount + " Held Images";
                 if (this.Competition2HeldButton.IsEnabled)

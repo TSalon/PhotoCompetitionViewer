@@ -35,9 +35,9 @@ namespace TPhotoCompetitionViewerTests.Competitions
         public void TestCompetitions()
         {
             // Test competition manager method
-            List<string> competitionsList = CompetitionHelper.GetCompetitions();
+            List<Competition> competitionsList = CompetitionHelper.GetCompetitions();
             Assert.AreEqual(1, competitionsList.Count);
-            Assert.AreEqual("2018-12-25 Test Competition", competitionsList[0]);
+            Assert.AreEqual("2018-12-25 Test Competition", competitionsList[0].GetName());
 
             List<string> heldImages = CompetitionHelper.GetHeldImages("2018-12-25 Test Competition");
             Assert.AreEqual(0, heldImages.Count);

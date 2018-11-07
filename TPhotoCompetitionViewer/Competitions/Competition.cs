@@ -16,15 +16,15 @@ namespace TPhotoCompetitionViewer.Competitions
 
         private List<CompetitionImage> images;
         private readonly string competitionFileName;
-        private readonly int scoresRequired;
+        private int scoresRequired;
         private string competitionDirectory;
         private string clubName;
         private string trophyName;
+        private bool scoring;
 
-        public Competition(string competitionFileName, int scoresRequired)
+        public Competition(string competitionFileName)
         {
             this.competitionFileName = competitionFileName;
-            this.scoresRequired = scoresRequired;
         }
 
         internal void LoadImages(string competitionDirectory)
@@ -41,6 +41,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 XmlNode rootNode = orderingDocument.FirstChild;
                 this.clubName = rootNode["Club"].InnerText;
                 this.trophyName = rootNode["Trophy"].InnerText;
+                this.scoring = rootNode["Scoring"].InnerText == "true";
                 XmlNode imagesNode = rootNode["Images"];
                 foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
                 {
@@ -56,6 +57,11 @@ namespace TPhotoCompetitionViewer.Competitions
                 this.trophyName = e.Message;
             }
 
+        }
+
+        internal bool ScoringEnabled()
+        {
+            return this.scoring;
         }
 
         /** Return images with results if there are any, or return all the held images if there aren't */
@@ -147,6 +153,11 @@ namespace TPhotoCompetitionViewer.Competitions
         internal object GetTrophyName()
         {
             return this.trophyName;
+        }
+
+        internal void SetScoresRequired(int scoresRequired)
+        {
+            this.scoresRequired = scoresRequired;
         }
 
         internal string GetCompetitionDirectory()
