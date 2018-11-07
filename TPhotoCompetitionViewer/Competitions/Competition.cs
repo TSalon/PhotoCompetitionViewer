@@ -59,11 +59,6 @@ namespace TPhotoCompetitionViewer.Competitions
 
         }
 
-        internal object GetHeldImages()
-        {
-            throw new NotImplementedException();
-        }
-
         internal bool ScoringEnabled()
         {
             return this.scoring;
