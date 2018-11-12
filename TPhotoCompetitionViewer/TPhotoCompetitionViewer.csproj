@@ -238,6 +238,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\icons.txt" />
     <Content Include="Resources\Numbers\Brian\1.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
