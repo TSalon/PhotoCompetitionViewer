@@ -32,8 +32,6 @@ namespace TPhotoCompetitionViewer.Views
             this.handsets = new BuzzHandsetFinder().FindHandsets().ToList();
 
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
-
-            this.LoadCompetitions();
         }
 
         private void LoadCompetitions()
@@ -194,6 +192,11 @@ namespace TPhotoCompetitionViewer.Views
         internal void UpdateHeldCount()
         {
             this.RefreshHeldImagesButtons();
+        }
+
+        internal void SetupFromCommandLine(string[] args)
+        {
+            this.LoadCompetitions();
         }
     }
 }
