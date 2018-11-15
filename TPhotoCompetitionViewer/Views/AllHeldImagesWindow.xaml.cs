@@ -21,7 +21,7 @@ namespace TPhotoCompetitionViewer.Views
     /// </summary>
     public partial class AllHeldImagesWindow : Window
     {
-        private string competitionName;
+        private Competition competition;
         private HeldImages heldImages = null;
 
         public AllHeldImagesWindow()
@@ -34,9 +34,9 @@ namespace TPhotoCompetitionViewer.Views
         /** Initialise screen with held images */
         internal void Init(Competition competition)
         {
-            this.competitionName = competition.GetName();
+            this.competition = competition;
             var heldImages = CompetitionHelper.GetHeldImages(competition.GetName());
-            this.heldImages = new HeldImages(this.competitionName, heldImages, this.gfOuter, this);
+            this.heldImages = new HeldImages(this.competition.GetName(), heldImages, this.gfOuter, this);
 
             this.MarkAwardedImages();
         }
@@ -53,12 +53,40 @@ namespace TPhotoCompetitionViewer.Views
             {
                 this.Close();
             }
+            else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                if (e.Key == Key.N)
+                {
+                    this.SelectByNumber();
+                }
+            }
         }
 
-        internal void ShowSingleImageWindow(string competitionName, string imagePosition, SQLiteConnection dbConnection)
+        private void SelectByNumber()
+        {
+            ImageNumberPrompt imageNumberWindow = new ImageNumberPrompt();
+            imageNumberWindow.ShowDialog();
+
+            int selectedNumber = imageNumberWindow.GetSelectedNumber();
+            if (selectedNumber > 0)
+            {
+                string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
+                SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+
+                int imagePosition = selectedNumber - 1;
+                CompetitionImage image = this.competition.GetImageObject(imagePosition);
+                if (image.IsHeld(dbConnection))
+                {
+                    string imagePath = image.GetFilePath();
+                    ShowSingleImageWindow(this.competition.GetName(), imagePath, dbConnection);
+                }
+            }
+        }
+
+        internal void ShowSingleImageWindow(string competitionName, string imagePath, SQLiteConnection dbConnection)
         {
             SingleHeldImageWindow heldImageWindow = new SingleHeldImageWindow();
-            heldImageWindow.Init(competitionName, imagePosition, dbConnection, this);
+            heldImageWindow.Init(competitionName, imagePath, dbConnection, this);
             heldImageWindow.ShowDialog();
         }
     }

@@ -132,12 +132,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="HeldImages.cs" />
+    <Compile Include="Views\ImageNumberPrompt.xaml.cs">
+      <DependentUpon>ImageNumberPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SingleHeldImageWindow.xaml.cs">
       <DependentUpon>SingleHeldImageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WinnersSlideshowWindow.xaml.cs">
       <DependentUpon>WinnersSlideshowWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\ImageNumberPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SingleCompetitionImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
