@@ -46,7 +46,8 @@ namespace TPhotoCompetitionViewerTests.Competitions
             Assert.AreEqual(0, heldImageCount);
 
             // Get hold of competition object and look at methods on that
-            Competition competition = CompetitionHelper.GetCompetition(0, 3);
+            Competition competition = competitionsList[0];
+            competition.SetScoresRequired(3);
             Assert.AreEqual("2018-12-25 Test Competition", competition.GetName());
             Assert.AreEqual(3, competition.GetScoresRequired());
 
@@ -57,17 +58,14 @@ namespace TPhotoCompetitionViewerTests.Competitions
 
             // Get hold of the first three images and look at the methods there
             CompetitionImage firstImage = competition.GetImageObject(0);
-            Assert.AreEqual("221_2_Reflective.jpg", firstImage.GetFilename());
             Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", firstImage.GetFilePath());
             Assert.AreEqual("Reflective", firstImage.GetTitle());
 
             CompetitionImage secondImage = competition.GetImageObject(1);
-            Assert.AreEqual("221_1_Bridgewater.jpg", secondImage.GetFilename());
             Assert.AreEqual("Tim Sawyer/221_1_Bridgewater.jpg", secondImage.GetFilePath());
             Assert.AreEqual("Bridgewater", secondImage.GetTitle());
 
             CompetitionImage thirdImage = competition.GetImageObject(2);
-            Assert.AreEqual("221_3_Young Red_Kite.jpg", thirdImage.GetFilename());
             Assert.AreEqual("Tim Sawyer/221_3_Young Red_Kite.jpg", thirdImage.GetFilePath());
             Assert.AreEqual("Young Red Kite", thirdImage.GetTitle());
 

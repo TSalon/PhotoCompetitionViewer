@@ -43,10 +43,12 @@ namespace TPhotoCompetitionViewer.Competitions
                 this.trophyName = rootNode["Trophy"].InnerText;
                 this.scoring = rootNode["Scoring"].InnerText == "true";
                 XmlNode imagesNode = rootNode["Images"];
+                int i = 1;
                 foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
                 {
-                    CompetitionImage eachImage = new CompetitionImage(this, eachImageNode);
+                    CompetitionImage eachImage = new CompetitionImage(this, eachImageNode, i);
                     imageList.Add(eachImage);
+                    i += 1;
                 }
 
                 this.images = imageList;
