@@ -135,6 +135,7 @@
     <Compile Include="Views\ImageNumberPrompt.xaml.cs">
       <DependentUpon>ImageNumberPrompt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ScoredImageDataGridItem.cs" />
     <Compile Include="Views\ScoresWindow.xaml.cs">
       <DependentUpon>ScoresWindow.xaml</DependentUpon>
     </Compile>

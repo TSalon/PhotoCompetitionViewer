@@ -41,12 +41,27 @@ namespace TPhotoCompetitionViewer.Views
         {
             for (int i = 0; i < this.images.Count; i++)
             {
-                this.scoresDataGrid.Items.Add(new { Author = this.images[i].GetAuthor(),
-                                                    Title = this.images[i].GetTitle(),
-                                                    Score = this.images[i].GetScore(),
-                                                    Timestamp = this.images[i].GetScoreTimestamp(),
-                                                  });
+                var item = new ScoredImageDataGridItem
+                {
+                    Author = this.images[i].GetAuthor(),
+                    Title = this.images[i].GetTitle(),
+                    Score = this.images[i].GetScore(),
+                    Timestamp = this.images[i].GetScoreTimestamp(),
+                    ImagePath = this.images[i].GetFilePath(),
+                };
+                this.scoresDataGrid.Items.Add(item);
             }
+        }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            ScoredImageDataGridItem rowData = row.DataContext as ScoredImageDataGridItem;
+            string imagePath = rowData.ImagePath;
+
+            SingleHeldImageWindow imageWindow = new SingleHeldImageWindow();
+            imageWindow.Init(this.competition.GetName(), imagePath, null, null);
+            imageWindow.ShowDialog();
         }
     }
 }

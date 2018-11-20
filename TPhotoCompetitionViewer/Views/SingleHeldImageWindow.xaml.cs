@@ -38,7 +38,9 @@ namespace TPhotoCompetitionViewer.Views
             this.PreviewKeyDown += new KeyEventHandler(HandleKeys);
         }
 
-        /** Show specified image in window */
+        /** Show specified image in window.
+         *  Use null allHeldImagesWindow to use this standalone, with no scoring.
+         */
         internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection, AllHeldImagesWindow allHeldImagesWindow)
         {
             this.dbConnection = dbConnection;
@@ -98,55 +100,59 @@ namespace TPhotoCompetitionViewer.Views
 
         private void AwardResult(Result result)
         {
-            string resultPosition = "";
-            string shortPosition = "";
-            switch (result)
+            if (this.allHeldImagesWindow != null) // don't do anything if we're no in the context of held images
             {
-                case Result.None:
-                    resultPosition = null;
-                    shortPosition = null;
-                    break;
-                case Result.First:
-                    resultPosition = "First Place";
-                    shortPosition = "1";
-                    break;
-                case Result.Second:
-                    resultPosition = "Second Place";
-                    shortPosition = "2";
-                    break;
-                case Result.Third:
-                    resultPosition = "Third Place";
-                    shortPosition = "3";
-                    break;
-                case Result.HighlyCommended:
-                    resultPosition = "Highly Commended";
-                    shortPosition = "HC";
-                    break;
-                case Result.Commended:
-                    resultPosition = "Commended";
-                    shortPosition = "C";
-                    break;
+                string resultPosition = "";
+                string shortPosition = "";
+                switch (result)
+                {
+                    case Result.None:
+                        resultPosition = null;
+                        shortPosition = null;
+                        break;
+                    case Result.First:
+                        resultPosition = "First Place";
+                        shortPosition = "1";
+                        break;
+                    case Result.Second:
+                        resultPosition = "Second Place";
+                        shortPosition = "2";
+                        break;
+                    case Result.Third:
+                        resultPosition = "Third Place";
+                        shortPosition = "3";
+                        break;
+                    case Result.HighlyCommended:
+                        resultPosition = "Highly Commended";
+                        shortPosition = "HC";
+                        break;
+                    case Result.Commended:
+                        resultPosition = "Commended";
+                        shortPosition = "C";
+                        break;
+                }
+
+                if (resultPosition != null)
+                {
+                    this.ImagePosition.Content = resultPosition;
+                    this.ImagePosition.Visibility = Visibility.Visible;
+
+                    CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+                    TextInfo textInfo = cultureInfo.TextInfo;
+
+                    this.ImageAuthor.Content = textInfo.ToTitleCase(this.imageAuthor);
+                    this.ImageAuthor.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    this.ImagePosition.Content = "Cleared";
+                    this.ImagePosition.Visibility = Visibility.Visible;
+                }
+
+                this.WriteResultToDatabase(this.imageFileName, shortPosition);
+
+                this.allHeldImagesWindow.MarkAwardedImages();
             }
-
-            if (resultPosition != null)
-            {
-                this.ImagePosition.Content = resultPosition;
-                this.ImagePosition.Visibility = Visibility.Visible;
-
-                CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
-                TextInfo textInfo = cultureInfo.TextInfo;
-
-                this.ImageAuthor.Content = textInfo.ToTitleCase(this.imageAuthor);
-                this.ImageAuthor.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                this.ImagePosition.Content = "Cleared";
-                this.ImagePosition.Visibility = Visibility.Visible;
-            }
-            this.WriteResultToDatabase(this.imageFileName, shortPosition);
-
-            this.allHeldImagesWindow.MarkAwardedImages();
         }
 
         private void WriteResultToDatabase(string imageFileName, string shortPosition)
