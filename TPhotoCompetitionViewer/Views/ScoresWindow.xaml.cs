@@ -32,7 +32,7 @@ namespace TPhotoCompetitionViewer.Views
         {
             this.competition = competition;
 
-            this.ShowAllScoredImages();
+            this.ShowHighestScorePerPerson();
         }
 
         /** Show all scored images on data grid */
@@ -40,6 +40,44 @@ namespace TPhotoCompetitionViewer.Views
         {
             List<CompetitionImage> images = this.competition.GetAllScoredImages();
             this.ShowImages(images);
+        }
+
+        public void ShowHighestScorePerPerson()
+        {
+            List<CompetitionImage> authorTopScoredImages = new List<CompetitionImage>();
+            List<CompetitionImage> images = this.competition.GetAllScoredImages();
+
+            foreach (CompetitionImage image in images)
+            {
+                string thisImageAuthor = image.GetAuthor();
+                short thisImageScore = image.GetScore();
+                bool alreadyAcceptedAuthor = false;
+
+                // Is there an image already in authorTopScoredImages for this author?
+                foreach (CompetitionImage acceptedImage in authorTopScoredImages)
+                {
+                    if (thisImageAuthor == acceptedImage.GetAuthor())
+                    {
+                        alreadyAcceptedAuthor = true;
+                        // We already have an image from this author
+                        if (thisImageScore >= acceptedImage.GetScore())
+                        {
+                            // The score on the new image is same or better than the one we already have
+                            // We should be working top score down, so this likely indicates an image with the same score
+                            // Include both
+                            authorTopScoredImages.Add(image);
+                            break;
+                        }
+                    }
+                }
+
+                if (!alreadyAcceptedAuthor)
+                {
+                    authorTopScoredImages.Add(image);
+                }
+            }
+
+            this.ShowImages(authorTopScoredImages);
         }
 
         private void ShowImages(List<CompetitionImage> images)
