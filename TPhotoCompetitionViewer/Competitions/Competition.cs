@@ -61,15 +61,19 @@ namespace TPhotoCompetitionViewer.Competitions
 
         }
 
-        internal List<CompetitionImage> GetScoredImages()
+        internal List<CompetitionImage> GetAllScoredImages()
+        {
+            string sql = "SELECT timestamp, name, score FROM scores ORDER BY score DESC";
+            return SelectScoredImages(sql);
+        }
+
+        internal List<CompetitionImage> SelectScoredImages(string sql)
         {
             List<CompetitionImage> scoredImages = new List<CompetitionImage>();
 
             string databaseFilePath = ImagePaths.GetDatabaseFile(this.GetName());
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
             dbConnection.Open();
-
-            string sql = "SELECT timestamp, name, score FROM scores";
 
             SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
             SQLiteDataReader reader = cmd.ExecuteReader();

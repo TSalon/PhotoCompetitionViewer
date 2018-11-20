@@ -22,7 +22,6 @@ namespace TPhotoCompetitionViewer.Views
     public partial class ScoresWindow : Window
     {
         private Competition competition;
-        internal List<CompetitionImage> images;
 
         public ScoresWindow()
         {
@@ -32,22 +31,28 @@ namespace TPhotoCompetitionViewer.Views
         internal void Init(Competition competition)
         {
             this.competition = competition;
-            this.images = this.competition.GetScoredImages();
 
-            this.PopulateDataGrid();
+            this.ShowAllScoredImages();
         }
 
-        private void PopulateDataGrid()
+        /** Show all scored images on data grid */
+        private void ShowAllScoredImages()
         {
-            for (int i = 0; i < this.images.Count; i++)
+            List<CompetitionImage> images = this.competition.GetAllScoredImages();
+            this.ShowImages(images);
+        }
+
+        private void ShowImages(List<CompetitionImage> images)
+        { 
+            for (int i = 0; i < images.Count; i++)
             {
                 var item = new ScoredImageDataGridItem
                 {
-                    Author = this.images[i].GetAuthor(),
-                    Title = this.images[i].GetTitle(),
-                    Score = this.images[i].GetScore(),
-                    Timestamp = this.images[i].GetScoreTimestamp(),
-                    ImagePath = this.images[i].GetFilePath(),
+                    Author = images[i].GetAuthor(),
+                    Title = images[i].GetTitle(),
+                    Score = images[i].GetScore(),
+                    Timestamp = images[i].GetScoreTimestamp(),
+                    ImagePath = images[i].GetFilePath(),
                 };
                 this.scoresDataGrid.Items.Add(item);
             }
