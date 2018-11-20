@@ -85,7 +85,7 @@ namespace TPhotoCompetitionViewer.Competitions
                     {
                         if (eachImage.GetFilePath() == imageName)
                         {
-                            eachImage.SetScore(score);
+                            eachImage.SetScore(score, timestamp);
                             scoredImages.Add(eachImage);
                             break;
                         }

@@ -23,6 +23,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly Competition competition;
         private string displayResult = "";
         private short score;
+        private string scoreTimestamp;
 
         public CompetitionImage(Competition competition, XmlNode imageNode, int imagePosition)
         {
@@ -42,6 +43,11 @@ namespace TPhotoCompetitionViewer.Competitions
         internal string GetTitle()
         {
             return this.imageTitle;
+        }
+
+        internal object GetScoreTimestamp()
+        {
+            return this.scoreTimestamp;
         }
 
         internal String GetFullFilePath()
@@ -103,9 +109,10 @@ namespace TPhotoCompetitionViewer.Competitions
             }
         }
 
-        internal void SetScore(short score)
+        internal void SetScore(short score, string timestamp)
         {
             this.score = score;
+            this.scoreTimestamp = timestamp;
         }
 
         internal short GetScore()
