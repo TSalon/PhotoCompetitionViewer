@@ -22,7 +22,8 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly IDictionary<String, int> handsetScores = new Dictionary<string,int>(); // Dictionary of handset id -> score
         private readonly Competition competition;
         private string displayResult = "";
-        
+        private short score;
+
         public CompetitionImage(Competition competition, XmlNode imageNode, int imagePosition)
         {
             this.competition = competition;
@@ -100,6 +101,16 @@ namespace TPhotoCompetitionViewer.Competitions
                     this.displayResult = "Commended";
                     break;
             }
+        }
+
+        internal void SetScore(short score)
+        {
+            this.score = score;
+        }
+
+        internal short GetScore()
+        {
+            return this.score;
         }
 
         internal string GetResult()

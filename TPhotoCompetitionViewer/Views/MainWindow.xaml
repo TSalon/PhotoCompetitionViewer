@@ -11,8 +11,9 @@
         <GroupBox x:Name="CompetitionOneBox" Header="GroupBox" HorizontalAlignment="Left" Height="273" Margin="112,129,0,0" VerticalAlignment="Top" Width="1085" FontSize="36">
             <Grid Margin="52,41,0.333,15.333">
                 <Button x:Name="Competition1Button" Content="Run Competition" HorizontalAlignment="Left" Height="68" Margin="10,-24,0,0" VerticalAlignment="Top" Width="962" FontSize="48" Click="Competition1Button_Click"/>
-                <TextBox x:Name="CompOneScoresRequired" HorizontalAlignment="Left" Height="65" Margin="10,67,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="62" FontSize="48" Visibility="Hidden"/>
-                <Label x:Name="CompOneScorersLabel" Content="scorers" HorizontalAlignment="Left" Margin="72,73,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Hidden"/>
+                <TextBox x:Name="CompOneScoresRequired" HorizontalAlignment="Left" Height="65" Margin="10,67,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="62" FontSize="48" Visibility="Visible"/>
+                <Label x:Name="CompOneScorersLabel" Content="scorers" HorizontalAlignment="Left" Margin="72,73,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Visible"/>
+                <Button x:Name="CompOneScoresButton" Content="Scores" HorizontalAlignment="Left" Margin="251,67,0,0" VerticalAlignment="Top" Width="142" Height="64" Click="Scores1Button_Click"/>
                 <Button x:Name="Competition1HeldButton" Content="0 Held Images" HorizontalAlignment="Left" Height="68" Margin="459,67,0,0" VerticalAlignment="Top" Width="425" FontSize="36" Click="Held1Button_Click"/>
                 <Button x:Name="Competition1SlideshowButton" HorizontalAlignment="Left" Margin="904,67,0,0" VerticalAlignment="Top" Width="68" Height="68" Click="Slideshow1Button_Click">
                     <StackPanel>
@@ -27,8 +28,9 @@
         <GroupBox x:Name="CompetitionTwoBox" Header="GroupBox" HorizontalAlignment="Left" Height="282" Margin="112,402,0,0" VerticalAlignment="Top" Width="1085" FontSize="36">
             <Grid Margin="52,41,0.333,15.333">
                 <Button x:Name="Competition2Button" Content="Run Competition" HorizontalAlignment="Left" Height="68" Margin="10,-24,0,0" VerticalAlignment="Top" Width="962" FontSize="48" Click="Competition2Button_Click"/>
-                <TextBox x:Name="CompTwoScoresRequired" HorizontalAlignment="Left" Height="64" Margin="10,67,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="62" FontSize="48" Visibility="Hidden"/>
-                <Label x:Name="CompTwoScorersLabel" Content="scorers" HorizontalAlignment="Left" Margin="72,72,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Hidden"/>
+                <TextBox x:Name="CompTwoScoresRequired" HorizontalAlignment="Left" Height="64" Margin="10,67,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="62" FontSize="48" Visibility="Visible"/>
+                <Label x:Name="CompTwoScorersLabel" Content="scorers" HorizontalAlignment="Left" Margin="72,72,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Visible"/>
+                <Button x:Name="CompTwoScoresButton" Content="Scores" HorizontalAlignment="Left" Margin="251,67,0,0" VerticalAlignment="Top" Width="142" Height="64" Click="Scores2Button_Click"/>
                 <Button x:Name="Competition2HeldButton" Content="0 Held Images" HorizontalAlignment="Left" Height="68" Margin="459,67,0,0" VerticalAlignment="Top" Width="425" FontSize="36" Click="Held2Button_Click"/>
                 <Button x:Name="Competition2SlideshowButton" HorizontalAlignment="Left" Margin="904,67,0,0" VerticalAlignment="Top" Width="68" Height="68" Click="Slideshow2Button_Click">
                     <StackPanel>

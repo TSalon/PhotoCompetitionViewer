@@ -1,0 +1,19 @@
+﻿<Window x:Class="TPhotoCompetitionViewer.Views.ScoresWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TPhotoCompetitionViewer.Views"
+        mc:Ignorable="d"
+        Title="ScoresWindow" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="scoresDataGrid" Margin="0,0,0,0" CanUserSortColumns="True" HeadersVisibility="Column" ItemsSource="{Binding images}" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Author}" ClipboardContentBinding="{x:Null}" Header="Author"/>
+                <DataGridTextColumn Binding="{Binding Title}" ClipboardContentBinding="{x:Null}" Header="Image"/>
+                <DataGridTextColumn Binding="{Binding Score}" ClipboardContentBinding="{x:Null}" Header="Score"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

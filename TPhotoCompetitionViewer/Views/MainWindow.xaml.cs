@@ -44,6 +44,13 @@ namespace TPhotoCompetitionViewer.Views
             this.Competition2Button.IsEnabled = false;
             this.CompTwoScoresRequired.IsEnabled = false;
 
+            this.CompOneScoresRequired.Visibility = Visibility.Hidden;
+            this.CompOneScorersLabel.Visibility = Visibility.Hidden;
+            this.CompOneScoresButton.Visibility = Visibility.Hidden;
+            this.CompTwoScoresRequired.Visibility = Visibility.Hidden;
+            this.CompTwoScorersLabel.Visibility = Visibility.Hidden;
+            this.CompTwoScoresButton.Visibility = Visibility.Hidden;
+
             this.DisableBothHeldButtons();
 
             this.competitionList = CompetitionHelper.GetCompetitions();
@@ -63,6 +70,7 @@ namespace TPhotoCompetitionViewer.Views
                 {
                     this.CompOneScoresRequired.Visibility = Visibility.Visible;
                     this.CompOneScorersLabel.Visibility = Visibility.Visible;
+                    this.CompOneScoresButton.Visibility = Visibility.Visible;
                 }
 
                 if (this.competitionList.Count > 1)
@@ -75,6 +83,7 @@ namespace TPhotoCompetitionViewer.Views
                     {
                         this.CompTwoScoresRequired.Visibility = Visibility.Visible;
                         this.CompTwoScorersLabel.Visibility = Visibility.Visible;
+                        this.CompTwoScoresButton.Visibility = Visibility.Visible;
                     }
                 }
 
@@ -173,6 +182,21 @@ namespace TPhotoCompetitionViewer.Views
             AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
             heldPage.Init(this.competitionList[1]);
             heldPage.ShowDialog();
+        }
+
+
+        private void Scores1Button_Click(object sender, RoutedEventArgs e)
+        {
+            ScoresWindow scoresPage = new ScoresWindow();
+            scoresPage.Init(this.competitionList[0]);
+            scoresPage.ShowDialog();
+        }
+
+        private void Scores2Button_Click(object sender, RoutedEventArgs e)
+        {
+            ScoresWindow scoresPage = new ScoresWindow();
+            scoresPage.Init(this.competitionList[1]);
+            scoresPage.ShowDialog();
         }
 
         private void Slideshow1Button_Click(object sender, RoutedEventArgs e)

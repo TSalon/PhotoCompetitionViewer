@@ -41,7 +41,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 XmlNode rootNode = orderingDocument.FirstChild;
                 this.clubName = rootNode["Club"].InnerText;
                 this.trophyName = rootNode["Trophy"].InnerText;
-                this.scoring = rootNode["Scoring"].InnerText == "true";
+                this.scoring = rootNode["Scoring"].InnerText.ToLower() == "true";
                 XmlNode imagesNode = rootNode["Images"];
                 int i = 1;
                 foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
@@ -59,6 +59,40 @@ namespace TPhotoCompetitionViewer.Competitions
                 this.trophyName = e.Message;
             }
 
+        }
+
+        internal List<CompetitionImage> GetScoredImages()
+        {
+            List<CompetitionImage> scoredImages = new List<CompetitionImage>();
+
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.GetName());
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            dbConnection.Open();
+
+            string sql = "SELECT timestamp, name, score FROM scores";
+
+            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    var timestamp = reader.GetString(0);
+                    var imageName =reader.GetString(1);
+                    var score = reader.GetInt16(2);
+
+                    foreach (CompetitionImage eachImage in this.images)
+                    {
+                        if (eachImage.GetFilePath() == imageName)
+                        {
+                            eachImage.SetScore(score);
+                            scoredImages.Add(eachImage);
+                            break;
+                        }
+                    }
+                }
+            }
+            return scoredImages;
         }
 
         internal bool ScoringEnabled()
