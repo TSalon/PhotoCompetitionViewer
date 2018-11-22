@@ -39,7 +39,7 @@ namespace TPhotoCompetitionViewer.Views
 
         internal void UpdateImageList()
         {
-            this.scoresDataGrid.Items.Clear();
+            this.ShowAllScoredImages();
             this.ShowHighestScorePerPerson();
         }
 
@@ -47,7 +47,7 @@ namespace TPhotoCompetitionViewer.Views
         private void ShowAllScoredImages()
         {
             List<CompetitionImage> images = this.competition.GetAllScoredImages();
-            this.ShowImages(images);
+            this.ShowImages(this.scoresDataGrid, images);
         }
 
         public void ShowHighestScorePerPerson()
@@ -85,11 +85,12 @@ namespace TPhotoCompetitionViewer.Views
                 }
             }
 
-            this.ShowImages(authorTopScoredImages);
+            this.ShowImages(this.oneEachDataGrid, authorTopScoredImages);
         }
 
-        private void ShowImages(List<CompetitionImage> images)
+        private void ShowImages(System.Windows.Controls.DataGrid dataGrid, List<CompetitionImage> images)
         {
+            dataGrid.Items.Clear();
             string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
             var dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
 
@@ -104,7 +105,7 @@ namespace TPhotoCompetitionViewer.Views
                     ImagePath = images[i].GetFilePath(),
                     Held = images[i].IsHeld(dbConnection),
                 };
-                this.scoresDataGrid.Items.Add(item);
+                dataGrid.Items.Add(item);
             }
 
             this.mainWindow.UpdateHeldCount();

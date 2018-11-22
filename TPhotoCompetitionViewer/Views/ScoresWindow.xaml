@@ -7,20 +7,39 @@
         mc:Ignorable="d"
         Title="ScoresWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="scoresDataGrid" Margin="0,0,0,0" CanUserSortColumns="True" HeadersVisibility="Column" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Timestamp}" ClipboardContentBinding="{x:Null}" Header="Time"/>
-                <DataGridTextColumn Binding="{Binding Author}" ClipboardContentBinding="{x:Null}" Header="Author"/>
-                <DataGridTextColumn Binding="{Binding Title}" ClipboardContentBinding="{x:Null}" Header="Image"/>
-                <DataGridTextColumn Binding="{Binding Score}" ClipboardContentBinding="{x:Null}" Header="Score"/>
-                <DataGridTextColumn Binding="{Binding Held}" ClipboardContentBinding="{x:Null}" Header="Held"/>
-            </DataGrid.Columns>
-            <DataGrid.Resources>
-                <Style TargetType="DataGridRow">
-                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
-                </Style>
-            </DataGrid.Resources>
-        </DataGrid>
-
+        <TabControl>
+            <TabItem Header="All">
+                <DataGrid x:Name="scoresDataGrid" Margin="0,0,0,0" CanUserSortColumns="True" HeadersVisibility="Column" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Timestamp}" ClipboardContentBinding="{x:Null}" Header="Time"/>
+                        <DataGridTextColumn Binding="{Binding Author}" ClipboardContentBinding="{x:Null}" Header="Author"/>
+                        <DataGridTextColumn Binding="{Binding Title}" ClipboardContentBinding="{x:Null}" Header="Image"/>
+                        <DataGridTextColumn Binding="{Binding Score}" ClipboardContentBinding="{x:Null}" Header="Score"/>
+                        <DataGridTextColumn Binding="{Binding Held}" ClipboardContentBinding="{x:Null}" Header="Held"/>
+                    </DataGrid.Columns>
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="One Each">
+                <DataGrid x:Name="oneEachDataGrid" Margin="0,0,0,0" CanUserSortColumns="True" HeadersVisibility="Column" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Timestamp}" ClipboardContentBinding="{x:Null}" Header="Time"/>
+                        <DataGridTextColumn Binding="{Binding Author}" ClipboardContentBinding="{x:Null}" Header="Author"/>
+                        <DataGridTextColumn Binding="{Binding Title}" ClipboardContentBinding="{x:Null}" Header="Image"/>
+                        <DataGridTextColumn Binding="{Binding Score}" ClipboardContentBinding="{x:Null}" Header="Score"/>
+                        <DataGridTextColumn Binding="{Binding Held}" ClipboardContentBinding="{x:Null}" Header="Held"/>
+                    </DataGrid.Columns>
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
