@@ -86,7 +86,7 @@ namespace TPhotoCompetitionViewer.Views
         internal void ShowSingleImageWindow(string competitionName, string imagePath, SQLiteConnection dbConnection)
         {
             SingleHeldImageWindow heldImageWindow = new SingleHeldImageWindow();
-            heldImageWindow.Init(competitionName, imagePath, dbConnection, this);
+            heldImageWindow.Init(competitionName, imagePath, dbConnection, this, null);
             heldImageWindow.ShowDialog();
         }
     }

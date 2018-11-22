@@ -188,14 +188,14 @@ namespace TPhotoCompetitionViewer.Views
         private void Scores1Button_Click(object sender, RoutedEventArgs e)
         {
             ScoresWindow scoresPage = new ScoresWindow();
-            scoresPage.Init(this.competitionList[0]);
+            scoresPage.Init(this.competitionList[0], this);
             scoresPage.ShowDialog();
         }
 
         private void Scores2Button_Click(object sender, RoutedEventArgs e)
         {
             ScoresWindow scoresPage = new ScoresWindow();
-            scoresPage.Init(this.competitionList[1]);
+            scoresPage.Init(this.competitionList[1], this);
             scoresPage.ShowDialog();
         }
 

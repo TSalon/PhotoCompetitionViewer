@@ -23,16 +23,23 @@ namespace TPhotoCompetitionViewer.Views
     public partial class ScoresWindow : Window
     {
         private Competition competition;
+        private MainWindow mainWindow;
 
         public ScoresWindow()
         {
             InitializeComponent();
         }
 
-        internal void Init(Competition competition)
+        internal void Init(Competition competition, MainWindow mainWindow)
         {
             this.competition = competition;
+            this.mainWindow = mainWindow;
+            this.UpdateImageList();
+        }
 
+        internal void UpdateImageList()
+        {
+            this.scoresDataGrid.Items.Clear();
             this.ShowHighestScorePerPerson();
         }
 
@@ -99,6 +106,8 @@ namespace TPhotoCompetitionViewer.Views
                 };
                 this.scoresDataGrid.Items.Add(item);
             }
+
+            this.mainWindow.UpdateHeldCount();
         }
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -108,7 +117,7 @@ namespace TPhotoCompetitionViewer.Views
             string imagePath = rowData.ImagePath;
 
             SingleHeldImageWindow imageWindow = new SingleHeldImageWindow();
-            imageWindow.Init(this.competition.GetName(), imagePath, null, null);
+            imageWindow.Init(this.competition.GetName(), imagePath, null, null, this);
             imageWindow.ShowDialog();
         }
     }

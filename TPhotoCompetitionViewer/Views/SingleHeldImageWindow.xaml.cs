@@ -28,6 +28,7 @@ namespace TPhotoCompetitionViewer.Views
         private string imageFileName;
         private AllHeldImagesWindow allHeldImagesWindow;
         private string competitionName;
+        private ScoresWindow scoresWindow;
         private string imageAuthor;
 
         enum Result { First, Second, Third, HighlyCommended, Commended, None };
@@ -42,12 +43,13 @@ namespace TPhotoCompetitionViewer.Views
         /** Show specified image in window.
          *  Use null allHeldImagesWindow to use this standalone, with no scoring.
          */
-        internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection, AllHeldImagesWindow allHeldImagesWindow)
+        internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection, AllHeldImagesWindow allHeldImagesWindow, ScoresWindow scoresWindow)
         {
             this.dbConnection = dbConnection;
             this.imageFileName = imageName;
             this.allHeldImagesWindow = allHeldImagesWindow;
             this.competitionName = competitionName;
+            this.scoresWindow = scoresWindow;
 
             this.imageAuthor = imageName.Split('/')[0];
 
@@ -114,7 +116,12 @@ namespace TPhotoCompetitionViewer.Views
                 // Only works if we're viewing a single image elsewhere - not from the allHeldImagesWindow
                 string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
                 SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-                CompetitionImage.ToggleHeld(dbConnection, this.imageFileName);
+                bool nowHeld = CompetitionImage.ToggleHeld(dbConnection, this.imageFileName);
+
+                this.ImagePosition.Content = nowHeld? "Held" : "No Longer Held";
+                this.ImagePosition.Visibility = Visibility.Visible;
+
+                this.scoresWindow.UpdateImageList();
             }
         }
 
