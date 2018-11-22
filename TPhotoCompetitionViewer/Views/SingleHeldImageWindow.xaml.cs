@@ -109,9 +109,13 @@ namespace TPhotoCompetitionViewer.Views
 
         private void ToggleHeld()
         {
-            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
-            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-            CompetitionImage.ToggleHeld(dbConnection, this.imageFileName);
+            if (this.allHeldImagesWindow == null)
+            {
+                // Only works if we're viewing a single image elsewhere - not from the allHeldImagesWindow
+                string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
+                SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+                CompetitionImage.ToggleHeld(dbConnection, this.imageFileName);
+            }
         }
 
         private void AwardResult(Result result)
