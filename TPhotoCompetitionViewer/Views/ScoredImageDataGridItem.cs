@@ -13,5 +13,6 @@ namespace TPhotoCompetitionViewer.Views
         public short Score { get; set; }
         public object Timestamp { get; set; }
         public string ImagePath { get; set; }
+        public bool Held { get; set; }
     }
 }

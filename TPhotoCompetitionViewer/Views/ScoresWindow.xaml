@@ -13,6 +13,7 @@
                 <DataGridTextColumn Binding="{Binding Author}" ClipboardContentBinding="{x:Null}" Header="Author"/>
                 <DataGridTextColumn Binding="{Binding Title}" ClipboardContentBinding="{x:Null}" Header="Image"/>
                 <DataGridTextColumn Binding="{Binding Score}" ClipboardContentBinding="{x:Null}" Header="Score"/>
+                <DataGridTextColumn Binding="{Binding Held}" ClipboardContentBinding="{x:Null}" Header="Held"/>
             </DataGrid.Columns>
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">

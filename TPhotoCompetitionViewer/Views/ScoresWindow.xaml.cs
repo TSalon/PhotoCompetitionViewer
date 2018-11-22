@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,7 +82,10 @@ namespace TPhotoCompetitionViewer.Views
         }
 
         private void ShowImages(List<CompetitionImage> images)
-        { 
+        {
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
+            var dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+
             for (int i = 0; i < images.Count; i++)
             {
                 var item = new ScoredImageDataGridItem
@@ -91,6 +95,7 @@ namespace TPhotoCompetitionViewer.Views
                     Score = images[i].GetScore(),
                     Timestamp = images[i].GetScoreTimestamp(),
                     ImagePath = images[i].GetFilePath(),
+                    Held = images[i].IsHeld(dbConnection),
                 };
                 this.scoresDataGrid.Items.Add(item);
             }
