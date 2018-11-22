@@ -57,13 +57,18 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal bool IsHeld(SQLiteConnection dbConnection)
         {
+            return CompetitionImage.IsHeld(dbConnection, this.imagePath);
+        }
+
+        internal static bool IsHeld(SQLiteConnection dbConnection, string imagePath)
+        {
             dbConnection.Open();
 
             bool isHeld = false;
             string isHeldSql = "SELECT COUNT(*) FROM held_images WHERE name = @name";
 
             SQLiteCommand cmd = new SQLiteCommand(isHeldSql, dbConnection);
-            cmd.Parameters.Add(new SQLiteParameter("@name", this.imagePath));
+            cmd.Parameters.Add(new SQLiteParameter("@name", imagePath));
             SQLiteDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {
@@ -127,7 +132,12 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal bool ToggleHeld(SQLiteConnection dbConnection)
         {
-            bool isHeld = this.IsHeld(dbConnection);
+            return CompetitionImage.ToggleHeld(dbConnection, this.imagePath);
+        }
+
+        internal static bool ToggleHeld(SQLiteConnection dbConnection, String imagePath)
+        { 
+            bool isHeld = CompetitionImage.IsHeld(dbConnection, imagePath);
 
             dbConnection.Open();
 
@@ -137,7 +147,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 String sql = "INSERT INTO held_images (timestamp, name) VALUES (CURRENT_TIMESTAMP, @name)";
                 
                 SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
-                insertHeld.Parameters.Add(new SQLiteParameter("@name", this.imagePath));
+                insertHeld.Parameters.Add(new SQLiteParameter("@name", imagePath));
                 insertHeld.ExecuteNonQuery();
             }
             else
@@ -145,7 +155,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 // Already held - remove it from the database
                 String sql = "DELETE FROM held_images WHERE name = @name";
                 SQLiteCommand deleteHeld = new SQLiteCommand(sql, dbConnection);
-                deleteHeld.Parameters.Add(new SQLiteParameter("@name", this.imagePath));
+                deleteHeld.Parameters.Add(new SQLiteParameter("@name", imagePath));
                 deleteHeld.ExecuteNonQuery();
             }
 

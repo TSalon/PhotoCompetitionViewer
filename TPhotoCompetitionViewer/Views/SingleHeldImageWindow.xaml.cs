@@ -27,6 +27,7 @@ namespace TPhotoCompetitionViewer.Views
         private SQLiteConnection dbConnection;
         private string imageFileName;
         private AllHeldImagesWindow allHeldImagesWindow;
+        private string competitionName;
         private string imageAuthor;
 
         enum Result { First, Second, Third, HighlyCommended, Commended, None };
@@ -46,6 +47,7 @@ namespace TPhotoCompetitionViewer.Views
             this.dbConnection = dbConnection;
             this.imageFileName = imageName;
             this.allHeldImagesWindow = allHeldImagesWindow;
+            this.competitionName = competitionName;
 
             this.imageAuthor = imageName.Split('/')[0];
 
@@ -96,6 +98,20 @@ namespace TPhotoCompetitionViewer.Views
                     this.AwardResult(Result.HighlyCommended);
                 }
             }
+            else if (e.KeyboardDevice.Modifiers == ModifierKeys.Shift)
+            {
+                if (e.Key == Key.H)
+                {
+                    this.ToggleHeld();
+                }
+            }
+        }
+
+        private void ToggleHeld()
+        {
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            CompetitionImage.ToggleHeld(dbConnection, this.imageFileName);
         }
 
         private void AwardResult(Result result)
