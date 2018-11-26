@@ -132,6 +132,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="HeldImages.cs" />
+    <Compile Include="TimingValues.cs" />
     <Compile Include="Views\ImageNumberPrompt.xaml.cs">
       <DependentUpon>ImageNumberPrompt.xaml</DependentUpon>
     </Compile>

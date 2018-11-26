@@ -49,12 +49,12 @@ namespace TPhotoCompetitionViewer.Views
             //Create a timer with interval of 5 secs for showing the title
             this.titleTimer = new DispatcherTimer();
             this.titleTimer.Tick += new EventHandler(TitleTimer_Tick);
-            this.titleTimer.Interval = new TimeSpan(0, 0, 5);
+            this.titleTimer.Interval = new TimeSpan(0, 0, TimingValues.TIME_TO_SHOW_TITLES_FOR_SECONDS);
 
 	        //Create a timer with interval of 2 second to prevent immadiate scoring
 	        this.enableScoringTimer = new DispatcherTimer();
 	        this.enableScoringTimer.Tick += new EventHandler(ScoringTimer_Tick);
-	        this.enableScoringTimer.Interval = new TimeSpan(0,0,2);
+	        this.enableScoringTimer.Interval = new TimeSpan(0,0, TimingValues.SCORING_DELAY_SECONDS);
         }
 
 
@@ -201,14 +201,14 @@ namespace TPhotoCompetitionViewer.Views
                     this.Dispatcher.Invoke(() =>
                     {
                         // Wait a bit, so that humans don't think we're reading their tiny little minds
-                        Thread.Sleep(1000);
+                        Thread.Sleep(TimingValues.DELAY_BEFORE_READING_SCORE_MS);
 
                         // Read out the appropriate score
                         this.MediaElement.Source = new Uri("Resources/Numbers/Brian/" + totalScore + ".mp3", UriKind.Relative);
                         this.MediaElement.Play();
 
                         // allow time for number to be read out and human perception time
-                        Thread.Sleep(2000);
+                        Thread.Sleep(TimingValues.DELAY_BEFORE_SHOWING_NEXT_IMAGE_MS);
 
                         // Move to next image
                         this.NextImage();

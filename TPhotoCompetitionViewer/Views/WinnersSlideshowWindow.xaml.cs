@@ -36,12 +36,12 @@ namespace TPhotoCompetitionViewer.Views
             //Create a timer with interval of 5 secs for showing the title
             this.titleTimer = new DispatcherTimer();
             this.titleTimer.Tick += new EventHandler(TitleTimer_Tick);
-            this.titleTimer.Interval = new TimeSpan(0, 0, 5);
+            this.titleTimer.Interval = new TimeSpan(0, 0, TimingValues.TIME_TO_SHOW_TITLES_FOR_SECONDS);
 
             //Create a timer with interval of 20 secs for showing the next image
             this.nextImageTimer = new DispatcherTimer();
             this.nextImageTimer.Tick += new EventHandler(NextImageTimer_Tick);
-            this.nextImageTimer.Interval = new TimeSpan(0, 0, 20);
+            this.nextImageTimer.Interval = new TimeSpan(0, 0, TimingValues.SLIDESHOW_NEXT_IMAGE_AFTER_SECONDS);
         }
 
         internal void Init(Competition competition)
