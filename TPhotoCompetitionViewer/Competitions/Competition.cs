@@ -152,6 +152,7 @@ namespace TPhotoCompetitionViewer.Competitions
                         {
                             if (eachImage.GetFilePath() == imageName)
                             {
+                                eachImage.SetResult(null);
                                 awardedImages.Add(eachImage);
                                 break;
                             }

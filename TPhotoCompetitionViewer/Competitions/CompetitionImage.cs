@@ -111,6 +111,10 @@ namespace TPhotoCompetitionViewer.Competitions
                 case "C":
                     this.displayResult = "Commended";
                     break;
+                default:
+                    this.displayResult = "";
+                    break;
+
             }
         }
 
