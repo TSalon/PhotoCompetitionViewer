@@ -37,6 +37,7 @@ namespace TPhotoCompetitionViewer.Views
         private HandsetWrapper handsets;
         private SQLiteConnection dbConnection;
 	    private bool scoringEnabled = false;
+        private bool titleShown = false;
         private PageMode currentMode = PageMode.Start;
 
         /** Initialise Window */
@@ -96,6 +97,8 @@ namespace TPhotoCompetitionViewer.Views
             this.CompetitionNameLabel.Visibility = Visibility.Hidden;
             this.TrophyNameLabel.Visibility = Visibility.Hidden;
 
+            this.titleShown = false;
+
             this.titleTimer.Stop();
             this.enableScoringTimer.Stop();
 
@@ -147,7 +150,9 @@ namespace TPhotoCompetitionViewer.Views
            this.ImageTitle.Visibility = Visibility.Hidden;
            this.ImagePosition.Visibility = Visibility.Hidden;
 
-           this.titleTimer.IsEnabled = false;
+            this.titleShown = false;
+
+            this.titleTimer.IsEnabled = false;
         }
 
 	    /** Handler timer tick to enable scoring */
@@ -211,7 +216,7 @@ namespace TPhotoCompetitionViewer.Views
                         Thread.Sleep(TimingValues.DELAY_BEFORE_SHOWING_NEXT_IMAGE_MS);
 
                         // Move to next image
-                        this.NextImage();
+                        this.NextImage(false);
                     });
                 }
             }
@@ -227,13 +232,19 @@ namespace TPhotoCompetitionViewer.Views
                     break;
 
                 case Key.Right:
-                case Key.PageDown:
-                    this.NextImage();
+                    this.NextImage(false);
+                    break;
+
+                case Key.PageDown: // clicker right
+                    this.NextImage(true);
                     break;
 
                 case Key.Left:
-                case Key.PageUp:
-                    this.PreviousImage();
+                    this.PreviousImage(false);
+                    break;
+
+                case Key.PageUp: // clicker left
+                    this.PreviousImage(true);
                     break;
 
                 case Key.T:
@@ -318,13 +329,20 @@ namespace TPhotoCompetitionViewer.Views
             this.ImageTitle.Visibility = Visibility.Visible;
             this.ImagePosition.Visibility = Visibility.Visible;
 
+            this.titleShown = true;
+
             this.titleTimer.Start();
 	        this.enableScoringTimer.Start();
         }
 
         /** Show the next image */
-        private void NextImage()
+        private void NextImage(Boolean waitForTitleToDisappear)
         {
+            if (waitForTitleToDisappear && this.titleShown)
+            {
+                return;
+            }
+
             switch (this.currentMode)
             {
                 case PageMode.Start:
@@ -350,8 +368,13 @@ namespace TPhotoCompetitionViewer.Views
         }
 
         /** Show the previous image */
-        private void PreviousImage()
+        private void PreviousImage(Boolean waitForTitleToDisappear)
         {
+            if (waitForTitleToDisappear && this.titleShown)
+            {
+                return;
+            }
+
             switch (this.currentMode)
             {
                 case PageMode.Image:
