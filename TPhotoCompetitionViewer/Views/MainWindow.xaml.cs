@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TPhotoCompetitionViewer.Competitions;
+using TPhotoCompetitionViewer.Views.Panel;
 
 namespace TPhotoCompetitionViewer.Views
 {

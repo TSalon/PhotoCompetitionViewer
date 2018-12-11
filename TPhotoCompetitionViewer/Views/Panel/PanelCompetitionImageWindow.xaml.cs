@@ -19,7 +19,7 @@ using TPhotoCompetitionViewer.Competitions;
 using TPhotoCompetitionViewer.Handsets;
 using TPhotoCompetitionViewer.Views;
 
-namespace TPhotoCompetitionViewer.Views
+namespace TPhotoCompetitionViewer.Views.Panel
 {
     /// <summary>
     /// Interaction logic for PanelCompetitionImageWindow.xaml

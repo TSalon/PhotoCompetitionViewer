@@ -35,7 +35,7 @@ namespace TPhotoCompetitionViewerTests.Competitions
         public void TestCompetitions()
         {
             // Test competition manager method
-            List<Competition> competitionsList = CompetitionHelper.GetCompetitions();
+            List<AbstractCompetition> competitionsList = CompetitionHelper.GetCompetitions();
             Assert.AreEqual(1, competitionsList.Count);
             Assert.AreEqual("2018-12-25 Test Competition", competitionsList[0].GetName());
 
@@ -46,7 +46,7 @@ namespace TPhotoCompetitionViewerTests.Competitions
             Assert.AreEqual(0, heldImageCount);
 
             // Get hold of competition object and look at methods on that
-            Competition competition = competitionsList[0];
+            Competition competition = (Competition)competitionsList[0];
             competition.SetScoresRequired(3);
             Assert.AreEqual("2018-12-25 Test Competition", competition.GetName());
             Assert.AreEqual(3, competition.GetScoresRequired());

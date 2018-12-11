@@ -145,7 +145,7 @@
     <Compile Include="Views\ScoresWindow.xaml.cs">
       <DependentUpon>ScoresWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PanelCompetitionImageWindow.xaml.cs">
+    <Compile Include="Views\Panel\PanelCompetitionImageWindow.xaml.cs">
       <DependentUpon>PanelCompetitionImageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SingleHeldImageWindow.xaml.cs">
@@ -162,7 +162,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PanelCompetitionImageWindow.xaml">
+    <Page Include="Views\Panel\PanelCompetitionImageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

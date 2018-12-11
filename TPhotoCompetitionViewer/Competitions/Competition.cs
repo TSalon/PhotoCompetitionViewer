@@ -12,7 +12,7 @@ namespace TPhotoCompetitionViewer.Competitions
 {
     class Competition : AbstractCompetition
     {
-        private List<CompetitionImage> images;
+        private List<CompetitionImage> images = new List<CompetitionImage>();
         private int scoresRequired;
         private bool scoring;
 
