@@ -20,12 +20,12 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly int imagePosition; // first one is 1
         private readonly string imagePath; // Tim Sawyer/221_1_Lone Tree.jpg
         private readonly IDictionary<String, int> handsetScores = new Dictionary<string,int>(); // Dictionary of handset id -> score
-        private readonly Competition competition;
+        private readonly AbstractCompetition competition;
         private string displayResult = "";
         private short score;
         private string scoreTimestamp;
 
-        public CompetitionImage(Competition competition, XmlNode imageNode, int imagePosition)
+        public CompetitionImage(AbstractCompetition competition, XmlNode imageNode, int imagePosition)
         {
             this.competition = competition;
             this.imagePosition = imagePosition;
@@ -57,33 +57,10 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal bool IsHeld(SQLiteConnection dbConnection)
         {
-            return CompetitionImage.IsHeld(dbConnection, this.imagePath);
+            return HoldTools.IsHeld(dbConnection, this.imagePath);
         }
 
-        internal static bool IsHeld(SQLiteConnection dbConnection, string imagePath)
-        {
-            dbConnection.Open();
-
-            bool isHeld = false;
-            string isHeldSql = "SELECT COUNT(*) FROM held_images WHERE name = @name";
-
-            SQLiteCommand cmd = new SQLiteCommand(isHeldSql, dbConnection);
-            cmd.Parameters.Add(new SQLiteParameter("@name", imagePath));
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    isHeld = reader.GetInt16(0) > 0;
-                }
-            }
-            reader.Close();
-
-
-            dbConnection.Close();
-
-            return isHeld;
-        }
+       
 
         internal string GetAuthor()
         {
@@ -136,36 +113,10 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal bool ToggleHeld(SQLiteConnection dbConnection)
         {
-            return CompetitionImage.ToggleHeld(dbConnection, this.imagePath);
+            return HoldTools.ToggleHeld(dbConnection, this.imagePath);
         }
 
-        internal static bool ToggleHeld(SQLiteConnection dbConnection, String imagePath)
-        { 
-            bool isHeld = CompetitionImage.IsHeld(dbConnection, imagePath);
-
-            dbConnection.Open();
-
-            if (isHeld == false)
-            {
-                // Not held - hold it in the database
-                String sql = "INSERT INTO held_images (timestamp, name) VALUES (CURRENT_TIMESTAMP, @name)";
-                
-                SQLiteCommand insertHeld = new SQLiteCommand(sql, dbConnection);
-                insertHeld.Parameters.Add(new SQLiteParameter("@name", imagePath));
-                insertHeld.ExecuteNonQuery();
-            }
-            else
-            {
-                // Already held - remove it from the database
-                String sql = "DELETE FROM held_images WHERE name = @name";
-                SQLiteCommand deleteHeld = new SQLiteCommand(sql, dbConnection);
-                deleteHeld.Parameters.Add(new SQLiteParameter("@name", imagePath));
-                deleteHeld.ExecuteNonQuery();
-            }
-
-            dbConnection.Close();
-            return !isHeld;
-        }
+       
 
         internal int ScoreImage(string handsetId, int score, SQLiteConnection dbConnection)
         {

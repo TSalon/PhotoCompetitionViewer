@@ -8,57 +8,16 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace TPhotoCompetitionViewer.Competitions
+namespace TPhotoCompetitionViewer.Competitions 
 {
-    class Competition
+    class Competition : AbstractCompetition
     {
-        private const string CONTROL_FILENAME = "competition.xml";
-
         private List<CompetitionImage> images;
-        private readonly string competitionFileName;
         private int scoresRequired;
-        private string competitionDirectory;
-        private string clubName;
-        private string trophyName;
         private bool scoring;
 
-        public Competition(string competitionFileName)
+        public Competition(string competitionFileName, string competitionDirectory, string clubName, string trophyName) : base(competitionFileName, competitionDirectory, clubName, trophyName)
         {
-            this.competitionFileName = competitionFileName;
-        }
-
-        internal void LoadImages(string competitionDirectory)
-        {
-            // Store path to images
-            this.competitionDirectory = competitionDirectory;
-
-            try
-            {
-                // Load image order details
-                XmlDocument orderingDocument = new XmlDocument();
-                orderingDocument.Load(competitionDirectory + "/" + CONTROL_FILENAME);
-                var imageList = new List<CompetitionImage>();
-                XmlNode rootNode = orderingDocument.FirstChild;
-                this.clubName = rootNode["Club"].InnerText;
-                this.trophyName = rootNode["Trophy"].InnerText;
-                this.scoring = rootNode["Scoring"].InnerText.ToLower() == "true";
-                XmlNode imagesNode = rootNode["Images"];
-                int i = 1;
-                foreach (XmlNode eachImageNode in imagesNode.ChildNodes)
-                {
-                    CompetitionImage eachImage = new CompetitionImage(this, eachImageNode, i);
-                    imageList.Add(eachImage);
-                    i += 1;
-                }
-
-                this.images = imageList;
-            }
-            catch (Exception e)
-            {
-                this.clubName = "Competition zip file broken";
-                this.trophyName = e.Message;
-            }
-
         }
 
         internal List<CompetitionImage> GetAllScoredImages()
@@ -99,7 +58,17 @@ namespace TPhotoCompetitionViewer.Competitions
             return scoredImages;
         }
 
-        internal bool ScoringEnabled()
+        internal void SetScoring(bool scoring)
+        {
+            this.scoring = scoring;
+        }
+
+        internal void SetImages(List<CompetitionImage> imageList)
+        {
+            this.images = imageList;
+        }
+
+        internal override bool ScoringEnabled()
         {
             return this.scoring;
         }
@@ -166,14 +135,9 @@ namespace TPhotoCompetitionViewer.Competitions
             return awardedImages;
         }
 
-        internal int GetScoresRequired()
+        internal override int GetScoresRequired()
         {
             return this.scoresRequired;
-        }
-
-        internal string GetName()
-        {
-            return this.competitionFileName;
         }
 
         internal int MaxImageIndex()
@@ -186,24 +150,9 @@ namespace TPhotoCompetitionViewer.Competitions
             return this.images[imageIndex];
         }
 
-        internal object GetClubName()
-        {
-            return this.clubName;
-        }
-
-        internal object GetTrophyName()
-        {
-            return this.trophyName;
-        }
-
         internal void SetScoresRequired(int scoresRequired)
         {
             this.scoresRequired = scoresRequired;
-        }
-
-        internal string GetCompetitionDirectory()
-        {
-            return this.competitionDirectory;
         }
     }
 }

@@ -116,7 +116,7 @@ namespace TPhotoCompetitionViewer.Views
                 // Only works if we're viewing a single image elsewhere - not from the allHeldImagesWindow
                 string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
                 SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-                bool nowHeld = CompetitionImage.ToggleHeld(dbConnection, this.imageFileName);
+                bool nowHeld = HoldTools.ToggleHeld(dbConnection, this.imageFileName);
 
                 this.ImagePosition.Content = nowHeld? "Held" : "No Longer Held";
                 this.ImagePosition.Visibility = Visibility.Visible;

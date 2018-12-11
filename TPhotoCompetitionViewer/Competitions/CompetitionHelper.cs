@@ -16,10 +16,10 @@ namespace TPhotoCompetitionViewer.Competitions
             // Prevent instantiation
         }
 
-        internal static List<Competition> GetCompetitions()
+        internal static List<AbstractCompetition> GetCompetitions()
         {
             IEnumerable<string> competitions = ImagePaths.GetCompetitionZipFilesList();
-            List<Competition> competitionList = new List<Competition>();
+            List<AbstractCompetition> competitionList = new List<AbstractCompetition>();
             foreach (var item in competitions)
             {
                 var today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
@@ -35,8 +35,7 @@ namespace TPhotoCompetitionViewer.Competitions
                         CompetitionHelper.ExtractFiles(competitionName);
                         CompetitionHelper.CreateDatabase(competitionName);
 
-                        Competition competition = new Competition(competitionName);
-                        competition.LoadImages(ImagePaths.GetExtractDirectory(competition.GetName()));
+                        AbstractCompetition competition = CompetitionFactory.Load(competitionName);
                         competitionList.Add(competition);
                     }
                 }

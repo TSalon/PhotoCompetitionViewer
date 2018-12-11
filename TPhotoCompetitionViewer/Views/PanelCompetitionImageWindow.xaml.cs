@@ -22,26 +22,25 @@ using TPhotoCompetitionViewer.Views;
 namespace TPhotoCompetitionViewer.Views
 {
     /// <summary>
-    /// Interaction logic for SingleCompetitionImageWindow.xaml
-    ///   - Responsible for handling all interaction with scoring controllers
+    /// Interaction logic for PanelCompetitionImageWindow.xaml
+    ///   - Scoring controllers not supported
     /// </summary>
-    public partial class SingleCompetitionImageWindow : Window
+    public partial class PanelCompetitionImageWindow : Window
     {
-        private enum PageMode { Start, Image, End };
-        private Competition competition;
+        private enum PageMode { Start, Panel, Image, End };
+        private PanelCompetition competition;
         private CompetitionImage competitionImage;
+        private CompetitionPanel competitionPanel;
         private int imageIndex = 0;
+        private int panelIndex = 0;
         private DispatcherTimer titleTimer;
-	    private DispatcherTimer enableScoringTimer;
         private MainWindow mainWindow;
-        private HandsetWrapper handsets;
         private SQLiteConnection dbConnection;
-	    private bool scoringEnabled = false;
         private bool titleShown = false;
         private PageMode currentMode = PageMode.Start;
 
         /** Initialise Window */
-        public SingleCompetitionImageWindow()
+        public PanelCompetitionImageWindow()
         {
             InitializeComponent();
 
@@ -51,34 +50,16 @@ namespace TPhotoCompetitionViewer.Views
             this.titleTimer = new DispatcherTimer();
             this.titleTimer.Tick += new EventHandler(TitleTimer_Tick);
             this.titleTimer.Interval = new TimeSpan(0, 0, TimingValues.TIME_TO_SHOW_TITLES_FOR_SECONDS);
-
-	        //Create a timer with interval of 2 second to prevent immediate scoring
-	        this.enableScoringTimer = new DispatcherTimer();
-	        this.enableScoringTimer.Tick += new EventHandler(ScoringTimer_Tick);
-	        this.enableScoringTimer.Interval = new TimeSpan(0,0, TimingValues.SCORING_DELAY_SECONDS);
         }
 
 
         /** Initialise this window for a particular competition and show the title page */
-        internal void Init(Competition competition, List<IBuzzHandsetDevice> handsets, MainWindow mainWindow)
+        internal void Init(PanelCompetition competition, MainWindow mainWindow)
         {
             // Get handle to main window
             this.mainWindow = mainWindow;
 
-            // get handle to buzz controllers and register event handler
-            this.handsets = new HandsetWrapper(handsets);
-            if (this.handsets.HasHandsets())
-            {
-                this.handsets.Get(0).ButtonChanged += HandleHandsetEvent0;
-                if (this.handsets.HasSecondHandsetGroup())
-                {
-                    this.handsets.Get(1).ButtonChanged += HandleHandsetEvent1;
-                }
-
-                // start with all handset lights turned off
-                this.handsets.AllLightsOff();
-            }
-
+            // Get handle to competition
             this.competition = competition;
 
             // Get a handle to the database for this competition
@@ -92,7 +73,7 @@ namespace TPhotoCompetitionViewer.Views
         {
             this.ImagePane.Visibility = Visibility.Hidden;
             this.ImageTitle.Visibility = Visibility.Hidden;
-            this.ImagePosition.Visibility = Visibility.Hidden;
+            this.PanelPosition.Visibility = Visibility.Hidden;
             this.ClubNameLabel.Visibility = Visibility.Hidden;
             this.CompetitionNameLabel.Visibility = Visibility.Hidden;
             this.TrophyNameLabel.Visibility = Visibility.Hidden;
@@ -100,9 +81,6 @@ namespace TPhotoCompetitionViewer.Views
             this.titleShown = false;
 
             this.titleTimer.Stop();
-            this.enableScoringTimer.Stop();
-
-            this.scoringEnabled = false;
         }
 
         private void SetPageMode(PageMode pageMode)
@@ -122,6 +100,15 @@ namespace TPhotoCompetitionViewer.Views
                     this.CompetitionNameLabel.Content = competitionNameLessDate;
                     this.TrophyNameLabel.Visibility = Visibility.Visible;
                     this.TrophyNameLabel.Content = this.competition.GetTrophyName();
+
+                    break;
+
+                case PageMode.Panel:
+                    this.HideAllControls();
+
+                    //this.ShowPanelImages();
+
+                    this.PanelPosition.Visibility = Visibility.Visible;
 
                     break;
 
@@ -147,81 +134,17 @@ namespace TPhotoCompetitionViewer.Views
         /** Handle timer tick to hide image title */
         private void TitleTimer_Tick(object sender, EventArgs e)
         {
-           this.ImageTitle.Visibility = Visibility.Hidden;
-           this.ImagePosition.Visibility = Visibility.Hidden;
-
-            this.titleShown = false;
-
-            this.titleTimer.IsEnabled = false;
-        }
-
-	    /** Handler timer tick to enable scoring */
-	    private void ScoringTimer_Tick(object sender, EventArgs e)
-	    {
-	      this.scoringEnabled = true;
-	    }
-
-
-        /** Event handler for first handset group */
-        private void HandleHandsetEvent0(object sender, BuzzButtonChangedEventArgs e)
-        {
-            this.HandleHandsetEvent(0, e);         
-        }
-
-        /** Event handler for second handset group, if present */
-        private void HandleHandsetEvent1(object sender, BuzzButtonChangedEventArgs e)
-        {
-            this.HandleHandsetEvent(1, e);
-        }
-
-        /** Handle the click of a handset button */
-        private void HandleHandsetEvent(int handsetGroupNumber, BuzzButtonChangedEventArgs e)
-        {
-            for (int i=0; i<e.Buttons.Length;i++)
+            switch (this.currentMode)
             {
-                var eachHandsetButtons = e.Buttons[i];
-                if (eachHandsetButtons.Any)
-                {
-                    var handsetId = HandsetIdTools.BuildHandsetId(handsetGroupNumber, i);
-                    if (eachHandsetButtons.Blue) { this.ScoreImage(handsetId, 5); continue; }
-                    if (eachHandsetButtons.Orange) { this.ScoreImage(handsetId, 4); continue; }
-                    if (eachHandsetButtons.Green) { this.ScoreImage(handsetId, 3); continue; }
-                    if (eachHandsetButtons.Yellow) { this.ScoreImage(handsetId, 2); continue; }
-                    if (eachHandsetButtons.Red) { this.ScoreImage(handsetId, 0); continue; }
-                }
+                case PageMode.Image:
+                    this.ImageTitle.Visibility = Visibility.Hidden;
+                    this.titleShown = false;
+                    this.titleTimer.IsEnabled = false;
+                    break;
             }
         }
 
-        /** Record the score associated with a pushed handset button */
-        private void ScoreImage(string handsetId, int score)
-        {
-            if (this.competitionImage != null && this.scoringEnabled)
-            {
-                int totalScore = this.competitionImage.ScoreImage(handsetId, score, this.dbConnection);
-                this.handsets.SetLightsForThisImage(this.competitionImage);
-
-                if (totalScore > 0)
-                {
-                    // we have total score
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        // Wait a bit, so that humans don't think we're reading their tiny little minds
-                        Thread.Sleep(TimingValues.DELAY_BEFORE_READING_SCORE_MS);
-
-                        // Read out the appropriate score
-                        this.MediaElement.Source = new Uri("Resources/Numbers/Brian/" + totalScore + ".mp3", UriKind.Relative);
-                        this.MediaElement.Play();
-
-                        // allow time for number to be read out and human perception time
-                        Thread.Sleep(TimingValues.DELAY_BEFORE_SHOWING_NEXT_IMAGE_MS);
-
-                        // Move to next image
-                        this.NextImage(false);
-                    });
-                }
-            }
-        }
-
+	    
         /** Handle a key on the keyboard being pushed */
         private void HandleKeys(object sender, KeyEventArgs e)
         {
@@ -253,27 +176,26 @@ namespace TPhotoCompetitionViewer.Views
                     break;
 
                 case Key.H:
-                    this.HoldImage();
+                    this.HoldPanel();
                     break;
             }
         }
 
         private void CloseWindow()
         {
-            this.handsets.AllLightsOff();
             this.Close();
         }
 
         /** Mark an image as held */
-        private void HoldImage()
+        private void HoldPanel()
         {
-            if (this.currentMode != PageMode.Image)
+            if (this.currentMode != PageMode.Panel)
             {
                 return;
             }
             
-            this.competitionImage.ToggleHeld(this.dbConnection);
-            this.ShowTitle();
+            this.competitionPanel.ToggleHeld(this.dbConnection);
+            this.ShowProgress();
 
             this.mainWindow.UpdateHeldCount();
         }
@@ -283,16 +205,10 @@ namespace TPhotoCompetitionViewer.Views
         {
 	        this.titleTimer.Stop();
 	
-	        this.scoringEnabled = false;
-	        this.enableScoringTimer.Stop();
-
-
             this.imageIndex = imageIndex;
-            this.competitionImage = this.competition.GetImageObject(imageIndex);
+            this.competitionImage = this.competition.GetImageObject(this.panelIndex, imageIndex);
 
-            this.handsets.SetLightsForThisImage(this.competitionImage);
-
-            string imagePath = this.competitionImage.GetFullFilePath();
+            string imagePath = competitionImage.GetFullFilePath();
             BitmapImage imageToShow = new BitmapImage();
             imageToShow.BeginInit();
             imageToShow.UriSource = new Uri(imagePath);
@@ -300,6 +216,8 @@ namespace TPhotoCompetitionViewer.Views
             this.ImagePane.Source = imageToShow;
 
             this.ShowTitle();
+
+            this.SetPageMode(PageMode.Image);
         }
 
         /** Show the image title for a short period of time */
@@ -311,28 +229,40 @@ namespace TPhotoCompetitionViewer.Views
             }
 
             string imageName = this.competitionImage.GetTitle();
-            int imageCount = this.competition.MaxImageIndex() + 1;
-            int imageCurrentIndex = this.imageIndex + 1;
-            string imagePosition;
+            this.ImageTitle.Content = imageName;
+            this.ImageTitle.Visibility = Visibility.Visible;
+           
+            this.titleShown = true;
 
-            if (this.competitionImage.IsHeld(this.dbConnection))
+            this.titleTimer.Start();
+        }
+
+        private void ShowProgress()
+        {
+            if (this.currentMode != PageMode.Panel)
             {
-                imagePosition = "[" + imageCurrentIndex + "/" + imageCount + "]" ;
+                return;
+            }
+
+            int panelCount = this.competition.MaxPanelIndex() + 1;
+            int panelCurrentIndex = this.panelIndex + 1;
+            string panelPosition;
+
+            if (this.competitionPanel.IsHeld(this.dbConnection))
+            {
+                panelPosition = "[" + panelCurrentIndex + "/" + panelCount + "]";
             }
             else
             {
-                imagePosition = "(" + imageCurrentIndex + "/" + imageCount + ")";
+                panelPosition = "(" + panelCurrentIndex + "/" + panelCount + ")";
             }
 
-            this.ImageTitle.Content = imageName;
-            this.ImagePosition.Content = imagePosition;
-            this.ImageTitle.Visibility = Visibility.Visible;
-            this.ImagePosition.Visibility = Visibility.Visible;
+            this.PanelPosition.Content = panelPosition;
+            this.PanelPosition.Visibility = Visibility.Visible;
 
             this.titleShown = true;
 
             this.titleTimer.Start();
-	        this.enableScoringTimer.Start();
         }
 
         /** Show the next image */
@@ -346,25 +276,47 @@ namespace TPhotoCompetitionViewer.Views
             switch (this.currentMode)
             {
                 case PageMode.Start:
-                    this.SetPageMode(PageMode.Image);
-                    // Show first image
-                    this.imageIndex = 0;
-                    this.ShowImage(this.imageIndex);
+                    this.SetPageMode(PageMode.Panel);
+                    // Show first panel title
+                    this.panelIndex = 0;
+                    this.ShowPanel(this.panelIndex);
+                    break;
+
+                case PageMode.Panel:
+                    this.ShowImage(0);
+
                     break;
 
                 case PageMode.Image:
                     // Show next image, or end page
-                    if (this.imageIndex < this.competition.MaxImageIndex())
+                    if (this.imageIndex < this.competition.MaxImageIndex(this.panelIndex))
                     {
                         this.ShowImage(this.imageIndex + 1);
                     }
                     else
                     {
-                        this.SetPageMode(PageMode.End);
-
+                        if (this.panelIndex < this.competition.MaxPanelIndex())
+                        {
+                            this.ShowPanel(this.panelIndex + 1);
+                        }
+                        else
+                        {
+                            this.SetPageMode(PageMode.End);
+                        }
                     }
                     break;
             }
+        }
+
+        private void ShowPanel(int panelIndex)
+        {
+            this.SetPageMode(PageMode.Panel);
+
+            this.panelIndex = panelIndex;
+            this.competitionPanel = this.competition.GetPanel(panelIndex);
+            this.competitionImage = null;
+
+            this.ShowProgress();
         }
 
         /** Show the previous image */
@@ -377,6 +329,20 @@ namespace TPhotoCompetitionViewer.Views
 
             switch (this.currentMode)
             {
+                case PageMode.Panel:
+                    if (this.panelIndex == 0)
+                    {
+                        this.SetPageMode(PageMode.Start);
+                    }
+                    else
+                    {
+                        this.panelIndex--;
+                        this.SetPageMode(PageMode.Image);
+                        CompetitionPanel panel = this.competition.GetPanel(this.panelIndex);
+                        this.ShowImage(panel.MaxImageIndex());
+                    }
+                    break;
+
                 case PageMode.Image:
                     if (this.imageIndex > 0)
                     {
@@ -384,11 +350,11 @@ namespace TPhotoCompetitionViewer.Views
                     }
                     else
                     {
-                        this.SetPageMode(PageMode.Start);
+                        this.ShowPanel(this.panelIndex);
                     }
                     break;
+
                 case PageMode.End:
-                    this.SetPageMode(PageMode.Image);
                     this.ShowImage(this.imageIndex);
                     break;
 
