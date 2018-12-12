@@ -24,12 +24,12 @@ namespace TPhotoCompetitionViewer
         private List<string> imageFilePaths;
         private Dictionary<string, string> awards;
         private readonly Grid gfOuter;
-        private readonly AllHeldImagesWindow AllHeldImagesWindow;
+        private readonly IAllHeldImagesWindow AllHeldImagesWindow;
 
         public static readonly DependencyProperty ImageNumberProperty = DependencyProperty.RegisterAttached("ImageNumber", typeof(int), typeof(Image), new PropertyMetadata(default(int)));
 
 
-        public HeldImages(string competitionName, List<string> heldImages, Grid gfOuter, AllHeldImagesWindow allHeldImagesWindow)
+        public HeldImages(string competitionName, List<string> heldImages, Grid gfOuter, IAllHeldImagesWindow allHeldImagesWindow)
         {
             this.competitionName = competitionName;
             this.imageFilePaths = heldImages;

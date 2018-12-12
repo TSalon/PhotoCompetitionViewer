@@ -23,7 +23,7 @@ namespace TPhotoCompetitionViewer.Competitions
             this.eachPanelNode = eachPanelNode;
             this.panelPosition = panelPosition;
             this.panelAuthor = eachPanelNode.Attributes["author"].InnerText;
-            this.panelId = panelAuthor + "_" + panelPosition;
+            this.panelId = panelAuthor + "_" + panelPosition + ".jpg";
         }
 
         internal void AddImage(CompetitionImage eachImage)
@@ -49,6 +49,16 @@ namespace TPhotoCompetitionViewer.Competitions
         internal bool IsHeld(SQLiteConnection dbConnection)
         {
             return HoldTools.IsHeld(dbConnection, this.panelId);
+        }
+
+        internal string GetAuthor()
+        {
+            return this.panelAuthor;
+        }
+
+        internal int GetPosition()
+        {
+            return this.panelPosition;
         }
     }
 }

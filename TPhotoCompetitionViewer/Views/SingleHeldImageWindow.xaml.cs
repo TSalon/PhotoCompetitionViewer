@@ -26,7 +26,7 @@ namespace TPhotoCompetitionViewer.Views
     {
         private SQLiteConnection dbConnection;
         private string imageFileName;
-        private AllHeldImagesWindow allHeldImagesWindow;
+        private IAllHeldImagesWindow allHeldImagesWindow;
         private string competitionName;
         private ScoresWindow scoresWindow;
         private string imageAuthor;
@@ -43,7 +43,7 @@ namespace TPhotoCompetitionViewer.Views
         /** Show specified image in window.
          *  Use null allHeldImagesWindow to use this standalone, with no scoring.
          */
-        internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection, AllHeldImagesWindow allHeldImagesWindow, ScoresWindow scoresWindow)
+        internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection, IAllHeldImagesWindow allHeldImagesWindow, ScoresWindow scoresWindow)
         {
             this.dbConnection = dbConnection;
             this.imageFileName = imageName;

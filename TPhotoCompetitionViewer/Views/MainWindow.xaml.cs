@@ -180,18 +180,31 @@ namespace TPhotoCompetitionViewer.Views
             this.RunCompetition(competition);
         }
 
+        private void ShowHeldImages(AbstractCompetition competition)
+        {
+            if (competition is PanelCompetition)
+            {
+                AllHeldPanelsWindow heldPage = new AllHeldPanelsWindow();
+                heldPage.Init((PanelCompetition)competition);
+                heldPage.ShowDialog();
+            }
+            else
+            {
+                AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
+                heldPage.Init((Competition)competition);
+                heldPage.ShowDialog();
+            }
+                
+        }
+
         private void Held1Button_Click(object sender, RoutedEventArgs e)
         {
-            AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
-            heldPage.Init((Competition)this.competitionList[0]);
-            heldPage.ShowDialog();
+            this.ShowHeldImages(this.competitionList[0]);
         }
 
         private void Held2Button_Click(object sender, RoutedEventArgs e)
         {
-            AllHeldImagesWindow heldPage = new AllHeldImagesWindow();
-            heldPage.Init((Competition)this.competitionList[1]);
-            heldPage.ShowDialog();
+            this.ShowHeldImages(this.competitionList[1]);
         }
 
 

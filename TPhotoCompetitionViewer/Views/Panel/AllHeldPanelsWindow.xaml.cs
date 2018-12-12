@@ -14,17 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TPhotoCompetitionViewer.Competitions;
 
-namespace TPhotoCompetitionViewer.Views
+namespace TPhotoCompetitionViewer.Views.Panel
 {
     /// <summary>
     /// Interaction logic for HeldWindow.xaml
     /// </summary>
-    public partial class AllHeldImagesWindow : Window, IAllHeldImagesWindow
+    public partial class AllHeldPanelsWindow : Window, IAllHeldImagesWindow
     {
-        private Competition competition;
+        private PanelCompetition competition;
         private HeldImages heldImages = null;
 
-        public AllHeldImagesWindow()
+        public AllHeldPanelsWindow()
         {
             InitializeComponent();
 
@@ -32,7 +32,7 @@ namespace TPhotoCompetitionViewer.Views
         }
 
         /** Initialise screen with held images */
-        internal void Init(Competition competition)
+        internal void Init(PanelCompetition competition)
         {
             this.competition = competition;
             var heldImages = CompetitionHelper.GetHeldImages(competition.GetName());
@@ -52,34 +52,6 @@ namespace TPhotoCompetitionViewer.Views
             if (e.Key == Key.Escape)
             {
                 this.Close();
-            }
-            else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
-            {
-                if (e.Key == Key.N)
-                {
-                    this.SelectByNumber();
-                }
-            }
-        }
-
-        private void SelectByNumber()
-        {
-            ImageNumberPrompt imageNumberWindow = new ImageNumberPrompt();
-            imageNumberWindow.ShowDialog();
-
-            int selectedNumber = imageNumberWindow.GetSelectedNumber();
-            if (selectedNumber > 0)
-            {
-                string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
-                SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-
-                int imagePosition = selectedNumber - 1;
-                CompetitionImage image = this.competition.GetImageObject(imagePosition);
-                if (image.IsHeld(dbConnection))
-                {
-                    string imagePath = image.GetFilePath();
-                    ShowSingleImageWindow(this.competition.GetName(), imagePath, dbConnection);
-                }
             }
         }
 
