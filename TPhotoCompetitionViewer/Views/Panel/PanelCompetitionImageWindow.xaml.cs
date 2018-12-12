@@ -106,8 +106,7 @@ namespace TPhotoCompetitionViewer.Views.Panel
                 case PageMode.Panel:
                     this.HideAllControls();
 
-                    //this.ShowPanelImages();
-
+                    this.ImagePane.Visibility = Visibility.Visible;
                     this.PanelPosition.Visibility = Visibility.Visible;
 
                     break;
@@ -315,6 +314,13 @@ namespace TPhotoCompetitionViewer.Views.Panel
             this.panelIndex = panelIndex;
             this.competitionPanel = this.competition.GetPanel(panelIndex);
             this.competitionImage = null;
+
+            string imagePath = this.competition.GetCompetitionDirectory() + "/" + this.competitionPanel.GetPanelId();
+            BitmapImage imageToShow = new BitmapImage();
+            imageToShow.BeginInit();
+            imageToShow.UriSource = new Uri(imagePath);
+            imageToShow.EndInit();
+            this.ImagePane.Source = imageToShow;
 
             this.ShowProgress();
         }

@@ -113,14 +113,12 @@ namespace TPhotoCompetitionViewer.Views
         {
             this.DisableBothHeldButtons();
 
-            List<AbstractCompetition> competitions = CompetitionHelper.GetCompetitions();
-
             BitmapImage blackSlideshowIcon = new BitmapImage();
             blackSlideshowIcon.BeginInit();
             blackSlideshowIcon.UriSource = new Uri("pack://application:,,,/Resources/slideshow_black_72x72.png");
             blackSlideshowIcon.EndInit();
 
-            int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitions[0].GetName());
+            int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(this.competitionList[0].GetName());
             this.Competition1HeldButton.IsEnabled = lCompetitionOneHeldImageCount > 0;
             this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held Images";
             if (this.Competition1HeldButton.IsEnabled)
@@ -129,9 +127,9 @@ namespace TPhotoCompetitionViewer.Views
                 this.Competition1SlideshowImage.Source = blackSlideshowIcon;
             }
 
-            if (competitions.Count > 1)
+            if (this.competitionList.Count > 1)
             {
-                int lCompetitionTwoHeldImageCount = CompetitionHelper.FetchHeldImageCount(competitions[1].GetName());
+                int lCompetitionTwoHeldImageCount = CompetitionHelper.FetchHeldImageCount(this.competitionList[1].GetName());
                 this.Competition2HeldButton.IsEnabled = lCompetitionTwoHeldImageCount > 0;
                 this.Competition2HeldButton.Content = lCompetitionTwoHeldImageCount + " Held Images";
                 if (this.Competition2HeldButton.IsEnabled)

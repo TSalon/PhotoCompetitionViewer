@@ -223,13 +223,7 @@ namespace TPhotoCompetitionViewer
 
         internal string GetImageTitle(int position)
         {
-            string imagePath = this.imageFilePaths[position];
-            string[] authorFile = imagePath.Split('/');
-            string filename = authorFile[1];
-            string filenameNoExt = filename.Substring(0, filename.Length - 4);
-            string filenameNoPrefix = filenameNoExt.Substring(filename.IndexOf("_"));
-            filenameNoPrefix = filenameNoPrefix.Substring(filename.IndexOf("_"));
-            return filenameNoPrefix;
+            return "Panel " + (position + 1);
         }
     }
 

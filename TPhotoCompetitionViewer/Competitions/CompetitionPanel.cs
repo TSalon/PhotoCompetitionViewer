@@ -60,5 +60,10 @@ namespace TPhotoCompetitionViewer.Competitions
         {
             return this.panelPosition;
         }
+
+        internal string GetPanelId()
+        {
+            return this.panelId;
+        }
     }
 }
