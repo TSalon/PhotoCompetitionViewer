@@ -92,12 +92,12 @@ namespace TPhotoCompetitionViewer.Competitions
             using (DrawingContext drawingContext = drawingVisual.RenderOpen())
             {
                 drawingContext.DrawImage(frame1, new Rect(0, 0, frame1.PixelWidth, frame1.PixelHeight));
-                drawingContext.DrawImage(frame2, new Rect(frame1.PixelWidth, 0, frame2.PixelWidth, frame2.PixelHeight));
-                drawingContext.DrawImage(frame3, new Rect(frame1.PixelWidth + frame2.PixelWidth, 0, frame3.PixelWidth, frame3.PixelHeight));
+                drawingContext.DrawImage(frame2, new Rect(frame1.PixelWidth + 10, 0, frame2.PixelWidth, frame2.PixelHeight));
+                drawingContext.DrawImage(frame3, new Rect(frame1.PixelWidth + frame2.PixelWidth + 20, 0, frame3.PixelWidth, frame3.PixelHeight));
             }
 
             // Converts the Visual (DrawingVisual) into a BitmapSource
-            int width = frame1.PixelWidth + frame2.PixelWidth + frame3.PixelWidth;
+            int width = frame1.PixelWidth + frame2.PixelWidth + frame3.PixelWidth + 20;
             int height = Math.Max(frame1.PixelHeight, Math.Max(frame2.PixelHeight, frame3.PixelHeight));
             RenderTargetBitmap bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
             bmp.Render(drawingVisual);
