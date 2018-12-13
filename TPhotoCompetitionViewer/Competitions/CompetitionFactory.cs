@@ -87,21 +87,19 @@ namespace TPhotoCompetitionViewer.Competitions
             BitmapFrame frame2 = BitmapDecoder.Create(new Uri(eachPanel.GetImage(1).GetFullFilePath()), BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frames.First();
             BitmapFrame frame3 = BitmapDecoder.Create(new Uri(eachPanel.GetImage(2).GetFullFilePath()), BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frames.First();
 
-            // Gets the size of the images (I assume each image has the same size)
-            int imageWidth = frame1.PixelWidth;
-            int imageHeight = frame1.PixelHeight;
-
             // Draws the images into a DrawingVisual component
             DrawingVisual drawingVisual = new DrawingVisual();
             using (DrawingContext drawingContext = drawingVisual.RenderOpen())
             {
-                drawingContext.DrawImage(frame1, new Rect(0, 0, imageWidth, imageHeight));
-                drawingContext.DrawImage(frame2, new Rect(imageWidth, 0, imageWidth, imageHeight));
-                drawingContext.DrawImage(frame3, new Rect(imageWidth * 2, 0, imageWidth, imageHeight));
+                drawingContext.DrawImage(frame1, new Rect(0, 0, frame1.PixelWidth, frame1.PixelHeight));
+                drawingContext.DrawImage(frame2, new Rect(frame1.PixelWidth, 0, frame2.PixelWidth, frame2.PixelHeight));
+                drawingContext.DrawImage(frame3, new Rect(frame1.PixelWidth + frame2.PixelWidth, 0, frame3.PixelWidth, frame3.PixelHeight));
             }
 
             // Converts the Visual (DrawingVisual) into a BitmapSource
-            RenderTargetBitmap bmp = new RenderTargetBitmap(imageWidth * 3, imageHeight, 96, 96, PixelFormats.Pbgra32);
+            int width = frame1.PixelWidth + frame2.PixelWidth + frame3.PixelWidth;
+            int height = Math.Max(frame1.PixelHeight, Math.Max(frame2.PixelHeight, frame3.PixelHeight));
+            RenderTargetBitmap bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
             bmp.Render(drawingVisual);
 
             // Creates a PngBitmapEncoder and adds the BitmapSource to the frames of the encoder
