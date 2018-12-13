@@ -16,6 +16,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string panelAuthor;
         private readonly string panelId;
         private readonly List<CompetitionImage> images = new List<CompetitionImage>();
+        private CompetitionImage panelImage;
 
         public CompetitionPanel(AbstractCompetition competition, XmlNode eachPanelNode, int panelPosition)
         {
@@ -69,10 +70,13 @@ namespace TPhotoCompetitionViewer.Competitions
         // Create a CompetitionImage that represents the Panel Image
         internal CompetitionImage GetPanelImage()
         {
-            string panelTitle = "Panel " + this.GetPosition();
-            CompetitionImage competitionImage = new CompetitionImage(this.competition, this.GetPanelId(), panelTitle, this.panelAuthor, this.GetPosition());
-            
-            return competitionImage;
+            if (this.panelImage == null)
+            {
+                string panelTitle = "Panel " + this.GetPosition();
+                CompetitionImage competitionImage = new CompetitionImage(this.competition, this.GetPanelId(), panelTitle, this.panelAuthor, this.GetPosition());
+                this.panelImage = competitionImage;
+            }
+            return this.panelImage;
         }
     }
 }

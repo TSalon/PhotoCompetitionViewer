@@ -197,8 +197,17 @@ namespace TPhotoCompetitionViewer
             List<CompetitionImage> awardedImages = new List<CompetitionImage>();
             foreach (string key in this.awards.Keys)
             {
-                CompetitionImage awardedImage = this.competition.GetImageObjectById(key);
-                awardedImages.Add(awardedImage);
+                if (this.competition is PanelCompetition)
+                {
+                    CompetitionPanel awardedPanel = this.competition.GetImagePanelById(key);
+                    CompetitionImage competitionImage = awardedPanel.GetPanelImage();
+                    awardedImages.Add(competitionImage);
+                }
+                else
+                {
+                    CompetitionImage awardedImage = this.competition.GetImageObjectById(key);
+                    awardedImages.Add(awardedImage);
+                }
             }
             this.images = this.images.Except(awardedImages).ToList();
             // Add the award holders on at the end
