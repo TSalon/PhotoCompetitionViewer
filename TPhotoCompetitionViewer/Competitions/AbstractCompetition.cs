@@ -51,5 +51,8 @@ namespace TPhotoCompetitionViewer.Competitions
         {
             return false;
         }
+
+        internal abstract CompetitionImage GetImageObjectById(string imageId);
+        internal abstract CompetitionPanel GetImagePanelById(string panelId);
     }
 }

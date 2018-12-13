@@ -43,9 +43,9 @@ namespace TPhotoCompetitionViewer.Competitions
             return competitionList;
         }
 
-        internal static List<string> GetHeldImages(string competitionName)
+        internal static List<CompetitionImage> GetHeldImages(Competition competition, string competitionName)
         {
-            List<string> heldImages = new List<string>();
+            List<CompetitionImage> heldImages = new List<CompetitionImage>();
 
             string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
@@ -59,7 +59,34 @@ namespace TPhotoCompetitionViewer.Competitions
             {
                 while (reader.Read())
                 {
-                    heldImages.Add(reader.GetString(0));
+                    CompetitionImage competitionImage = competition.GetImageObjectById(reader.GetString(0));
+                    heldImages.Add(competitionImage);
+                }
+            }
+
+            dbConnection.Close();
+
+            return heldImages;
+        }
+
+        internal static List<CompetitionImage> GetHeldPanels(PanelCompetition competition, string competitionName)
+        {
+            List<CompetitionImage> heldImages = new List<CompetitionImage>();
+
+            string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            dbConnection.Open();
+
+            string sql = "SELECT name FROM held_images";
+
+            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    CompetitionPanel competitionPanel = competition.GetImagePanelById(reader.GetString(0));
+                    heldImages.Add(competitionPanel.GetPanelImage());
                 }
             }
 

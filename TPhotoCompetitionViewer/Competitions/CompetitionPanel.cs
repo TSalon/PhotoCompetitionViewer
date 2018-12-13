@@ -65,5 +65,14 @@ namespace TPhotoCompetitionViewer.Competitions
         {
             return this.panelId;
         }
+
+        // Create a CompetitionImage that represents the Panel Image
+        internal CompetitionImage GetPanelImage()
+        {
+            string panelTitle = "Panel " + this.GetPosition();
+            CompetitionImage competitionImage = new CompetitionImage(this.competition, this.GetPanelId(), panelTitle, this.panelAuthor, this.GetPosition());
+            
+            return competitionImage;
+        }
     }
 }

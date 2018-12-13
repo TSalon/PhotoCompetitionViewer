@@ -154,5 +154,22 @@ namespace TPhotoCompetitionViewer.Competitions
         {
             this.scoresRequired = scoresRequired;
         }
+
+        internal override CompetitionImage GetImageObjectById(string imageId)
+        {
+            foreach (CompetitionImage eachImage in this.images)
+            {
+                if (eachImage.GetFilePath() == imageId)
+                {
+                    return eachImage;
+                }
+            }
+            throw new NotImplementedException();
+        }
+
+        internal override CompetitionPanel GetImagePanelById(string panelId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

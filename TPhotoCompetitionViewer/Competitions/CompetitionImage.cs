@@ -13,7 +13,7 @@ using System.Xml;
 
 namespace TPhotoCompetitionViewer.Competitions
 {
-    class CompetitionImage
+    public class CompetitionImage
     {
         private readonly string imageTitle; // Lone Tree
         private readonly string imageAuthor; // Tim Sawyer
@@ -25,7 +25,17 @@ namespace TPhotoCompetitionViewer.Competitions
         private short score;
         private string scoreTimestamp;
 
-        public CompetitionImage(AbstractCompetition competition, XmlNode imageNode, int imagePosition)
+        internal CompetitionImage(AbstractCompetition competition, string imagePath, string title, string author, int imagePosition)
+        {
+            this.competition = competition;
+            this.imagePosition = imagePosition;
+
+            this.imagePath = imagePath;
+            this.imageTitle = title;
+            this.imageAuthor = author;
+        }
+
+        internal CompetitionImage(AbstractCompetition competition, XmlNode imageNode, int imagePosition)
         {
             this.competition = competition;
             this.imagePosition = imagePosition;

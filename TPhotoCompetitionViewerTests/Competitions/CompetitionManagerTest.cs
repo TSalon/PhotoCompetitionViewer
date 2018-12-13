@@ -39,7 +39,7 @@ namespace TPhotoCompetitionViewerTests.Competitions
             Assert.AreEqual(1, competitionsList.Count);
             Assert.AreEqual("2018-12-25 Test Competition", competitionsList[0].GetName());
 
-            List<string> heldImages = CompetitionHelper.GetHeldImages("2018-12-25 Test Competition");
+            List<CompetitionImage> heldImages = CompetitionHelper.GetHeldImages((Competition)competitionsList[0], "2018-12-25 Test Competition");
             Assert.AreEqual(0, heldImages.Count);
 
             int heldImageCount = CompetitionHelper.FetchHeldImageCount("2018-12-25 Test Competition");
@@ -83,9 +83,9 @@ namespace TPhotoCompetitionViewerTests.Competitions
             int heldImageCountAfterHoldingOneImage = CompetitionHelper.FetchHeldImageCount(competition.GetName());
             Assert.AreEqual(1, heldImageCountAfterHoldingOneImage);
 
-            List<string> heldImagesAfterHoldingOneImage = CompetitionHelper.GetHeldImages(competition.GetName());
+            List<CompetitionImage> heldImagesAfterHoldingOneImage = CompetitionHelper.GetHeldImages(competition, competition.GetName());
             Assert.AreEqual(1, heldImagesAfterHoldingOneImage.Count);
-            Assert.AreEqual("Tim Sawyer/221_3_Young Red_Kite.jpg", heldImagesAfterHoldingOneImage[0]);
+            Assert.AreEqual("Tim Sawyer/221_3_Young Red_Kite.jpg", heldImagesAfterHoldingOneImage[0].GetFilePath());
 
             // Hold another
             bool firstHeld = firstImage.ToggleHeld(dbConnection);
@@ -93,10 +93,10 @@ namespace TPhotoCompetitionViewerTests.Competitions
             int heldImageCountAfterHoldingTwoImages = CompetitionHelper.FetchHeldImageCount(competition.GetName());
             Assert.AreEqual(2, heldImageCountAfterHoldingTwoImages);
 
-            List<string> heldImagesAfterHoldingTwoImages = CompetitionHelper.GetHeldImages(competition.GetName());
+            List<CompetitionImage> heldImagesAfterHoldingTwoImages = CompetitionHelper.GetHeldImages(competition, competition.GetName());
             Assert.AreEqual(2, heldImagesAfterHoldingTwoImages.Count);
-            Assert.AreEqual("Tim Sawyer/221_3_Young Red_Kite.jpg", heldImagesAfterHoldingOneImage[0]);
-            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterHoldingTwoImages[1]);
+            Assert.AreEqual("Tim Sawyer/221_3_Young Red_Kite.jpg", heldImagesAfterHoldingOneImage[0].GetFilePath());
+            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterHoldingTwoImages[1].GetFilePath());
 
             // Unhold first one
             bool thirdUnHeld = thirdImage.ToggleHeld(dbConnection);
@@ -104,9 +104,9 @@ namespace TPhotoCompetitionViewerTests.Competitions
             int heldImageCountAfterUnHoldingImage = CompetitionHelper.FetchHeldImageCount(competition.GetName());
             Assert.AreEqual(1, heldImageCountAfterUnHoldingImage);
 
-            List<string> heldImagesAfterUnHoldingImage = CompetitionHelper.GetHeldImages(competition.GetName());
+            List<CompetitionImage> heldImagesAfterUnHoldingImage = CompetitionHelper.GetHeldImages(competition, competition.GetName());
             Assert.AreEqual(1, heldImagesAfterUnHoldingImage.Count);
-            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterUnHoldingImage[0]);
+            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterUnHoldingImage[0].GetFilePath());
 
             // Hold second one through competition method
             bool held = competition.GetImageObject(1).ToggleHeld(dbConnection);
@@ -117,10 +117,10 @@ namespace TPhotoCompetitionViewerTests.Competitions
             int heldImageCountAfterHoldingThroughCompetition = CompetitionHelper.FetchHeldImageCount(competition.GetName());
             Assert.AreEqual(2, heldImageCountAfterHoldingThroughCompetition);
 
-            List<string> heldImagesAfterHoldingThroughCompetition = CompetitionHelper.GetHeldImages(competition.GetName());
+            List<CompetitionImage> heldImagesAfterHoldingThroughCompetition = CompetitionHelper.GetHeldImages(competition, competition.GetName());
             Assert.AreEqual(2, heldImagesAfterHoldingThroughCompetition.Count);
-            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterHoldingThroughCompetition[0]);
-            Assert.AreEqual("Tim Sawyer/221_1_Bridgewater.jpg", heldImagesAfterHoldingThroughCompetition[1]);
+            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterHoldingThroughCompetition[0].GetFilePath());
+            Assert.AreEqual("Tim Sawyer/221_1_Bridgewater.jpg", heldImagesAfterHoldingThroughCompetition[1].GetFilePath());
 
             // Test unholding through competition method
             held = competition.GetImageObject(1).ToggleHeld(dbConnection);
@@ -131,9 +131,9 @@ namespace TPhotoCompetitionViewerTests.Competitions
             int heldImageCountAfterUnHoldingThroughCompetition = CompetitionHelper.FetchHeldImageCount(competition.GetName());
             Assert.AreEqual(1, heldImageCountAfterUnHoldingThroughCompetition);
 
-            List<string> heldImagesAfterUnHoldingThroughCompetition = CompetitionHelper.GetHeldImages(competition.GetName());
+            List<CompetitionImage> heldImagesAfterUnHoldingThroughCompetition = CompetitionHelper.GetHeldImages(competition, competition.GetName());
             Assert.AreEqual(1, heldImagesAfterUnHoldingThroughCompetition.Count);
-            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterUnHoldingThroughCompetition[0]);
+            Assert.AreEqual("Tim Sawyer/221_2_Reflective.jpg", heldImagesAfterUnHoldingThroughCompetition[0].GetFilePath());
 
             // Test scoring
             int totalScore = firstImage.ScoreImage("0_0", 5, dbConnection);

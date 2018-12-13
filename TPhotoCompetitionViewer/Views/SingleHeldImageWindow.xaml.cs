@@ -25,7 +25,7 @@ namespace TPhotoCompetitionViewer.Views
     public partial class SingleHeldImageWindow : Window
     {
         private SQLiteConnection dbConnection;
-        private string imageFileName;
+        private CompetitionImage image;
         private IAllHeldImagesWindow allHeldImagesWindow;
         private string competitionName;
         private ScoresWindow scoresWindow;
@@ -43,18 +43,17 @@ namespace TPhotoCompetitionViewer.Views
         /** Show specified image in window.
          *  Use null allHeldImagesWindow to use this standalone, with no scoring.
          */
-        internal void Init(string competitionName, string imageName, SQLiteConnection dbConnection, IAllHeldImagesWindow allHeldImagesWindow, ScoresWindow scoresWindow)
+        internal void Init(string competitionName, CompetitionImage image, SQLiteConnection dbConnection, IAllHeldImagesWindow allHeldImagesWindow, ScoresWindow scoresWindow)
         {
             this.dbConnection = dbConnection;
-            this.imageFileName = imageName;
+            this.image = image;
             this.allHeldImagesWindow = allHeldImagesWindow;
             this.competitionName = competitionName;
             this.scoresWindow = scoresWindow;
-
-            this.imageAuthor = imageName.Split('/')[0];
+            this.imageAuthor = image.GetAuthor();
 
             string basePath = ImagePaths.GetExtractDirectory(competitionName);
-            string imagePath = basePath + "/" + imageName;
+            string imagePath = basePath + "/" + image.GetFilePath();
             BitmapImage imageToShow = new BitmapImage();
             imageToShow.BeginInit();
             imageToShow.UriSource = new Uri(imagePath);
@@ -116,7 +115,7 @@ namespace TPhotoCompetitionViewer.Views
                 // Only works if we're viewing a single image elsewhere - not from the allHeldImagesWindow
                 string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
                 SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
-                bool nowHeld = HoldTools.ToggleHeld(dbConnection, this.imageFileName);
+                bool nowHeld = HoldTools.ToggleHeld(dbConnection, this.image.GetFilePath());
 
                 this.ImagePosition.Content = nowHeld? "Held" : "No Longer Held";
                 this.ImagePosition.Visibility = Visibility.Visible;
@@ -176,7 +175,7 @@ namespace TPhotoCompetitionViewer.Views
                     this.ImagePosition.Visibility = Visibility.Visible;
                 }
 
-                this.WriteResultToDatabase(this.imageFileName, shortPosition);
+                this.WriteResultToDatabase(this.image.GetFilePath(), shortPosition);
 
                 this.allHeldImagesWindow.MarkAwardedImages();
             }

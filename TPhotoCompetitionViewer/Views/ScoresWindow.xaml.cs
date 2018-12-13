@@ -118,7 +118,8 @@ namespace TPhotoCompetitionViewer.Views
             string imagePath = rowData.ImagePath;
 
             SingleHeldImageWindow imageWindow = new SingleHeldImageWindow();
-            imageWindow.Init(this.competition.GetName(), imagePath, null, null, this);
+            CompetitionImage competitionImage = this.competition.GetImageObjectById(imagePath);
+            imageWindow.Init(this.competition.GetName(), competitionImage, null, null, this);
             imageWindow.ShowDialog();
         }
     }

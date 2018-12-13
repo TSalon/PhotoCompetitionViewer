@@ -41,5 +41,22 @@ namespace TPhotoCompetitionViewer.Competitions
         {
             return this.panels[panelIndex];
         }
+
+        internal override CompetitionPanel GetImagePanelById(string panelId)
+        {
+            foreach (CompetitionPanel eachPanel in this.panels)
+            {
+                if (eachPanel.GetPanelId() == panelId)
+                {
+                    return eachPanel;
+                }
+            }
+            throw new NotImplementedException();
+        }
+
+        internal override CompetitionImage GetImageObjectById(string imageId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

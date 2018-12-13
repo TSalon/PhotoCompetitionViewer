@@ -20,8 +20,8 @@ namespace TPhotoCompetitionViewer
         private readonly List<Image> imageControls = new List<Image>();
         private readonly List<Label> labelControls = new List<Label>();
         private readonly List<Label> titleControls = new List<Label>();
-        private readonly string competitionName;
-        private List<string> imageFilePaths;
+        private readonly AbstractCompetition competition;
+        private List<CompetitionImage> images;
         private Dictionary<string, string> awards;
         private readonly Grid gfOuter;
         private readonly IAllHeldImagesWindow AllHeldImagesWindow;
@@ -29,10 +29,10 @@ namespace TPhotoCompetitionViewer
         public static readonly DependencyProperty ImageNumberProperty = DependencyProperty.RegisterAttached("ImageNumber", typeof(int), typeof(Image), new PropertyMetadata(default(int)));
 
 
-        public HeldImages(string competitionName, List<string> heldImages, Grid gfOuter, IAllHeldImagesWindow allHeldImagesWindow)
+        public HeldImages(AbstractCompetition competition, List<CompetitionImage> heldImages, Grid gfOuter, IAllHeldImagesWindow allHeldImagesWindow)
         {
-            this.competitionName = competitionName;
-            this.imageFilePaths = heldImages;
+            this.competition = competition;
+            this.images = heldImages;
             this.gfOuter = gfOuter;
             this.AllHeldImagesWindow = allHeldImagesWindow;
 
@@ -132,18 +132,18 @@ namespace TPhotoCompetitionViewer
             Image clickedImage = (Image)sender;
             int position = (int)clickedImage.GetValue(ImageNumberProperty);
         
-            string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
 
-            this.AllHeldImagesWindow.ShowSingleImageWindow(this.competitionName, this.GetImagePath(position), dbConnection);
+            this.AllHeldImagesWindow.ShowSingleImageWindow(this.competition.GetName(), this.GetImagePath(position), dbConnection);
         }
 
         private void AssignImagesToControls()
         {
-            string basePath = ImagePaths.GetExtractDirectory(this.competitionName);
-            for (int i = 0; i < this.imageFilePaths.Count; i++)
+            string basePath = ImagePaths.GetExtractDirectory(this.competition.GetName());
+            for (int i = 0; i < this.images.Count; i++)
             {
-                string imageName = this.imageFilePaths[i];
+                string imageName = this.images[i].GetFilePath();
                 string imagePath = basePath + "/" + imageName;
                 BitmapImage imageToShow = new BitmapImage();
                 imageToShow.BeginInit();
@@ -159,7 +159,7 @@ namespace TPhotoCompetitionViewer
         {
             // Fetch list of awarded images
             this.awards = new Dictionary<string, string>();
-            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competitionName);
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.competition.GetName());
             SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
             dbConnection.Open();
 
@@ -194,17 +194,23 @@ namespace TPhotoCompetitionViewer
             }
 
             // Take the existing image paths, and remove those with awards
-            this.imageFilePaths = this.imageFilePaths.Except(this.awards.Keys).ToList();
+            List<CompetitionImage> awardedImages = new List<CompetitionImage>();
+            foreach (string key in this.awards.Keys)
+            {
+                CompetitionImage awardedImage = this.competition.GetImageObjectById(key);
+                awardedImages.Add(awardedImage);
+            }
+            this.images = this.images.Except(awardedImages).ToList();
             // Add the award holders on at the end
-            this.imageFilePaths.AddRange(this.awards.Keys);
+            this.images.AddRange(awardedImages);
             this.AssignImagesToControls();
 
             // Grey out images with positions
-            for (int i = 0; i < this.imageFilePaths.Count(); i++)
+            for (int i = 0; i < this.images.Count(); i++)
             {
                 foreach (KeyValuePair<string, string> entry in this.awards)
                 {
-                    if (this.imageFilePaths[i] == entry.Key)
+                    if (this.images[i].GetFilePath() == entry.Key)
                     {
                         this.imageControls[i].Opacity = 0.5;
                         this.labelControls[i].Content = entry.Value;
@@ -216,14 +222,14 @@ namespace TPhotoCompetitionViewer
             }
         }
 
-        internal string GetImagePath(int position)
+        internal CompetitionImage GetImagePath(int position)
         {
-            return this.imageFilePaths[position];
+            return this.images[position];
         }
 
         internal string GetImageTitle(int position)
         {
-            return "Panel " + (position + 1);
+            return this.GetImagePath(position).GetTitle();
         }
     }
 

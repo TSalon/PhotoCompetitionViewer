@@ -35,8 +35,8 @@ namespace TPhotoCompetitionViewer.Views
         internal void Init(Competition competition)
         {
             this.competition = competition;
-            var heldImages = CompetitionHelper.GetHeldImages(competition.GetName());
-            this.heldImages = new HeldImages(this.competition.GetName(), heldImages, this.gfOuter, this);
+            var heldImages = CompetitionHelper.GetHeldImages(competition, competition.GetName());
+            this.heldImages = new HeldImages(this.competition, heldImages, this.gfOuter, this);
 
             this.MarkAwardedImages();
         }
@@ -77,16 +77,15 @@ namespace TPhotoCompetitionViewer.Views
                 CompetitionImage image = this.competition.GetImageObject(imagePosition);
                 if (image.IsHeld(dbConnection))
                 {
-                    string imagePath = image.GetFilePath();
-                    ShowSingleImageWindow(this.competition.GetName(), imagePath, dbConnection);
+                    ShowSingleImageWindow(this.competition.GetName(), image, dbConnection);
                 }
             }
         }
 
-        public void ShowSingleImageWindow(string competitionName, string imagePath, SQLiteConnection dbConnection)
+        public void ShowSingleImageWindow(string competitionName, CompetitionImage image, SQLiteConnection dbConnection)
         {
             SingleHeldImageWindow heldImageWindow = new SingleHeldImageWindow();
-            heldImageWindow.Init(competitionName, imagePath, dbConnection, this, null);
+            heldImageWindow.Init(competitionName, image, dbConnection, this, null);
             heldImageWindow.ShowDialog();
         }
     }
