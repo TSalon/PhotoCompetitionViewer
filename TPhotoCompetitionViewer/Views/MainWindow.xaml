@@ -14,7 +14,7 @@
                 <TextBox x:Name="CompOneScoresRequired" HorizontalAlignment="Left" Height="65" Margin="10,67,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="62" FontSize="48" Visibility="Visible"/>
                 <Label x:Name="CompOneScorersLabel" Content="scorers" HorizontalAlignment="Left" Margin="72,73,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Visible"/>
                 <Button x:Name="CompOneScoresButton" Content="Scores" HorizontalAlignment="Left" Margin="251,67,0,0" VerticalAlignment="Top" Width="142" Height="64" Click="Scores1Button_Click"/>
-                <Button x:Name="Competition1HeldButton" Content="0 Held Images" HorizontalAlignment="Left" Height="68" Margin="459,67,0,0" VerticalAlignment="Top" Width="425" FontSize="36" Click="Held1Button_Click"/>
+                <Button x:Name="Competition1HeldButton" Content="0 Held" HorizontalAlignment="Left" Height="68" Margin="645,67,0,0" VerticalAlignment="Top" Width="239" FontSize="36" Click="Held1Button_Click"/>
                 <Button x:Name="Competition1SlideshowButton" HorizontalAlignment="Left" Margin="904,67,0,0" VerticalAlignment="Top" Width="68" Height="68" Click="Slideshow1Button_Click">
                     <StackPanel>
                         <Image x:Name="Competition1SlideshowImage" Source="../Resources/slideshow_black_72x72.png" />
@@ -31,7 +31,7 @@
                 <TextBox x:Name="CompTwoScoresRequired" HorizontalAlignment="Left" Height="64" Margin="10,67,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="62" FontSize="48" Visibility="Visible"/>
                 <Label x:Name="CompTwoScorersLabel" Content="scorers" HorizontalAlignment="Left" Margin="72,72,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Visible"/>
                 <Button x:Name="CompTwoScoresButton" Content="Scores" HorizontalAlignment="Left" Margin="251,67,0,0" VerticalAlignment="Top" Width="142" Height="64" Click="Scores2Button_Click"/>
-                <Button x:Name="Competition2HeldButton" Content="0 Held Images" HorizontalAlignment="Left" Height="68" Margin="459,67,0,0" VerticalAlignment="Top" Width="425" FontSize="36" Click="Held2Button_Click"/>
+                <Button x:Name="Competition2HeldButton" Content="0 Held" HorizontalAlignment="Left" Height="68" Margin="645,67,0,0" VerticalAlignment="Top" Width="239" FontSize="36" Click="Held2Button_Click"/>
                 <Button x:Name="Competition2SlideshowButton" HorizontalAlignment="Left" Margin="904,67,0,0" VerticalAlignment="Top" Width="68" Height="68" Click="Slideshow2Button_Click">
                     <StackPanel>
                         <Image x:Name="Competition2SlideshowImage" Source="../Resources/slideshow_black_72x72.png" />

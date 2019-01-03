@@ -74,7 +74,7 @@ namespace TPhotoCompetitionViewer.Competitions
         }
 
         /** Return images with results if there are any, or return all the held images if there aren't */
-        internal List<CompetitionImage> GetSlideshowImages()
+        internal override List<CompetitionImage> GetSlideshowImages()
         {
             List<CompetitionImage> awardedImages = new List<CompetitionImage>();
 

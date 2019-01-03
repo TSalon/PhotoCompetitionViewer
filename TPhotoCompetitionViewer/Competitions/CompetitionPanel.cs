@@ -78,5 +78,10 @@ namespace TPhotoCompetitionViewer.Competitions
             }
             return this.panelImage;
         }
+
+        internal IEnumerable<CompetitionImage> GetImages()
+        {
+            return this.images;
+        }
     }
 }

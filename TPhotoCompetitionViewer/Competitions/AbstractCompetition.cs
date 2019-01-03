@@ -54,5 +54,6 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal abstract CompetitionImage GetImageObjectById(string imageId);
         internal abstract CompetitionPanel GetImagePanelById(string panelId);
+        internal abstract List<CompetitionImage> GetSlideshowImages();
     }
 }

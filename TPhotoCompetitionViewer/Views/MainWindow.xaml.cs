@@ -120,7 +120,7 @@ namespace TPhotoCompetitionViewer.Views
 
             int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(this.competitionList[0].GetName());
             this.Competition1HeldButton.IsEnabled = lCompetitionOneHeldImageCount > 0;
-            this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held Images";
+            this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held";
             if (this.Competition1HeldButton.IsEnabled)
             {
                 this.Competition1SlideshowButton.IsEnabled = true;
@@ -131,7 +131,7 @@ namespace TPhotoCompetitionViewer.Views
             {
                 int lCompetitionTwoHeldImageCount = CompetitionHelper.FetchHeldImageCount(this.competitionList[1].GetName());
                 this.Competition2HeldButton.IsEnabled = lCompetitionTwoHeldImageCount > 0;
-                this.Competition2HeldButton.Content = lCompetitionTwoHeldImageCount + " Held Images";
+                this.Competition2HeldButton.Content = lCompetitionTwoHeldImageCount + " Held";
                 if (this.Competition2HeldButton.IsEnabled)
                 {
                     this.Competition2SlideshowButton.IsEnabled = true;
@@ -223,14 +223,14 @@ namespace TPhotoCompetitionViewer.Views
         private void Slideshow1Button_Click(object sender, RoutedEventArgs e)
         {
             WinnersSlideshowWindow winnersPage = new WinnersSlideshowWindow();
-            winnersPage.Init((Competition)this.competitionList[0]);
+            winnersPage.Init(this.competitionList[0]);
             winnersPage.ShowDialog();
         }
 
         private void Slideshow2Button_Click(object sender, RoutedEventArgs e)
         {
             WinnersSlideshowWindow winnersPage = new WinnersSlideshowWindow();
-            winnersPage.Init((Competition)this.competitionList[1]);
+            winnersPage.Init(this.competitionList[1]);
             winnersPage.ShowDialog();
         }
 
