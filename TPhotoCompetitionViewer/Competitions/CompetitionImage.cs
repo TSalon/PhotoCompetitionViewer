@@ -154,11 +154,13 @@ namespace TPhotoCompetitionViewer.Competitions
                 }
 
                 // Write score to database
-                String sql = "INSERT INTO scores (timestamp, name, score) VALUES (CURRENT_TIMESTAMP, @name, @score)";
+                String sql = "INSERT INTO scores (timestamp, name, author, title, score) VALUES (CURRENT_TIMESTAMP, @name, @author, @title, @score)";
 		        dbConnection.Open();
                 SQLiteCommand insertScore = new SQLiteCommand(sql, dbConnection);
                 insertScore.Parameters.Add(new SQLiteParameter("@name", this.imagePath));
                 insertScore.Parameters.Add(new SQLiteParameter("@score", totalScore));
+                insertScore.Parameters.Add(new SQLiteParameter("@author", this.imageAuthor));
+                insertScore.Parameters.Add(new SQLiteParameter("@title", this.imageTitle));
                 insertScore.ExecuteNonQuery();
 
 		        dbConnection.Close();

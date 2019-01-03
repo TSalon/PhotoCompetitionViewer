@@ -109,7 +109,7 @@ namespace TPhotoCompetitionViewer.Competitions
                 SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
                 dbConnection.Open();
 
-                String createScoresTableCommandString = "CREATE TABLE IF NOT EXISTS scores (timestamp TEXT, name VARCHAR(255) NOT NULL, score NUMBER(2) not null)";
+                String createScoresTableCommandString = "CREATE TABLE IF NOT EXISTS scores (timestamp TEXT, name VARCHAR(255) NOT NULL, author VARCHAR(100), title VARCHAR(100), score NUMBER(2) NOT NULL)";
                 SQLiteCommand createScoresTableCommand = new SQLiteCommand(createScoresTableCommandString, dbConnection);
                 createScoresTableCommand.ExecuteNonQuery();
 
