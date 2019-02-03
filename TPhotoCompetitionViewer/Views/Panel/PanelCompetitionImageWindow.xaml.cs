@@ -158,7 +158,7 @@ namespace TPhotoCompetitionViewer.Views.Panel
                     break;
 
                 case Key.PageDown: // clicker right
-                    this.NextImage(true);
+                    this.NextImage(false);
                     break;
 
                 case Key.Left:
@@ -166,7 +166,7 @@ namespace TPhotoCompetitionViewer.Views.Panel
                     break;
 
                 case Key.PageUp: // clicker left
-                    this.PreviousImage(true);
+                    this.PreviousImage(false);
                     break;
 
                 case Key.T:
@@ -214,9 +214,9 @@ namespace TPhotoCompetitionViewer.Views.Panel
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
 
-            this.ShowTitle();
-
             this.SetPageMode(PageMode.Image);
+
+            this.ShowTitle();
         }
 
         /** Show the image title for a short period of time */
