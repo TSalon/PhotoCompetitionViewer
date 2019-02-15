@@ -261,3 +261,6 @@ __pycache__/
 *.pyc
 
 .axoCover
+
+# built installer shouldn't end up in git
+IrisPhotoViewer.exe
