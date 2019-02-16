@@ -37,62 +37,66 @@ Section "Iris (required)"
   
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
+
+  CreateDirectory "$INSTDIR\Resources\Numbers\Brian"
+  CreateDirectory "$INSTDIR\x64"
+  CreateDirectory "$INSTDIR\x86"
   
   ; Put files there
-  File "TPhotoCompetitionViewer\bin\Release\EntityFramework.dll"
-  File "TPhotoCompetitionViewer\bin\Release\EntityFramework.SqlServer.dll"
-  File "TPhotoCompetitionViewer\bin\Release\EntityFramework.SqlServer.xml"
-  File "TPhotoCompetitionViewer\bin\Release\EntityFramework.xml"
-  File "TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.dll"
-  File "TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.dll.config"
-  File "TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.EF6.dll"
-  File "TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.Linq.dll"
-  File "TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.xml"
-  File "TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.exe"
-  File "TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.exe.config"
-  File "TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.pdb"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\1.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\2.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\3.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\4.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\5.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\6.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\7.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\8.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\9.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\10.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\11.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\12.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\13.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\14.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\15.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\16.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\17.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\18.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\19.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\20.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\21.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\22.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\23.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\24.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\25.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\26.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\27.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\28.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\29.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\30.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\31.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\32.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\33.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\34.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\35.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\36.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\37.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\38.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\39.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\40.mp3"
-  File "TPhotoCompetitionViewer\bin\Release\x64\SQLite.Interop.dll"
-  File "TPhotoCompetitionViewer\bin\Release\x86\SQLite.Interop.dll"
+  File TPhotoCompetitionViewer\bin\Release\EntityFramework.dll
+  File TPhotoCompetitionViewer\bin\Release\EntityFramework.SqlServer.dll
+  File TPhotoCompetitionViewer\bin\Release\EntityFramework.SqlServer.xml
+  File TPhotoCompetitionViewer\bin\Release\EntityFramework.xml
+  File TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.dll
+  File TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.dll.config
+  File TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.EF6.dll
+  File TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.Linq.dll
+  File TPhotoCompetitionViewer\bin\Release\System.Data.SQLite.xml
+  File TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.exe
+  File TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.exe.config
+  File TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.pdb
+  File /oname=Resources\Numbers\Brian\1.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\1.mp3 
+  File /oname=Resources\Numbers\Brian\2.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\2.mp3
+  File /oname=Resources\Numbers\Brian\3.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\3.mp3
+  File /oname=Resources\Numbers\Brian\4.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\4.mp3
+  File /oname=Resources\Numbers\Brian\5.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\5.mp3
+  File /oname=Resources\Numbers\Brian\6.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\6.mp3
+  File /oname=Resources\Numbers\Brian\7.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\7.mp3
+  File /oname=Resources\Numbers\Brian\8.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\8.mp3
+  File /oname=Resources\Numbers\Brian\9.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\9.mp3
+  File /oname=Resources\Numbers\Brian\10.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\10.mp3
+  File /oname=Resources\Numbers\Brian\11.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\11.mp3
+  File /oname=Resources\Numbers\Brian\12.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\12.mp3
+  File /oname=Resources\Numbers\Brian\13.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\13.mp3
+  File /oname=Resources\Numbers\Brian\14.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\14.mp3
+  File /oname=Resources\Numbers\Brian\15.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\15.mp3
+  File /oname=Resources\Numbers\Brian\16.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\16.mp3
+  File /oname=Resources\Numbers\Brian\17.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\17.mp3
+  File /oname=Resources\Numbers\Brian\18.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\18.mp3
+  File /oname=Resources\Numbers\Brian\19.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\19.mp3
+  File /oname=Resources\Numbers\Brian\20.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\20.mp3
+  File /oname=Resources\Numbers\Brian\21.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\21.mp3
+  File /oname=Resources\Numbers\Brian\22.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\22.mp3
+  File /oname=Resources\Numbers\Brian\23.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\23.mp3
+  File /oname=Resources\Numbers\Brian\24.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\24.mp3
+  File /oname=Resources\Numbers\Brian\25.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\25.mp3
+  File /oname=Resources\Numbers\Brian\26.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\26.mp3
+  File /oname=Resources\Numbers\Brian\27.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\27.mp3
+  File /oname=Resources\Numbers\Brian\28.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\28.mp3
+  File /oname=Resources\Numbers\Brian\29.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\29.mp3
+  File /oname=Resources\Numbers\Brian\30.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\30.mp3
+  File /oname=Resources\Numbers\Brian\31.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\31.mp3
+  File /oname=Resources\Numbers\Brian\32.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\32.mp3
+  File /oname=Resources\Numbers\Brian\33.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\33.mp3
+  File /oname=Resources\Numbers\Brian\34.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\34.mp3
+  File /oname=Resources\Numbers\Brian\35.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\35.mp3
+  File /oname=Resources\Numbers\Brian\36.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\36.mp3
+  File /oname=Resources\Numbers\Brian\37.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\37.mp3
+  File /oname=Resources\Numbers\Brian\38.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\38.mp3
+  File /oname=Resources\Numbers\Brian\39.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\39.mp3
+  File /oname=Resources\Numbers\Brian\40.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\40.mp3
+  File /oname=x64\SQLite.Interop.dll TPhotoCompetitionViewer\bin\Release\x64\SQLite.Interop.dll
+  File /oname=x86\SQLite.Interop.dll TPhotoCompetitionViewer\bin\Release\x86\SQLite.Interop.dll
   
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\NSIS_IrisPhotoViewer "Install_Dir" "$INSTDIR"
