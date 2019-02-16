@@ -126,7 +126,7 @@ namespace TPhotoCompetitionViewer.Views
 
         private void AwardResult(Result result)
         {
-            if (this.allHeldImagesWindow != null) // don't do anything if we're no in the context of held images
+            if (this.allHeldImagesWindow != null) // don't do anything if we're not in the context of held images
             {
                 string resultPosition = "";
                 string shortPosition = "";
@@ -185,6 +185,14 @@ namespace TPhotoCompetitionViewer.Views
         {
             this.dbConnection.Open();
 
+            // delete any existing position
+            String deleteSql = "DELETE FROM winners WHERE name = @name";
+
+            SQLiteCommand deleteAward = new SQLiteCommand(deleteSql, this.dbConnection);
+            deleteAward.Parameters.Add(new SQLiteParameter("@name", imageFileName));
+            deleteAward.ExecuteNonQuery();
+
+            // Insert new position if one specified
             if (shortPosition != null)
             {
                 String sql = "INSERT INTO winners (timestamp, name, position) VALUES (CURRENT_TIMESTAMP, @name, @position)";
@@ -194,14 +202,7 @@ namespace TPhotoCompetitionViewer.Views
                 insertWinner.Parameters.Add(new SQLiteParameter("@position", shortPosition));
                 insertWinner.ExecuteNonQuery();
             }
-            else
-            {
-                String sql = "DELETE FROM winners WHERE name = @name";
 
-                SQLiteCommand deleteAward = new SQLiteCommand(sql, this.dbConnection);
-                deleteAward.Parameters.Add(new SQLiteParameter("@name", imageFileName));
-                deleteAward.ExecuteNonQuery();
-            }
             this.dbConnection.Close();
         }
     }
