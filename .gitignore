@@ -264,3 +264,4 @@ __pycache__/
 
 # built installer shouldn't end up in git
 IrisCompetitionViewer-*.exe
+*.wixobj
