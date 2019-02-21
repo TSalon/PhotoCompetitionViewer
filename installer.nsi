@@ -1,18 +1,19 @@
 ; Installer for Iris Competition Viewer
 ;--------------------------------
+!define VERSION "1.0.5"
 
 ; The name of the installer
-Name "Iris Competition Viewer"
+Name "Iris Competition Viewer v${VERSION}"
 
 ; The file to write
-OutFile "IrisPhotoViewer.exe"
+OutFile "IrisCompetitionViewer-${VERSION}.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES\IrisPhotoViewer
+InstallDir $PROGRAMFILES\IrisCompetitionViewer
 
-; Registry key to check for directory (so if you install again, it will 
+; Registry key to check for directory (so if you install again, it will
 ; overwrite the old one automatically)
-InstallDirRegKey HKLM "Software\NSIS_IrisPhotoViewer" "Install_Dir"
+InstallDirRegKey HKLM "Software\NSIS_IrisCompetitionViewer" "Install_Dir"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
@@ -34,14 +35,14 @@ UninstPage instfiles
 Section "Iris (required)"
 
   SectionIn RO
-  
+
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
 
   CreateDirectory "$INSTDIR\Resources\Numbers\Brian"
   CreateDirectory "$INSTDIR\x64"
   CreateDirectory "$INSTDIR\x86"
-  
+
   ; Put files there
   File TPhotoCompetitionViewer\bin\Release\EntityFramework.dll
   File TPhotoCompetitionViewer\bin\Release\EntityFramework.SqlServer.dll
@@ -55,7 +56,7 @@ Section "Iris (required)"
   File TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.exe
   File TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.exe.config
   File TPhotoCompetitionViewer\bin\Release\TPhotoCompetitionViewer.pdb
-  File /oname=Resources\Numbers\Brian\1.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\1.mp3 
+  File /oname=Resources\Numbers\Brian\1.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\1.mp3
   File /oname=Resources\Numbers\Brian\2.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\2.mp3
   File /oname=Resources\Numbers\Brian\3.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\3.mp3
   File /oname=Resources\Numbers\Brian\4.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\4.mp3
@@ -97,26 +98,26 @@ Section "Iris (required)"
   File /oname=Resources\Numbers\Brian\40.mp3 TPhotoCompetitionViewer\bin\Release\Resources\Numbers\Brian\40.mp3
   File /oname=x64\SQLite.Interop.dll TPhotoCompetitionViewer\bin\Release\x64\SQLite.Interop.dll
   File /oname=x86\SQLite.Interop.dll TPhotoCompetitionViewer\bin\Release\x86\SQLite.Interop.dll
-  
+
   ; Write the installation path into the registry
-  WriteRegStr HKLM SOFTWARE\NSIS_IrisPhotoViewer "Install_Dir" "$INSTDIR"
-  
+  WriteRegStr HKLM SOFTWARE\NSIS_IrisCompetitionViewer "Install_Dir" "$INSTDIR"
+
   ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisPhotoViewer" "DisplayName" "Iris Photo Viewer"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisPhotoViewer" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisPhotoViewer" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisPhotoViewer" "NoRepair" 1
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisCompetitionViewer" "DisplayName" "Iris Photo Viewer"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisCompetitionViewer" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisCompetitionViewer" "NoModify" 1
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisCompetitionViewer" "NoRepair" 1
   WriteUninstaller "$INSTDIR\uninstall.exe"
-  
+
 SectionEnd
 
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"
 
-  CreateDirectory "$SMPROGRAMS\Iris Photo Viewer"
-  CreateShortcut "$SMPROGRAMS\Iris Photo Viewer\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortcut "$SMPROGRAMS\Iris Photo Viewer\Iris Photo Viewer.lnk" "$INSTDIR\TPhotoCompetitionViewer.exe" "" "$INSTDIR\TPhotoCompetitionViewer.exe" 0
-  
+  CreateDirectory "$SMPROGRAMS\Iris Competition Viewer"
+  CreateShortcut "$SMPROGRAMS\Iris Competition Viewer\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateShortcut "$SMPROGRAMS\Iris Competition Viewer\Iris Photo Viewer.lnk" "$INSTDIR\TPhotoCompetitionViewer.exe" "" "$INSTDIR\TPhotoCompetitionViewer.exe" 0
+
 SectionEnd
 
 ;--------------------------------
@@ -124,10 +125,10 @@ SectionEnd
 ; Uninstaller
 
 Section "Uninstall"
-  
+
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisPhotoViewer"
-  DeleteRegKey HKLM SOFTWARE\NSIS_IrisPhotoViewer
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IrisCompetitionViewer"
+  DeleteRegKey HKLM SOFTWARE\NSIS_IrisCompetitionViewer
 
   ; Remove files and uninstaller
   Delete $INSTDIR\EntityFramework.dll
@@ -187,10 +188,10 @@ Section "Uninstall"
   Delete $INSTDIR\uninstall.exe
 
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\Example2\*.*"
+  Delete "$SMPROGRAMS\Iris Competition Viewer\*.*"
 
   ; Remove directories used
-  RMDir "$SMPROGRAMS\Iris Photo Viewer"
+  RMDir "$SMPROGRAMS\Iris Competition Viewer"
   RMDir "$INSTDIR"
 
 SectionEnd
