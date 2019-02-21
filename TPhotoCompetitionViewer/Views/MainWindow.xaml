@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res="clr-namespace:TPhotoCompetitionViewer.Properties"
         xmlns:local="clr-namespace:TPhotoCompetitionViewer.Views"
         mc:Ignorable="d"
         Title="Photo Competition Viewer" Height="768" Width="1316.408" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize">
