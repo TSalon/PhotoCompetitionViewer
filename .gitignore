@@ -263,4 +263,5 @@ __pycache__/
 .axoCover
 
 # built installer shouldn't end up in git
-IrisPhotoViewer.exe
+IrisCompetitionViewer-*.exe
+*.wixobj

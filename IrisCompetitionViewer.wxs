@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Name='Iris Competition Viewer 1.0.6' Manufacturer='Iris Photo Software'
+      Id='95032449-A17C-4C4B-9F84-1F371D53E0DB'
+      UpgradeCode='8121A737-C9FC-4AFC-85E2-CF44ACD2A29C'
+      Language='1033' Codepage='1252' Version='1.0.6'>
+  <Package Id='*' Keywords='Installer' Description="Iris Competition Viewer v1.0.6"
+      Comments='Photographic Competition Viewing Software' Manufacturer='Iris Photo Software'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+  <Media Id='1' Cabinet='TPhoto.cab' EmbedCab='yes'/>
+  <Directory Id='TARGETDIR' Name='SourceDir'>
+    <Directory Id='ProgramFilesFolder' Name='PFiles'>
+      <Directory Id='IrisPhotoSoftware' Name='Iris Photo Software'>
+        <Directory Id='INSTALLDIR' Name='Iris Competition Viewer'>
+          <Component Id='MainExecutable' Guid='9E42A78A-77C3-43FC-92D2-04385065FE95'>
+            <File Id='IrisCompetitionViewerEXE' Name='TPhotoCompetitionViewer.exe' DiskId='1' Source='TPhotoCompetitionViewer.exe' KeyPath='yes'>
+              <Shortcut Id="startmenuIrisPhotoViewer" Directory="ProgramMenuDir" Name="Iris Competition Viewer" WorkingDirectory='INSTALLDIR' Icon="TPhotoCompetitionViewer.exe" IconIndex="0" Advertise="yes" />
+              <Shortcut Id="desktopIrisPhotoViewer" Directory="DesktopFolder" Name="Iris Competition Viewer" WorkingDirectory='INSTALLDIR' Icon="TPhotoCompetitionViewer.exe" IconIndex="0" Advertise="yes" />
+            </File>
+          </Component>
+          <Component Id='Manual' Guid='480637A6-3297-4240-8A8A-49B012A7E710'>
+            <File Id='Manual' Name='Manual.pdf' DiskId='1' Source='Manual.pdf' KeyPath='yes'>
+                <Shortcut Id='startmenuManual' Directory='ProgramMenuDir' Name='Instruction Manual' Advertise='yes' />
+            </File>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Directory Id="ProgramMenuFolder" Name="Programs">
+      <Directory Id="ProgramMenuDir" Name="Iris Competition Viewer">
+        <Component Id="ProgramMenuDir" Guid="ABD75638-758E-4B38-AD0D-C292174104F6">
+          <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+          <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+        </Component>
+      </Directory>
+    </Directory>
+
+    <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+
+    <Feature Id='Complete' Level='1'>
+      <ComponentRef Id='MainExecutable' />
+      <ComponentRef Id='Manual' />
+      <ComponentRef Id='ProgramMenuDir' />
+    </Feature>
+    <Icon Id="TPhotoCompetitionViewer.exe" SourceFile="TPhotoCompetitionViewer.exe" />
+  </Product>
+</Wix>

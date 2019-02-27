@@ -87,6 +87,10 @@ namespace TPhotoCompetitionViewer.Views
                         this.CompTwoScoresButton.Visibility = Visibility.Visible;
                     }
                 }
+                else
+                {
+                    this.CompetitionTwoBox.Visibility = Visibility.Hidden;
+                }
 
                 this.RefreshHeldImagesButtons();
             }
