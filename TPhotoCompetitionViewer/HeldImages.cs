@@ -238,7 +238,8 @@ namespace TPhotoCompetitionViewer
 
         internal string GetImageTitle(int position)
         {
-            return this.GetImagePath(position).GetTitle();
+            CompetitionImage image = this.GetImagePath(position);
+            return "[" + image.GetIndex() + "] " + image.GetTitle();
         }
     }
 
