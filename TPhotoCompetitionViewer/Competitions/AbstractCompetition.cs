@@ -12,13 +12,17 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string competitionDirectory;
         private readonly string clubName;
         private readonly string trophyName;
+        private readonly string competitionKey;
+        private readonly string resultsKey;
 
-        public AbstractCompetition(string competitionFileName, string competitionDirectory, string clubName, string trophyName)
+        public AbstractCompetition(string competitionFileName, string competitionDirectory, string clubName, string trophyName, string competitionKey, string resultsKey)
         {
             this.competitionFileName = competitionFileName;
             this.competitionDirectory = competitionDirectory;
             this.clubName = clubName;
             this.trophyName = trophyName;
+            this.competitionKey = competitionKey;
+            this.resultsKey = resultsKey;
         }
 
         internal virtual int GetScoresRequired()

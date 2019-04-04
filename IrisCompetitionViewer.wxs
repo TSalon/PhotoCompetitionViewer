@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
-  <Product Name='Iris Competition Viewer 1.0.6' Manufacturer='Iris Photo Software'
+  <?define VersionNumber = "1.0.6" ?>
+  <Product Name='Iris Competition Viewer v${var.VersionNumber}' Manufacturer='Iris Photo Software'
       Id='95032449-A17C-4C4B-9F84-1F371D53E0DB'
       UpgradeCode='8121A737-C9FC-4AFC-85E2-CF44ACD2A29C'
-      Language='1033' Codepage='1252' Version='1.0.6'>
-  <Package Id='*' Keywords='Installer' Description="Iris Competition Viewer v1.0.6"
+      Language='1033' Codepage='1252' Version='${var.VersionNumber}'>
+  <Package Id='*' Keywords='Installer' Description="Iris Competition Viewer v${var.VersionNumber}"
       Comments='Photographic Competition Viewing Software' Manufacturer='Iris Photo Software'
       InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
   <Media Id='1' Cabinet='TPhoto.cab' EmbedCab='yes'/>

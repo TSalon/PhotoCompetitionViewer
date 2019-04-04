@@ -16,7 +16,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private int scoresRequired;
         private bool scoring;
 
-        public Competition(string competitionFileName, string competitionDirectory, string clubName, string trophyName) : base(competitionFileName, competitionDirectory, clubName, trophyName)
+        public Competition(string competitionFileName, string competitionDirectory, string clubName, string trophyName, string competitionKey, string resultsKey) : base(competitionFileName, competitionDirectory, clubName, trophyName, competitionKey, resultsKey)
         {
         }
 

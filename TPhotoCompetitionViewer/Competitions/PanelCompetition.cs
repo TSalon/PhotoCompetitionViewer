@@ -11,7 +11,7 @@ namespace TPhotoCompetitionViewer.Competitions
     {
         private List<CompetitionPanel> panels;
 
-        public PanelCompetition(string competitionFileName, string competitionDirectory, string clubName, string trophyName) : base(competitionFileName, competitionDirectory, clubName, trophyName)
+        public PanelCompetition(string competitionFileName, string competitionDirectory, string clubName, string trophyName, string competitionKey, string resultsKey) : base(competitionFileName, competitionDirectory, clubName, trophyName, competitionKey, resultsKey)
         {
         }
 

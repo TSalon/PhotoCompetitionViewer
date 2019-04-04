@@ -29,16 +29,18 @@ namespace TPhotoCompetitionViewer.Competitions
                 string competitionStyle = rootNode["Style"].InnerText;
                 string clubName = rootNode["Club"].InnerText;
                 string trophyName = rootNode["Trophy"].InnerText;
+                string competitionKey = rootNode["CompKey"].InnerText;
+                string resultsKey = rootNode["ResultsKey"].InnerText;
                 bool scoring = rootNode["Scoring"].InnerText.ToLower() == "true";
 
                 switch (competitionStyle.ToLower())
                 {
                     case "panel":
-                        competition = LoadPanelCompetition(competitionFileName, competitionDirectory, rootNode, clubName, trophyName);
+                        competition = LoadPanelCompetition(competitionFileName, competitionDirectory, rootNode, clubName, trophyName, competitionKey, resultsKey);
                         break;
 
                     default:
-                        competition = LoadSingleImageCompetition(competitionFileName, competitionDirectory, rootNode, clubName, trophyName, scoring);
+                        competition = LoadSingleImageCompetition(competitionFileName, competitionDirectory, rootNode, clubName, trophyName, scoring, competitionKey, resultsKey);
                         break;
                 }
             }
@@ -53,9 +55,9 @@ namespace TPhotoCompetitionViewer.Competitions
 
         }
 
-        private static AbstractCompetition LoadPanelCompetition(string competitionFileName, string competitionDirectory, XmlNode rootNode, string clubName, string trophyName)
+        private static AbstractCompetition LoadPanelCompetition(string competitionFileName, string competitionDirectory, XmlNode rootNode, string clubName, string trophyName, string competitionKey, string resultsKey)
         {
-            AbstractCompetition competition = new PanelCompetition(competitionFileName, competitionDirectory, clubName, trophyName);
+            AbstractCompetition competition = new PanelCompetition(competitionFileName, competitionDirectory, clubName, trophyName, competitionKey, resultsKey);
             XmlNode panelsNode = rootNode["Panels"];
             int panelPosition = 1;
             var panelList = new List<CompetitionPanel>();
@@ -113,9 +115,9 @@ namespace TPhotoCompetitionViewer.Competitions
                 encoder.Save(stream);
         }
 
-        private static AbstractCompetition LoadSingleImageCompetition(string competitionFileName, string competitionDirectory, XmlNode rootNode, string clubName, string trophyName, bool scoring)
+        private static AbstractCompetition LoadSingleImageCompetition(string competitionFileName, string competitionDirectory, XmlNode rootNode, string clubName, string trophyName, bool scoring, string competitionKey, string resultsKey)
         {
-            AbstractCompetition competition = new Competition(competitionFileName, competitionDirectory, clubName, trophyName);
+            AbstractCompetition competition = new Competition(competitionFileName, competitionDirectory, clubName, trophyName, competitionKey, resultsKey, competitionKey, resultsKey);
             XmlNode imagesNode = rootNode["Images"];
             int i = 1;
             var imageList = new List<CompetitionImage>();
