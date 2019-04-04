@@ -20,6 +20,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly int imagePosition; // first one is 1
         private readonly string imagePath; // Tim Sawyer/221_1_Lone Tree.jpg
         private readonly string imageId; // unique id - serial of CompetitionImage in database.  Used for uploading results
+        private readonly string audioPath; // audio/image_001.mp3
         private readonly IDictionary<String, int> handsetScores = new Dictionary<string,int>(); // Dictionary of handset id -> score
         private readonly AbstractCompetition competition;
         private string awardCode; // 1,2,3,C,HC
@@ -52,6 +53,7 @@ namespace TPhotoCompetitionViewer.Competitions
             this.imageTitle = imageNode.Attributes["title"].InnerText;
             this.imageAuthor = imageNode.Attributes["author"].InnerText;
             this.imageId = imageNode.Attributes["id"].InnerText;
+            this.audioPath = imageNode.Attributes["audio"].InnerText;
         }
 
         internal string GetFilePath()
@@ -196,6 +198,11 @@ namespace TPhotoCompetitionViewer.Competitions
         internal int GetIndex()
         {
             return this.imagePosition;
+        }
+
+        internal string GetAudioPath()
+        {
+            return this.audioPath;
         }
     }
 }
