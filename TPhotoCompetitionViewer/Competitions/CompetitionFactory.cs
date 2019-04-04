@@ -48,7 +48,7 @@ namespace TPhotoCompetitionViewer.Competitions
             {
                 string clubName = "Competition zip file broken";
                 string trophyName = e.Message;
-                competition = new Competition(competitionFileName, competitionDirectory, clubName, trophyName);
+                competition = new Competition(competitionFileName, competitionDirectory, clubName, trophyName, null, null);
             }
 
             return competition;
@@ -117,7 +117,7 @@ namespace TPhotoCompetitionViewer.Competitions
 
         private static AbstractCompetition LoadSingleImageCompetition(string competitionFileName, string competitionDirectory, XmlNode rootNode, string clubName, string trophyName, bool scoring, string competitionKey, string resultsKey)
         {
-            AbstractCompetition competition = new Competition(competitionFileName, competitionDirectory, clubName, trophyName, competitionKey, resultsKey, competitionKey, resultsKey);
+            AbstractCompetition competition = new Competition(competitionFileName, competitionDirectory, clubName, trophyName, competitionKey, resultsKey);
             XmlNode imagesNode = rootNode["Images"];
             int i = 1;
             var imageList = new List<CompetitionImage>();
