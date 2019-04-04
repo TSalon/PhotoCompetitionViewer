@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPhotoCompetitionViewer.Views"
         mc:Ignorable="d"
-        Title="ResultsUploadWindow" Height="450" Width="800">
+        Title="ResultsUploadWindow" Height="386.667" Width="290.05">
     <Grid>
-        <Label Name="UrlLabel" Content="Label" HorizontalAlignment="Left" Margin="204,108,0,0" VerticalAlignment="Top"/>
+        <Image Name="QrCodeImageControl" HorizontalAlignment="Left" Height="228" Margin="27,73,0,0" VerticalAlignment="Top" Width="228"/>
 
     </Grid>
 </Window>
