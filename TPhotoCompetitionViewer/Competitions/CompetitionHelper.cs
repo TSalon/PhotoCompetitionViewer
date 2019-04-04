@@ -24,11 +24,11 @@ namespace TPhotoCompetitionViewer.Competitions
             {
                 var today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
                 var competitionFileName = ImagePaths.RemoveSourcePathStart(item);
-                if (competitionFileName.ToLower().EndsWith(".zip"))
+                if (competitionFileName.ToLower().EndsWith(".iris"))
                 {
                     var competitionDateString = competitionFileName.Substring(0, 10);
                     var competitionDate = DateTime.Parse(competitionDateString);
-                    var competitionName = competitionFileName.Substring(0, competitionFileName.Length - 4);
+                    var competitionName = competitionFileName.Substring(0, competitionFileName.Length - 5);
 
                     if (competitionDate >= today)
                     {

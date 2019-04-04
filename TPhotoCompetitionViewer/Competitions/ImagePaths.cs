@@ -46,7 +46,7 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal static string GetZipFile(string competitionName)
         {
-            return COMPETITION_SRC_DIRECTORY + "/" + competitionName + ".zip";
+            return COMPETITION_SRC_DIRECTORY + "/" + competitionName + ".iris";
         }
 
         internal static string GetCompetitionsDirectory()
