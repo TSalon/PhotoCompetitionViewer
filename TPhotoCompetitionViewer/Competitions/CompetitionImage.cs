@@ -24,7 +24,7 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly AbstractCompetition competition;
         private string awardCode; // 1,2,3,C,HC
 
-        internal string getImageId()
+        internal string GetImageId()
         {
             return this.imageId;
         }

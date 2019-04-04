@@ -35,7 +35,7 @@ namespace TPhotoCompetitionViewer.Views
             List<CompetitionImage> lAwardedImages = competition.GetAwardedImages();
             foreach (CompetitionImage image in lAwardedImages)
             {
-                string imageid = image.getImageId();
+                string imageid = image.GetImageId();
                 string position = image.GetAwardCode();
 
                 if (lAwardString.Length > 1)
