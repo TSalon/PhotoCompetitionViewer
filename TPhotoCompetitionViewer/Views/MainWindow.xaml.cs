@@ -232,11 +232,13 @@ namespace TPhotoCompetitionViewer.Views
         private void Held1Button_Click(object sender, RoutedEventArgs e)
         {
             this.ShowHeldImages(this.competitionList[0]);
+            this.UpdateHeldCount();
         }
 
         private void Held2Button_Click(object sender, RoutedEventArgs e)
         {
             this.ShowHeldImages(this.competitionList[1]);
+            this.UpdateHeldCount();
         }
 
 
