@@ -155,6 +155,9 @@
     <Compile Include="Views\Panel\AllHeldPanelsWindow.xaml.cs">
       <DependentUpon>AllHeldPanelsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ResultsUploadWindow.xaml.cs">
+      <DependentUpon>ResultsUploadWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ScoredImageDataGridItem.cs" />
     <Compile Include="Views\ScoresWindow.xaml.cs">
       <DependentUpon>ScoresWindow.xaml</DependentUpon>
@@ -175,6 +178,10 @@
     <Page Include="Views\Panel\AllHeldPanelsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ResultsUploadWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ScoresWindow.xaml">
       <SubType>Designer</SubType>

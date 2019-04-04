@@ -60,6 +60,45 @@ namespace TPhotoCompetitionViewer.Competitions
             throw new NotImplementedException();
         }
 
+        /** Return images that have been given awards */
+        internal override List<CompetitionImage> GetAwardedImages()
+        {
+            List<CompetitionImage> awardedImages = new List<CompetitionImage>();
+
+            string databaseFilePath = ImagePaths.GetDatabaseFile(this.GetName());
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            dbConnection.Open();
+
+            string winners_sql = "SELECT name, position FROM winners";
+
+            SQLiteCommand winners_cmd = new SQLiteCommand(winners_sql, dbConnection);
+            SQLiteDataReader winners_reader = winners_cmd.ExecuteReader();
+
+            while (winners_reader.Read())
+            {
+                var panelId = winners_reader.GetString(0);
+                var result = winners_reader.GetString(1);
+
+                foreach (CompetitionPanel eachPanel in this.panels)
+                {
+                    if (eachPanel.GetPanelId() == panelId)
+                    {
+                        foreach (CompetitionImage eachImage in eachPanel.GetImages())
+                        {
+                            eachImage.SetResult(result);
+                            awardedImages.Add(eachImage);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            dbConnection.Close();
+
+            return awardedImages;
+        }
+
+
         /** Return images with results if there are any, or return all the held images if there aren't */
         internal override List<CompetitionImage> GetSlideshowImages()
         {

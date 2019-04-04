@@ -56,8 +56,19 @@ namespace TPhotoCompetitionViewer.Competitions
             return false;
         }
 
+        internal string GetCompetitionKey()
+        {
+            return this.competitionKey;
+        }
+
+        internal string GetResultsKey()
+        {
+            return this.resultsKey;
+        }
+
         internal abstract CompetitionImage GetImageObjectById(string imageId);
         internal abstract CompetitionPanel GetImagePanelById(string panelId);
         internal abstract List<CompetitionImage> GetSlideshowImages();
+        internal abstract List<CompetitionImage> GetAwardedImages();
     }
 }

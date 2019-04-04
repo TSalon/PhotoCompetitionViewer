@@ -22,6 +22,13 @@ namespace TPhotoCompetitionViewer.Competitions
         private readonly string imageId; // unique id - serial of CompetitionImage in database.  Used for uploading results
         private readonly IDictionary<String, int> handsetScores = new Dictionary<string,int>(); // Dictionary of handset id -> score
         private readonly AbstractCompetition competition;
+        private string awardCode; // 1,2,3,C,HC
+
+        internal string getImageId()
+        {
+            return this.imageId;
+        }
+
         private string displayResult = "";
         private short score;
         private string scoreTimestamp;
@@ -83,6 +90,7 @@ namespace TPhotoCompetitionViewer.Competitions
 
         internal void SetResult(string result)
         {
+            this.awardCode = result;
             switch (result)
             {
                 case "1":
@@ -121,6 +129,11 @@ namespace TPhotoCompetitionViewer.Competitions
         internal string GetResult()
         {
             return this.displayResult;
+        }
+
+        internal string GetAwardCode()
+        {
+            return this.awardCode;
         }
 
         internal bool ToggleHeld(SQLiteConnection dbConnection)
