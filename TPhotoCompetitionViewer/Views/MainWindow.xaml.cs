@@ -103,13 +103,22 @@ namespace TPhotoCompetitionViewer.Views
             greySlideshowIcon.UriSource = new Uri("pack://application:,,,/Resources/slideshow_grey_72x72.png");
             greySlideshowIcon.EndInit();
 
+            BitmapImage greyUploadIcon = new BitmapImage();
+            greyUploadIcon.BeginInit();
+            greyUploadIcon.UriSource = new Uri("pack://application:,,,/Resources/file_upload_grey_72x72.png");
+            greyUploadIcon.EndInit();
+
             this.Competition1HeldButton.IsEnabled = false;
             this.Competition1SlideshowButton.IsEnabled = false;
             this.Competition1SlideshowImage.Source = greySlideshowIcon;
+            this.Competition1UploadButton.IsEnabled = false;
+            this.Competition1UploadImage.Source = greyUploadIcon;
 
             this.Competition2HeldButton.IsEnabled = false;
             this.Competition2SlideshowButton.IsEnabled = false;
             this.Competition2SlideshowImage.Source = greySlideshowIcon;
+            this.Competition2UploadButton.IsEnabled = false;
+            this.Competition2UploadImage.Source = greyUploadIcon;
 
         }
 
@@ -122,6 +131,11 @@ namespace TPhotoCompetitionViewer.Views
             blackSlideshowIcon.UriSource = new Uri("pack://application:,,,/Resources/slideshow_black_72x72.png");
             blackSlideshowIcon.EndInit();
 
+            BitmapImage blackUploadIcon = new BitmapImage();
+            blackUploadIcon.BeginInit();
+            blackUploadIcon.UriSource = new Uri("pack://application:,,,/Resources/file_upload_black_72x72.png");
+            blackUploadIcon.EndInit();
+
             int lCompetitionOneHeldImageCount = CompetitionHelper.FetchHeldImageCount(this.competitionList[0].GetName());
             this.Competition1HeldButton.IsEnabled = lCompetitionOneHeldImageCount > 0;
             this.Competition1HeldButton.Content = lCompetitionOneHeldImageCount + " Held";
@@ -129,7 +143,16 @@ namespace TPhotoCompetitionViewer.Views
             {
                 this.Competition1SlideshowButton.IsEnabled = true;
                 this.Competition1SlideshowImage.Source = blackSlideshowIcon;
+
+                int lCompetitionOneAwardedImageCount = CompetitionHelper.FetchAwardedImageCount(this.competitionList[0].GetName());
+                if (lCompetitionOneAwardedImageCount > 0)
+                {
+                    this.Competition1UploadButton.IsEnabled = true;
+                    this.Competition1UploadImage.Source = blackUploadIcon;
+                }
+
             }
+
 
             if (this.competitionList.Count > 1)
             {
@@ -140,6 +163,13 @@ namespace TPhotoCompetitionViewer.Views
                 {
                     this.Competition2SlideshowButton.IsEnabled = true;
                     this.Competition2SlideshowImage.Source = blackSlideshowIcon;
+
+                    int lCompetitionTwoAwardedImageCount = CompetitionHelper.FetchAwardedImageCount(this.competitionList[1].GetName());
+                    if(lCompetitionTwoAwardedImageCount > 0)
+                    {
+                        this.Competition2UploadButton.IsEnabled = true;
+                        this.Competition2UploadImage.Source = blackUploadIcon;
+                    }
                 }
             }
         }

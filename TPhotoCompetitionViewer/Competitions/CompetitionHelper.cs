@@ -149,7 +149,32 @@ namespace TPhotoCompetitionViewer.Competitions
 
             return heldImagesCount;
         }
-        
+
+        internal static int FetchAwardedImageCount(string competitionName)
+        {
+            int heldImagesCount = 0;
+
+            string databaseFilePath = ImagePaths.GetDatabaseFile(competitionName);
+            SQLiteConnection dbConnection = new SQLiteConnection("DataSource=" + databaseFilePath + ";Version=3;");
+            dbConnection.Open();
+
+            string sql = "SELECT count(*) FROM winners";
+
+            SQLiteCommand cmd = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    heldImagesCount = reader.GetInt16(0);
+                }
+            }
+
+            dbConnection.Close();
+
+            return heldImagesCount;
+        }
+
         /** Extract from zip file to tmp directory */
         private static void ExtractFiles(string competitionName)
         {
