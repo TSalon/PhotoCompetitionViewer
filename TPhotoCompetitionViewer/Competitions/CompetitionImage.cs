@@ -177,5 +177,10 @@ namespace TPhotoCompetitionViewer.Competitions
             if (this.handsetScores.ContainsKey(key)) return true;
             return false;
         }
+
+        internal int GetIndex()
+        {
+            return this.imagePosition;
+        }
     }
 }

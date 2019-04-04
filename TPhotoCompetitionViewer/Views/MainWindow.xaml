@@ -6,7 +6,7 @@
         xmlns:res="clr-namespace:TPhotoCompetitionViewer.Properties"
         xmlns:local="clr-namespace:TPhotoCompetitionViewer.Views"
         mc:Ignorable="d"
-        Title="Photo Competition Viewer" Height="768" Width="1316.408" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize">
+        Title="Iris Competition Viewer" Height="768" Width="1316.408" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="StatusLabel" Content="Status Prompt" HorizontalAlignment="Left" Margin="87,44,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Foreground="White"/>
         <GroupBox x:Name="CompetitionOneBox" Header="First Competition" HorizontalAlignment="Left" Height="273" Margin="112,129,0,0" VerticalAlignment="Top" Width="1085" FontSize="36">
