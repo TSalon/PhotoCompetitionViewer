@@ -334,7 +334,7 @@ namespace TPhotoCompetitionViewer.Views
             this.titleTimer.Start();
 	        this.enableScoringTimer.Start();
 
-            string lMp3Path = ImagePaths.GetExtractDirectory(this.competition.GetName()) + this.competitionImage.GetAudioPath();
+            string lMp3Path = ImagePaths.GetExtractDirectory(this.competition.GetName()) + "/" + this.competitionImage.GetAudioPath();
             this.MediaElement.Source = new Uri(lMp3Path, UriKind.Absolute);
             this.MediaElement.Play();
         }
