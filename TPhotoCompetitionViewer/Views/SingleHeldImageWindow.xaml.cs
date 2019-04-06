@@ -31,7 +31,7 @@ namespace TPhotoCompetitionViewer.Views
         private ScoresWindow scoresWindow;
         private string imageAuthor;
 
-        enum Result { First, Second, Third, HighlyCommended, Commended, None };
+        enum Result { First, Second, Third, VeryHighlyCommended, HighlyCommended, Commended, None };
 
         public SingleHeldImageWindow()
         {
@@ -98,6 +98,11 @@ namespace TPhotoCompetitionViewer.Views
                 {
                     this.AwardResult(Result.HighlyCommended);
                 }
+                else if (e.Key == Key.V)
+                {
+                    this.AwardResult(Result.VeryHighlyCommended);
+                }
+
             }
             else if (e.KeyboardDevice.Modifiers == ModifierKeys.Shift)
             {
@@ -147,6 +152,10 @@ namespace TPhotoCompetitionViewer.Views
                     case Result.Third:
                         resultPosition = "Third Place";
                         shortPosition = "3";
+                        break;
+                    case Result.VeryHighlyCommended:
+                        resultPosition = "Very Highly Commended";
+                        shortPosition = "VH";
                         break;
                     case Result.HighlyCommended:
                         resultPosition = "Highly Commended";

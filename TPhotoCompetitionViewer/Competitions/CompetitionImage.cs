@@ -104,6 +104,9 @@ namespace TPhotoCompetitionViewer.Competitions
                 case "3":
                     this.displayResult = "Third";
                     break;
+                case "VH":
+                    this.displayResult = "Very Highly Commended";
+                    break;
                 case "HC":
                     this.displayResult = "Highly Commended";
                     break;
