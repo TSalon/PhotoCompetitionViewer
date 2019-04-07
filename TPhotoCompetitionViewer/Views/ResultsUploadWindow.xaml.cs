@@ -72,7 +72,7 @@ namespace TPhotoCompetitionViewer.Views
             string lAwardString = this.BuildAwardString(competition);
             string lDomain = "http://irisphotosoftware.co.uk/";
             string lHash = this.CalculateHash(lAwardString, competition.GetResultsKey());
-            string lUrl = lDomain + competition.GetCompetitionKey() + "/" + competition.GetResultsKey() + "/" + lAwardString + "/" + lHash + "/";
+            string lUrl = lDomain + competition.GetCompetitionKey() + "/" + lAwardString + "/" + lHash + "/";
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(lUrl, QRCodeGenerator.ECCLevel.Q);
