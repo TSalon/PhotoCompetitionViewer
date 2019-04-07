@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -70,7 +71,8 @@ namespace TPhotoCompetitionViewer.Views
         {
             string lAwardString = this.BuildAwardString(competition);
             string lDomain = "http://irisphotosoftware.co.uk/";
-            string lUrl = lDomain + competition.GetCompetitionKey() + "/" + competition.GetResultsKey() + "/" + lAwardString + "/";
+            string lHash = this.CalculateHash(lAwardString, competition.GetResultsKey());
+            string lUrl = lDomain + competition.GetCompetitionKey() + "/" + competition.GetResultsKey() + "/" + lAwardString + "/" + lHash + "/";
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(lUrl, QRCodeGenerator.ECCLevel.Q);
@@ -78,6 +80,23 @@ namespace TPhotoCompetitionViewer.Views
             Bitmap qrCodeBitmap = qrCode.GetGraphic(20);
 
             this.QrCodeImageControl.Source = this.BitmapToImageSource(qrCodeBitmap);
+        }
+
+        private string CalculateHash(string pAwardString, string pResultsRandomString)
+        {
+            string lStringToHash = pAwardString + "_" + pResultsRandomString;
+            using (SHA1Managed sha1 = new SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(lStringToHash));
+                var sb = new StringBuilder(hash.Length * 2);
+
+                foreach (byte b in hash)
+                {
+                    sb.Append(b.ToString("x2"));
+                }
+
+                return sb.ToString().ToLower();
+            }
         }
     }
 }
