@@ -4,14 +4,15 @@
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+		<MediaTemplate EmbedCab="yes"/>
 
-		<Feature Id="ProductFeature" Title="WixInstaller" Level="1">
+		<Feature Id="ProductFeature" Title="IrisCompetitionViewer" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="i18n" />
       <ComponentGroupRef Id="x64" />
       <ComponentGroupRef Id="x86" />
       <ComponentGroupRef Id="speech" />
+      <ComponentRef Id="ApplicationShortcut" />
 		</Feature>
 	</Product>
 
@@ -30,14 +31,15 @@
           </Directory>
         </Directory>
 			</Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Iris Photo Competition"/>
+      </Directory>
 		</Directory>
 	</Fragment>
-
-	<Fragment>
+  
+  <Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <Component Id="ProductComponent">
-        <File Source="$(var.TPhotoCompetitionViewer.TargetPath)"/>
-      </Component>
+      <Component Id="ProductComponent"><File Id="TPhotoCompetitionViewer.exe" Name="TPhotoCompetitionViewer.exe" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.exe"/></Component>
       <Component Id="EntityFramework.dll"><File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.dll" Vital="yes"/></Component>
       <Component Id="EntityFramework.SqlServer.dll"><File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.SqlServer.dll" Vital="yes"/></Component>
       <Component Id="EntityFramework.SqlServer.xml"><File Id="EntityFramework.SqlServer.xml" Name="EntityFramework.SqlServer.xml" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.SqlServer.xml" Vital="yes"/></Component>
@@ -52,6 +54,18 @@
       <Component Id="TPhotoCompetitionViewer.exe.config"><File Id="TPhotoCompetitionViewer.exe.config" Name="TPhotoCompetitionViewer.exe.config" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.exe.config" Vital="yes"/></Component>      
       <Component Id="TPhotoCompetitionViewer.pdb"><File Id="TPhotoCompetitionViewer.pdb" Name="TPhotoCompetitionViewer.pdb" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.pdb" Vital="yes"/></Component>      
 		</ComponentGroup>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="26634933-9899-4a19-862f-79f07d6e8c94">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Iris Competition Viewer"
+                  Description="Program for running Iris competitions"
+                  Target="[#TPhotoCompetitionViewer.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\IrisPhotoSoftware" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
 	</Fragment>
 
   <Fragment>
