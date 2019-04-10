@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPhotoCompetitionViewer", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPhotoCompetitionViewerTests", "TPhotoCompetitionViewerTests\TPhotoCompetitionViewerTests.csproj", "{C40F3B42-7A96-4A0D-954E-C1875900B472}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "WixInstaller", "WixInstaller\WixInstaller.wixproj", "{4474787A-790F-43F4-8C1C-B00B720BA760}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{C40F3B42-7A96-4A0D-954E-C1875900B472}.Release|x64.Build.0 = Release|Any CPU
 		{C40F3B42-7A96-4A0D-954E-C1875900B472}.Release|x86.ActiveCfg = Release|Any CPU
 		{C40F3B42-7A96-4A0D-954E-C1875900B472}.Release|x86.Build.0 = Release|Any CPU
+		{4474787A-790F-43F4-8C1C-B00B720BA760}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4474787A-790F-43F4-8C1C-B00B720BA760}.Debug|x64.ActiveCfg = Debug|x86
+		{4474787A-790F-43F4-8C1C-B00B720BA760}.Debug|x86.ActiveCfg = Debug|x86
+		{4474787A-790F-43F4-8C1C-B00B720BA760}.Debug|x86.Build.0 = Debug|x86
+		{4474787A-790F-43F4-8C1C-B00B720BA760}.Release|Any CPU.ActiveCfg = Release|x86
+		{4474787A-790F-43F4-8C1C-B00B720BA760}.Release|x64.ActiveCfg = Release|x86
+		{4474787A-790F-43F4-8C1C-B00B720BA760}.Release|x86.ActiveCfg = Release|x86
+		{4474787A-790F-43F4-8C1C-B00B720BA760}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
