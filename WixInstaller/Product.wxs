@@ -24,6 +24,19 @@
       <Component Id="ProductComponent">
         <File Source="$(var.TPhotoCompetitionViewer.TargetPath)"/>
       </Component>
+      <Component Id="EntityFramework.dll"><File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.dll"/></Component>
+      <Component Id="EntityFramework.SqlServer.dll"><File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.SqlServer.dll"/></Component>
+      <Component Id="EntityFramework.SqlServer.xml"><File Id="EntityFramework.SqlServer.xml" Name="EntityFramework.SqlServer.xml" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.SqlServer.xml"/></Component>
+      <Component Id="EntityFramework.xml"><File Id="EntityFramework.xml" Name="EntityFramework.xml" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.xml"/></Component>
+      <Component Id="QRCoder.dll"><File Id="QRCoder.dll" Name="QRCoder.dll" Source="../TPhotoCompetitionViewer/bin/Release/QRCoder.dll"/></Component>
+      <Component Id="System.Data.SQLite.dll"><File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.dll"/></Component>
+      <Component Id="System.Data.SQLite.dll.config"><File Id="System.Data.SQLite.dll.config" Name="System.Data.SQLite.dll.config" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.dll.config"/></Component>
+      <Component Id="System.Data.SQLite.EF6.dll"><File Id="System.Data.SQLite.EF6.dll" Name="System.Data.SQLite.EF6.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.EF6.dll"/></Component>
+      <Component Id="System.Data.SQLite.Linq.dll"><File Id="System.Data.SQLite.Linq.dll" Name="System.Data.SQLite.Linq.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.Linq.dll"/></Component>
+      <Component Id="System.Data.SQLite.xml"><File Id="System.Data.SQLite.xml" Name="System.Data.SQLite.xml" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.xml"/></Component>
+      <Component Id="System.Drawing.Common.dll"><File Id="System.Drawing.Common.dll" Name="System.Drawing.Common.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Drawing.Common.dll"/></Component>      
+      <Component Id="TPhotoCompetitionViewer.exe.config"><File Id="TPhotoCompetitionViewer.exe.config" Name="TPhotoCompetitionViewer.exe.config" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.exe.config"/></Component>      
+      <Component Id="TPhotoCompetitionViewer.pdb"><File Id="TPhotoCompetitionViewer.pdb" Name="TPhotoCompetitionViewer.pdb" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.pdb"/></Component>      
 		</ComponentGroup>
 	</Fragment>
 </Wix>
