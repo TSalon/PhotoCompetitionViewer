@@ -8,13 +8,27 @@
 
 		<Feature Id="ProductFeature" Title="WixInstaller" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="i18n" />
+      <ComponentGroupRef Id="x64" />
+      <ComponentGroupRef Id="x86" />
+      <ComponentGroupRef Id="speech" />
 		</Feature>
 	</Product>
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="WixInstaller" />
+        <Directory Id="INSTALLFOLDER" Name="IrisPhotoSoftware" >
+          <Directory Id="dir_i18n_en" Name="en"/>
+          <Directory Id="dir_x64" Name="x64"/>
+          <Directory Id="dir_x86" Name="x86"/>
+          <Directory Id="dir_Resources" Name="Resources">
+            <Directory Id="dir_Numbers" Name="Numbers">
+              <Directory Id="dir_Brian" Name="Brian">
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
 			</Directory>
 		</Directory>
 	</Fragment>
@@ -24,19 +38,169 @@
       <Component Id="ProductComponent">
         <File Source="$(var.TPhotoCompetitionViewer.TargetPath)"/>
       </Component>
-      <Component Id="EntityFramework.dll"><File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.dll"/></Component>
-      <Component Id="EntityFramework.SqlServer.dll"><File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.SqlServer.dll"/></Component>
-      <Component Id="EntityFramework.SqlServer.xml"><File Id="EntityFramework.SqlServer.xml" Name="EntityFramework.SqlServer.xml" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.SqlServer.xml"/></Component>
-      <Component Id="EntityFramework.xml"><File Id="EntityFramework.xml" Name="EntityFramework.xml" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.xml"/></Component>
-      <Component Id="QRCoder.dll"><File Id="QRCoder.dll" Name="QRCoder.dll" Source="../TPhotoCompetitionViewer/bin/Release/QRCoder.dll"/></Component>
-      <Component Id="System.Data.SQLite.dll"><File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.dll"/></Component>
-      <Component Id="System.Data.SQLite.dll.config"><File Id="System.Data.SQLite.dll.config" Name="System.Data.SQLite.dll.config" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.dll.config"/></Component>
-      <Component Id="System.Data.SQLite.EF6.dll"><File Id="System.Data.SQLite.EF6.dll" Name="System.Data.SQLite.EF6.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.EF6.dll"/></Component>
-      <Component Id="System.Data.SQLite.Linq.dll"><File Id="System.Data.SQLite.Linq.dll" Name="System.Data.SQLite.Linq.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.Linq.dll"/></Component>
-      <Component Id="System.Data.SQLite.xml"><File Id="System.Data.SQLite.xml" Name="System.Data.SQLite.xml" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.xml"/></Component>
-      <Component Id="System.Drawing.Common.dll"><File Id="System.Drawing.Common.dll" Name="System.Drawing.Common.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Drawing.Common.dll"/></Component>      
-      <Component Id="TPhotoCompetitionViewer.exe.config"><File Id="TPhotoCompetitionViewer.exe.config" Name="TPhotoCompetitionViewer.exe.config" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.exe.config"/></Component>      
-      <Component Id="TPhotoCompetitionViewer.pdb"><File Id="TPhotoCompetitionViewer.pdb" Name="TPhotoCompetitionViewer.pdb" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.pdb"/></Component>      
+      <Component Id="EntityFramework.dll"><File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.dll" Vital="yes"/></Component>
+      <Component Id="EntityFramework.SqlServer.dll"><File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.SqlServer.dll" Vital="yes"/></Component>
+      <Component Id="EntityFramework.SqlServer.xml"><File Id="EntityFramework.SqlServer.xml" Name="EntityFramework.SqlServer.xml" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.SqlServer.xml" Vital="yes"/></Component>
+      <Component Id="EntityFramework.xml"><File Id="EntityFramework.xml" Name="EntityFramework.xml" Source="../TPhotoCompetitionViewer/bin/Release/EntityFramework.xml" Vital="yes"/></Component>
+      <Component Id="QRCoder.dll"><File Id="QRCoder.dll" Name="QRCoder.dll" Source="../TPhotoCompetitionViewer/bin/Release/QRCoder.dll" Vital="yes"/></Component>
+      <Component Id="System.Data.SQLite.dll"><File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.dll" Vital="yes"/></Component>
+      <Component Id="System.Data.SQLite.dll.config"><File Id="System.Data.SQLite.dll.config" Name="System.Data.SQLite.dll.config" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.dll.config" Vital="yes"/></Component>
+      <Component Id="System.Data.SQLite.EF6.dll"><File Id="System.Data.SQLite.EF6.dll" Name="System.Data.SQLite.EF6.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.EF6.dll" Vital="yes"/></Component>
+      <Component Id="System.Data.SQLite.Linq.dll"><File Id="System.Data.SQLite.Linq.dll" Name="System.Data.SQLite.Linq.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.Linq.dll" Vital="yes"/></Component>
+      <Component Id="System.Data.SQLite.xml"><File Id="System.Data.SQLite.xml" Name="System.Data.SQLite.xml" Source="../TPhotoCompetitionViewer/bin/Release/System.Data.SQLite.xml" Vital="yes"/></Component>
+      <Component Id="System.Drawing.Common.dll"><File Id="System.Drawing.Common.dll" Name="System.Drawing.Common.dll" Source="../TPhotoCompetitionViewer/bin/Release/System.Drawing.Common.dll" Vital="yes"/></Component>      
+      <Component Id="TPhotoCompetitionViewer.exe.config"><File Id="TPhotoCompetitionViewer.exe.config" Name="TPhotoCompetitionViewer.exe.config" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.exe.config" Vital="yes"/></Component>      
+      <Component Id="TPhotoCompetitionViewer.pdb"><File Id="TPhotoCompetitionViewer.pdb" Name="TPhotoCompetitionViewer.pdb" Source="../TPhotoCompetitionViewer/bin/Release/TPhotoCompetitionViewer.pdb" Vital="yes"/></Component>      
 		</ComponentGroup>
 	</Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="i18n" Directory="dir_i18n_en">
+      <Component Id="component_i18n_en">
+        <File Id="TPhotoCompetitionViewer.resources.dll" Name="TPhotoCompetitionViewer.resources.dll" Source="../TPhotoCompetitionViewer/bin/Release/en/TPhotoCompetitionViewer.resources.dll" Vital="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="x64" Directory="dir_x64">
+      <Component Id="component_SQLite.Interop.dll_x64">
+        <File Id="x64_SQLite.Interop.dll" Name="SQLite.Interop.dll" Source="../TPhotoCompetitionViewer/bin/Release/x64/SQLite.Interop.dll" Vital="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="x86" Directory="dir_x86">
+      <Component Id="component_SQLite.Interop.dll_x86">
+        <File Id="x86_SQLite.Interop.dll" Name="SQLite.Interop.dll" Source="../TPhotoCompetitionViewer/bin/Release/x86/SQLite.Interop.dll" Vital="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="speech" Directory="dir_Brian">
+      <Component Id="component_speech1">
+        <File Id="Speech1" Name="1.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/1.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech2">
+        <File Id="Speech2" Name="2.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/2.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech3">
+        <File Id="Speech3" Name="3.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/3.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech4">
+        <File Id="Speech4" Name="4.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/4.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech5">
+        <File Id="Speech5" Name="5.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/5.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech6">
+        <File Id="Speech6" Name="6.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/6.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech7">
+        <File Id="Speech7" Name="7.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/7.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech8">
+        <File Id="Speech8" Name="8.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/8.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech9">
+        <File Id="Speech9" Name="9.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/9.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech10">
+        <File Id="Speech10" Name="10.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/10.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech11">
+        <File Id="Speech11" Name="11.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/11.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech12">
+        <File Id="Speech12" Name="12.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/12.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech13">
+        <File Id="Speech13" Name="13.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/13.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech14">
+        <File Id="Speech14" Name="14.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/14.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech15">
+        <File Id="Speech15" Name="15.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/15.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech16">
+        <File Id="Speech16" Name="16.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/16.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech17">
+        <File Id="Speech17" Name="17.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/17.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech18">
+        <File Id="Speech18" Name="18.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/18.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech19">
+        <File Id="Speech19" Name="19.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/19.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech20">
+        <File Id="Speech20" Name="20.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/20.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech21">
+        <File Id="Speech21" Name="21.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/21.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech22">
+        <File Id="Speech22" Name="22.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/22.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech23">
+        <File Id="Speech23" Name="23.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/23.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech24">
+        <File Id="Speech24" Name="24.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/24.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech25">
+        <File Id="Speech25" Name="25.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/25.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech26">
+        <File Id="Speech26" Name="26.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/26.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech27">
+        <File Id="Speech27" Name="27.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/27.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech28">
+        <File Id="Speech28" Name="28.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/28.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech29">
+        <File Id="Speech29" Name="29.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/29.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech30">
+        <File Id="Speech30" Name="30.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/30.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech31">
+        <File Id="Speech31" Name="31.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/31.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech32">
+        <File Id="Speech32" Name="32.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/32.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech33">
+        <File Id="Speech33" Name="33.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/33.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech34">
+        <File Id="Speech34" Name="34.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/34.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech35">
+        <File Id="Speech35" Name="35.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/35.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech36">
+        <File Id="Speech36" Name="36.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/36.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech37">
+        <File Id="Speech37" Name="37.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/37.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech38">
+        <File Id="Speech38" Name="38.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/38.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech39">
+        <File Id="Speech39" Name="39.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/39.mp3" Vital="yes"/>
+      </Component>
+      <Component Id="component_speech40">
+        <File Id="Speech40" Name="40.mp3" Source="../TPhotoCompetitionViewer/bin/Release/Resources/Numbers/Brian/40.mp3" Vital="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
 </Wix>
