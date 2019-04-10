@@ -296,6 +296,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\speaker_notes_black_72x72.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\speaker_notes_off_black_72x72.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\icons.txt" />
     <Resource Include="Resources\file_upload_black_72x72.png" />
     <Resource Include="Resources\file_upload_grey_72x72.png" />

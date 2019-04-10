@@ -25,6 +25,7 @@ namespace TPhotoCompetitionViewer.Views
     {
         private List<IBuzzHandsetDevice> handsets;
         private List<AbstractCompetition> competitionList;
+        private bool playAudio = true;
 
         public MainWindow()
         {
@@ -212,6 +213,27 @@ namespace TPhotoCompetitionViewer.Views
             this.RunCompetition(competition);
         }
 
+        private void ToggleAudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.playAudio = !this.playAudio;
+            if (this.playAudio)
+            {
+                BitmapImage playAudioTitlesIcon = new BitmapImage();
+                playAudioTitlesIcon.BeginInit();
+                playAudioTitlesIcon.UriSource = new Uri("pack://application:,,,/Resources/speaker_notes_black_72x72.png");
+                playAudioTitlesIcon.EndInit();
+                this.MuteButtonImage.Source = playAudioTitlesIcon;
+            }
+            else
+            {
+                BitmapImage muteAudioTitlesIcon = new BitmapImage();
+                muteAudioTitlesIcon.BeginInit();
+                muteAudioTitlesIcon.UriSource = new Uri("pack://application:,,,/Resources/speaker_notes_off_black_72x72.png");
+                muteAudioTitlesIcon.EndInit();
+                this.MuteButtonImage.Source = muteAudioTitlesIcon;
+            }
+        }
+
         private void ShowHeldImages(AbstractCompetition competition)
         {
             if (competition is PanelCompetition)
@@ -275,6 +297,11 @@ namespace TPhotoCompetitionViewer.Views
             ResultsUploadWindow winnersPage = new ResultsUploadWindow();
             winnersPage.Init(this.competitionList[0]);
             winnersPage.ShowDialog();
+        }
+
+        internal bool IsAudioEnabled()
+        {
+            return this.playAudio;
         }
 
         private void Upload2Button_Click(object sender, RoutedEventArgs e)
