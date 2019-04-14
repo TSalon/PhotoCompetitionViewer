@@ -309,6 +309,9 @@
     <Resource Include="Resources\file_upload_black_72x72.png" />
     <Resource Include="Resources\file_upload_grey_72x72.png" />
     <Resource Include="iris_logo1.ico" />
+    <None Include="Resources\README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Resources\Numbers\Brian\1.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

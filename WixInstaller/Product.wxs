@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="8a0de3d9-20d7-42d2-af0f-8eb07e9c5261" Name="Competition Viewer" Language="1033" Version="1.0.0.0" Manufacturer="Iris Photo Software" UpgradeCode="78ea36e4-6db8-4751-a94a-90d043810e94">
+	<Product Id="8a0de3d9-20d7-42d2-af0f-8eb07e9c5261" Name="Iris Competition Viewer" Language="1033" Version="1.1.0.0" Manufacturer="Iris Photo Software" UpgradeCode="78ea36e4-6db8-4751-a94a-90d043810e94">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -13,6 +13,10 @@
       <ComponentGroupRef Id="x86" />
       <ComponentGroupRef Id="speech" />
       <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="DesktopShortcut" />
+      <ComponentRef Id="StartMenuCompetitionDir" />
+      <ComponentRef Id="DesktopCompetitionDir" />
+      <ComponentGroupRef Id="CompetitionDir" />
 		</Feature>
 	</Product>
 
@@ -34,7 +38,10 @@
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="Iris Photo Competition"/>
       </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop"></Directory>
+      <Directory Id="ANOTHERLOCATION" Name="IrisCompetitions"></Directory>
 		</Directory>
+    <SetDirectory Id="ANOTHERLOCATION" Value="[WindowsVolume]IrisCompetitions"></SetDirectory>
 	</Fragment>
   
   <Fragment>
@@ -62,7 +69,26 @@
                   Description="Program for running Iris competitions"
                   Target="[#TPhotoCompetitionViewer.exe]"
                   WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
-        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RemoveFolder Id="CleanUpShortCutStart" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\IrisPhotoSoftware" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+      <Component Id ="StartMenuCompetitionDir" Guid='41ad59e3-175d-41e8-903b-5ecbfe0e574e'>
+        <Shortcut Id='dir_competition_startmenu' Directory='ApplicationProgramsFolder' Name='Competition Files' Target ='[ANOTHERLOCATION]' Advertise='no' />
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\IrisPhotoSoftware" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="a9a93dbb-862c-41d3-997f-c4ba7fc8e96b">
+        <Shortcut Id="ApplicationShortcutDesktop"
+                  Name="Iris Competition Viewer"
+                  Description="Program for running Iris competitions"
+                  Target="[#TPhotoCompetitionViewer.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpShortCutDesktop" Directory="DesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\IrisPhotoSoftware" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+      <Component Id ="DesktopCompetitionDir" Guid='e023f449-1e95-436a-81c4-9040a9ef6d92'>
+        <Shortcut Id='dir_competition_desktop' Directory='DesktopFolder' Name='Competition Files' Target ='[ANOTHERLOCATION]' Advertise='no' />
         <RegistryValue Root="HKCU" Key="Software\Microsoft\IrisPhotoSoftware" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
@@ -72,6 +98,14 @@
     <ComponentGroup Id="i18n" Directory="dir_i18n_en">
       <Component Id="component_i18n_en">
         <File Id="TPhotoCompetitionViewer.resources.dll" Name="TPhotoCompetitionViewer.resources.dll" Source="../TPhotoCompetitionViewer/bin/Release/en/TPhotoCompetitionViewer.resources.dll" Vital="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="CompetitionDir" Directory="ANOTHERLOCATION">
+      <Component Id="component_competition_dir" Guid="fb84a563-1ecf-42c4-88ef-c18645792ce4">
+        <File Id="README.txt" Name="README.txt" Source="../TPhotoCompetitionViewer/bin/Release/Resources/README.txt" Vital="yes"/>
       </Component>
     </ComponentGroup>
   </Fragment>
