@@ -70,7 +70,7 @@ namespace TPhotoCompetitionViewer.Views
         internal void Init(AbstractCompetition competition)
         {
             string lAwardString = this.BuildAwardString(competition);
-            string lDomain = "http://irisphotosoftware.co.uk/";
+            string lDomain = "https://irisphotosoftware.co.uk/results/";
             string lHash = this.CalculateHash(lAwardString, competition.GetResultsKey());
             string lUrl = lDomain + competition.GetCompetitionKey() + "/" + lAwardString + "/" + lHash + "/";
 

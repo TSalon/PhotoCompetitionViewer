@@ -249,11 +249,11 @@ namespace TPhotoCompetitionViewer.Views
 
                 case Key.T:
                 case Key.B: // clicker stop button
-                    this.ShowTitle();
+                    this.ShowTitle(false);
                     break;
 
                 case Key.H:
-                    this.HoldImage();
+                    this.HoldImage(false);
                     break;
             }
         }
@@ -265,7 +265,7 @@ namespace TPhotoCompetitionViewer.Views
         }
 
         /** Mark an image as held */
-        private void HoldImage()
+        private void HoldImage(bool playAudio)
         {
             if (this.currentMode != PageMode.Image)
             {
@@ -273,7 +273,7 @@ namespace TPhotoCompetitionViewer.Views
             }
             
             this.competitionImage.ToggleHeld(this.dbConnection);
-            this.ShowTitle();
+            this.ShowTitle(playAudio);
 
             this.mainWindow.UpdateHeldCount();
         }
@@ -299,11 +299,11 @@ namespace TPhotoCompetitionViewer.Views
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
 
-            this.ShowTitle();
+            this.ShowTitle(true);
         }
 
         /** Show the image title for a short period of time */
-        private void ShowTitle()
+        private void ShowTitle(bool playAudio)
         {
             if (this.currentMode != PageMode.Image)
             {
@@ -334,7 +334,7 @@ namespace TPhotoCompetitionViewer.Views
             this.titleTimer.Start();
 	        this.enableScoringTimer.Start();
 
-            if (this.mainWindow.IsAudioEnabled()){
+            if (playAudio && this.mainWindow.IsAudioEnabled()){
                 string lMp3Path = ImagePaths.GetExtractDirectory(this.competition.GetName()) + "/" + this.competitionImage.GetAudioPath();
                 this.MediaElement.Source = new Uri(lMp3Path, UriKind.Absolute);
                 this.MediaElement.Play();
