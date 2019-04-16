@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -57,6 +58,15 @@ namespace TPhotoCompetitionViewer.Views
             this.titleTimer.Stop();
             this.nextImageTimer.Stop();
 
+            DoubleAnimation fadeOut = new DoubleAnimation
+            {
+                From = 1,
+                To = 0,
+                Duration = new Duration(TimeSpan.FromSeconds(1)),
+                AutoReverse = false
+            };
+            this.ImagePane.BeginAnimation(OpacityProperty, fadeOut);
+
             this.currentIndex = imageIndex;
             var awardedImage = this.awardedImages[imageIndex];
 
@@ -66,6 +76,15 @@ namespace TPhotoCompetitionViewer.Views
             imageToShow.UriSource = new Uri(imagePath);
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
+
+            DoubleAnimation fadeIn = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = new Duration(TimeSpan.FromSeconds(1)),
+                AutoReverse = false
+            };
+            this.ImagePane.BeginAnimation(OpacityProperty, fadeIn);
 
             this.ImageTitle.Content = awardedImage.GetTitle();
             this.ImageTitle.Visibility = Visibility.Visible;
