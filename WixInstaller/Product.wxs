@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="8a0de3d9-20d7-42d2-af0f-8eb07e9c5261" Name="Iris Competition Viewer" Language="1033" Version="1.3.0.0" Manufacturer="Iris Photo Software" UpgradeCode="78ea36e4-6db8-4751-a94a-90d043810e94">
+	<Product Id="8a0de3d9-20d7-42d2-af0f-8eb07e9c5261" Name="Iris Competition Viewer" Language="1033" Version="1.3.0.2" Manufacturer="Iris Photo Software" UpgradeCode="78ea36e4-6db8-4751-a94a-90d043810e94">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
