@@ -96,6 +96,7 @@ namespace TPhotoCompetitionViewer.Views
             this.ClubNameLabel.Visibility = Visibility.Hidden;
             this.CompetitionNameLabel.Visibility = Visibility.Hidden;
             this.TrophyNameLabel.Visibility = Visibility.Hidden;
+            this.QuietLabel.Visibility = Visibility.Hidden;
 
             this.titleShown = false;
 
@@ -122,6 +123,7 @@ namespace TPhotoCompetitionViewer.Views
                     this.CompetitionNameLabel.Content = competitionNameLessDate;
                     this.TrophyNameLabel.Visibility = Visibility.Visible;
                     this.TrophyNameLabel.Content = this.competition.GetTrophyName();
+                    this.QuietLabel.Visibility = Visibility.Visible;
 
                     break;
 
@@ -244,7 +246,7 @@ namespace TPhotoCompetitionViewer.Views
                     break;
 
                 case Key.PageUp: // clicker left
-                    this.PreviousImage(true);
+                    this.PreviousImage(false);
                     break;
 
                 case Key.T:
@@ -279,7 +281,7 @@ namespace TPhotoCompetitionViewer.Views
         }
 
         /** Show the image at the specified index */
-        private void ShowImage(int imageIndex)
+        private void ShowImage(int imageIndex, bool playAudio)
         {
 	        this.titleTimer.Stop();
 	
@@ -299,7 +301,7 @@ namespace TPhotoCompetitionViewer.Views
             imageToShow.EndInit();
             this.ImagePane.Source = imageToShow;
 
-            this.ShowTitle(true);
+            this.ShowTitle(playAudio);
         }
 
         /** Show the image title for a short period of time */
@@ -355,14 +357,14 @@ namespace TPhotoCompetitionViewer.Views
                     this.SetPageMode(PageMode.Image);
                     // Show first image
                     this.imageIndex = 0;
-                    this.ShowImage(this.imageIndex);
+                    this.ShowImage(this.imageIndex, true);
                     break;
 
                 case PageMode.Image:
                     // Show next image, or end page
                     if (this.imageIndex < this.competition.MaxImageIndex())
                     {
-                        this.ShowImage(this.imageIndex + 1);
+                        this.ShowImage(this.imageIndex + 1, true);
                     }
                     else
                     {
@@ -386,7 +388,7 @@ namespace TPhotoCompetitionViewer.Views
                 case PageMode.Image:
                     if (this.imageIndex > 0)
                     {
-                        this.ShowImage(this.imageIndex - 1);
+                        this.ShowImage(this.imageIndex - 1, false);
                     }
                     else
                     {
@@ -395,7 +397,7 @@ namespace TPhotoCompetitionViewer.Views
                     break;
                 case PageMode.End:
                     this.SetPageMode(PageMode.Image);
-                    this.ShowImage(this.imageIndex);
+                    this.ShowImage(this.imageIndex, false);
                     break;
 
             }

@@ -22,5 +22,6 @@
         <Label x:Name="ClubNameLabel" Content="Club Name" FontSize="48" Foreground="White" Margin="10,100,0,0"></Label>
         <Label x:Name="CompetitionNameLabel" Content="Competition Name" FontSize="72" Foreground="White" Margin="10,301,-10,-301"></Label>
         <Label x:Name="TrophyNameLabel" Content="Trophy Name" FontSize="48" Foreground="White" Margin="10,389,0,-389"></Label>
+        <Label x:Name="QuietLabel" Content="Please: No Talking, Put Your Phone Away" FontSize="48" Foreground="White" Margin="59,601,52,68" HorizontalAlignment="Center" Width="913"></Label>
     </Grid>
 </Window>
