@@ -12,7 +12,7 @@ namespace TPhotoCompetitionViewer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace TPhotoCompetitionViewer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:/Competitions")]
+        [global::System.Configuration.DefaultSettingValueAttribute("c:/IrisCompetitions")]
         public string CompetitionSrcDir {
             get {
                 return ((string)(this["CompetitionSrcDir"]));
@@ -37,13 +37,37 @@ namespace TPhotoCompetitionViewer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:/CompetitionsExtract")]
+        [global::System.Configuration.DefaultSettingValueAttribute("c:/IrisCompetitionsExtract")]
         public string CompetitionExtractDir {
             get {
                 return ((string)(this["CompetitionExtractDir"]));
             }
             set {
                 this["CompetitionExtractDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowCursor {
+            get {
+                return ((bool)(this["ShowCursor"]));
+            }
+            set {
+                this["ShowCursor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayAudioTitles {
+            get {
+                return ((bool)(this["PlayAudioTitles"]));
+            }
+            set {
+                this["PlayAudioTitles"] = value;
             }
         }
     }

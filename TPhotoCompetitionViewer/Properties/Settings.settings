@@ -3,10 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="CompetitionSrcDir" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:/Competitions</Value>
+      <Value Profile="(Default)">c:/IrisCompetitions</Value>
     </Setting>
     <Setting Name="CompetitionExtractDir" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:/CompetitionsExtract</Value>
+      <Value Profile="(Default)">c:/IrisCompetitionsExtract</Value>
+    </Setting>
+    <Setting Name="ShowCursor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PlayAudioTitles" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

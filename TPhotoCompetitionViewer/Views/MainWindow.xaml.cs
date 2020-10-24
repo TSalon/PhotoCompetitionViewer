@@ -96,6 +96,10 @@ namespace TPhotoCompetitionViewer.Views
 
                 this.RefreshHeldImagesButtons();
             }
+
+            Properties.Settings.Default.Reload();
+            this.setCursorState(Properties.Settings.Default.ShowCursor);
+            this.setAudioState(Properties.Settings.Default.PlayAudioTitles);
         }
 
         private void DisableBothHeldButtons()
@@ -224,8 +228,14 @@ namespace TPhotoCompetitionViewer.Views
 
         private void ToggleAudioButton_Click(object sender, RoutedEventArgs e)
         {
-            this.playAudio = !this.playAudio;
-            if (this.playAudio)
+            this.setAudioState(!this.playAudio);
+        }
+
+        private void setAudioState(bool audioState) {
+            this.playAudio = audioState;
+            Properties.Settings.Default.PlayAudioTitles = this.playAudio;
+            Properties.Settings.Default.Save();
+            if (audioState)
             {
                 BitmapImage playAudioTitlesIcon = new BitmapImage();
                 playAudioTitlesIcon.BeginInit();
@@ -246,8 +256,14 @@ namespace TPhotoCompetitionViewer.Views
 
         private void ToggleCursorButton_Click(object sender, RoutedEventArgs e)
         {
-            this.showCursor = !this.showCursor;
-            if (this.showCursor)
+            this.setCursorState(!this.showCursor);
+        }
+        private void setCursorState(bool cursorState) 
+        {
+            this.showCursor = cursorState;
+            Properties.Settings.Default.ShowCursor = this.showCursor;
+            Properties.Settings.Default.Save();
+            if (cursorState)
             {
                 BitmapImage showCursorIcon = new BitmapImage();
                 showCursorIcon.BeginInit();
