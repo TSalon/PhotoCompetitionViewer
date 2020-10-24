@@ -26,6 +26,7 @@ namespace TPhotoCompetitionViewer.Views
         private List<IBuzzHandsetDevice> handsets;
         private List<AbstractCompetition> competitionList;
         private bool playAudio = true;
+        private bool showCursor = false;
 
         public MainWindow()
         {
@@ -188,12 +189,20 @@ namespace TPhotoCompetitionViewer.Views
             if (competition is PanelCompetition)
             {
                 PanelCompetitionImageWindow competitionPage = new PanelCompetitionImageWindow();
+                if (this.IsCursorEnabled())
+                {
+                    competitionPage.Cursor = Cursors.Arrow;
+                }
                 competitionPage.Init((PanelCompetition)competition, this);
                 competitionPage.ShowDialog();
             }
             else
             {
                 SingleCompetitionImageWindow competitionPage = new SingleCompetitionImageWindow();
+                if (this.IsCursorEnabled())
+                {
+                    competitionPage.Cursor = Cursors.Arrow;
+                }
                 int scoresRequired = System.Convert.ToInt32(this.CompOneScoresRequired.Text);
                 ((Competition)competition).SetScoresRequired(scoresRequired);
                 competitionPage.Init((Competition)competition, this.handsets, this);
@@ -231,6 +240,28 @@ namespace TPhotoCompetitionViewer.Views
                 muteAudioTitlesIcon.UriSource = new Uri("pack://application:,,,/Resources/speaker_notes_off_black_72x72.png");
                 muteAudioTitlesIcon.EndInit();
                 this.MuteButtonImage.Source = muteAudioTitlesIcon;
+            }
+        }
+
+
+        private void ToggleCursorButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.showCursor = !this.showCursor;
+            if (this.showCursor)
+            {
+                BitmapImage showCursorIcon = new BitmapImage();
+                showCursorIcon.BeginInit();
+                showCursorIcon.UriSource = new Uri("pack://application:,,,/Resources/visibility_black_72x72.png");
+                showCursorIcon.EndInit();
+                this.ShowCursorButtonImage.Source = showCursorIcon;
+            }
+            else
+            {
+                BitmapImage hideCursorIcon = new BitmapImage();
+                hideCursorIcon.BeginInit();
+                hideCursorIcon.UriSource = new Uri("pack://application:,,,/Resources/visibility_off_black_72x72.png");
+                hideCursorIcon.EndInit();
+                this.ShowCursorButtonImage.Source = hideCursorIcon;
             }
         }
 
@@ -302,6 +333,11 @@ namespace TPhotoCompetitionViewer.Views
         internal bool IsAudioEnabled()
         {
             return this.playAudio;
+        }
+
+        internal bool IsCursorEnabled()
+        {
+            return this.showCursor;
         }
 
         private void Upload2Button_Click(object sender, RoutedEventArgs e)

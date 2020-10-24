@@ -9,6 +9,14 @@
         Title="Iris Competition Viewer" Height="768" Width="1316.408" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black" Foreground="White" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="StatusLabel" Content="Status Prompt" HorizontalAlignment="Left" Margin="87,44,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        <Button x:Name="ShowCursorButton" HorizontalAlignment="Left" Margin="1040,67,0,0" VerticalAlignment="Top" Width="68" Height="68" Click="ToggleCursorButton_Click">
+            <StackPanel>
+                <Image x:Name="ShowCursorButtonImage" Source="../Resources/visibility_off_black_72x72.png" />
+            </StackPanel>
+            <Button.ToolTip>
+                <ToolTip Content="Click to show/hide the cursor when showing images full screen."/>
+            </Button.ToolTip>
+        </Button>
         <Button x:Name="MuteButton" HorizontalAlignment="Left" Margin="1125,67,0,0" VerticalAlignment="Top" Width="68" Height="68" Click="ToggleAudioButton_Click">
             <StackPanel>
                 <Image x:Name="MuteButtonImage" Source="../Resources/speaker_notes_black_72x72.png" />

@@ -299,6 +299,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\visibility_black_72x72.png" />
+    <Resource Include="Resources\visibility_grey_72x72.png" />
+    <Resource Include="Resources\visibility_off_black_72x72.png" />
+    <Resource Include="Resources\visibility_off_grey_72x72.png" />
     <Resource Include="Resources\speaker_notes_black_72x72.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
